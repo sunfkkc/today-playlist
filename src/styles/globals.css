@@ -1,5 +1,8 @@
-@import url('../../public/fonts/font.css');
+@import url('public/fonts/font.css');
 
-body {
+body,
+button,
+input,
+textarea {
   font-family: 'SUIT';
 }
