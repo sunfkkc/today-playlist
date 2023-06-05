@@ -2,19 +2,20 @@ import React from 'react';
 import { Icons, Text } from '@/components';
 import { colors } from '@/constants/colors';
 import { useRouter } from 'next/router';
+import { css } from '@emotion/react';
 
 function Header(props: Props) {
   const { title } = props;
   const router = useRouter();
   return (
     <div
-      style={{
-        height: 48,
-        display: 'flex',
-        alignItems: 'center',
-      }}
+      css={css`
+        height: 48px;
+        display: flex;
+        align-items: center;
+      `}
     >
-      <div style={{}}>
+      <div>
         <Icons.LeftArrow
           width={20}
           height={20}
@@ -22,7 +23,11 @@ function Header(props: Props) {
           onClick={() => router.back()}
         />
       </div>
-      <div style={{ marginLeft: 36 }}>
+      <div
+        css={css`
+          margin-left: 36px;
+        `}
+      >
         <Text typography="h1" color={colors.grey900} fontWeight="bold">
           {title}
         </Text>
