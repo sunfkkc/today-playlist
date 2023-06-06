@@ -21,6 +21,9 @@ function Header(props: Props) {
           height={20}
           stroke={colors.primary900}
           onClick={() => router.back()}
+          css={css`
+            cursor: pointer;
+          `}
         />
       </div>
       <div
