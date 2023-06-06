@@ -1,3 +1,4 @@
+import { GlobalPortal } from '@/GlobalPortal';
 import { css } from '@emotion/react';
 import React, { ReactNode } from 'react';
 
@@ -17,7 +18,7 @@ function Layout({ children }: { children: ReactNode }) {
         }
       `}
     >
-      {children}
+      <GlobalPortal.Provider>{children}</GlobalPortal.Provider>
     </div>
   );
 }
