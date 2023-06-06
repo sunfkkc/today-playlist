@@ -43,10 +43,10 @@
     .bottom-tab__item__backdrop {
       position: absolute;
       width: 54px;
-      height: 27px;
+      height: 20px;
       background: #6fb6ff;
       filter: blur(12px);
-      transform: rotate(180deg) translateX(50%);
+      transform: rotate(180deg) translateX(50%) translateY(-30%);
       left: 50%;
     }
     .bottom-tab__item__icon {
