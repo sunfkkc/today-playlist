@@ -11,6 +11,10 @@ function Layout({ children }: { children: ReactNode }) {
         background-repeat: no-repeat;
         background-size: cover;
         margin: 0 auto;
+
+        @media (max-width: 400px) {
+          width: 100%;
+        }
       `}
     >
       {children}
