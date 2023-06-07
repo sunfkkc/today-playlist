@@ -13,6 +13,12 @@
   }
 }
 
+@mixin active($selector) {
+  #{$selector}:active {
+    @content;
+  }
+}
+
 $button-transition-duration: 0.1s;
 $button-transition: color $button-transition-duration ease-in-out,
   background-color $button-transition-duration ease-in-out,
@@ -62,12 +68,13 @@ $button-transition: color $button-transition-duration ease-in-out,
     bottom: 0;
     left: 0;
     background-color: transparent;
+
     transition: background-color $button-transition-duration ease-in-out;
   }
 
   color: $white;
 
-  @include hover-active('&:not(:disabled):not(.disabled)') {
+  @include active('&:not(:disabled):not(.disabled)') {
     &::after {
       background: linear-gradient(
           0deg,
@@ -92,20 +99,20 @@ $button-transition: color $button-transition-duration ease-in-out,
       }
     }
 
-    @include hover-active('&:not(:disabled):not(.disabled)') {
-      &::after {
-        background: linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.06),
-            rgba(0, 0, 0, 0.06)
-          ),
-          linear-gradient(
-            114.48deg,
-            rgba(252, 190, 204, 0.4) 0%,
-            #c0deff 83.65%
-          );
-      }
-    }
+    // @include hover-active('&:not(:disabled):not(.disabled)') {
+    //   &::after {
+    //     background: linear-gradient(
+    //         0deg,
+    //         rgba(0, 0, 0, 0.06),
+    //         rgba(0, 0, 0, 0.06)
+    //       ),
+    //       linear-gradient(
+    //         114.48deg,
+    //         rgba(252, 190, 204, 0.4) 0%,
+    //         #c0deff 83.65%
+    //       );
+    //   }
+    // }
   }
 
   background: linear-gradient(

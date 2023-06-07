@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 import classNames from 'classnames';
-import Text from '@/components/Text';
 
 type Props = PropsWithChildren<{
   type?: 'primary' | 'danger' | 'light' | 'dark';
