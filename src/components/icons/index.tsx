@@ -18,3 +18,4 @@ export { default as Search24 } from 'public/icons/icon_search_24_2.svg';
 export { default as Stop24Filled } from 'public/icons/icon_stop_24_filled.svg';
 export { default as Subtract24Filled } from 'public/icons/icon_subtract_24_filled.svg';
 export { default as X20Filled } from 'public/icons/icon_x_20_filled.svg';
+export { default as Google } from 'public/icons/Google__G__Logo 1.svg';
