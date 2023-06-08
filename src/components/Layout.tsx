@@ -6,15 +6,17 @@ function Layout({ children }: { children: ReactNode }) {
   return (
     <div
       css={css`
+        position: relative;
         width: 350px;
         height: 100vh;
         background-image: url('/images/Rectangle\ 30.png');
         background-repeat: no-repeat;
         background-size: cover;
         margin: 0 auto;
-        padding: 0 16px;
+        //TODO: 글로벌 패딩 값을 주면 바텀 탭이 영역을 넘어감
+        //padding: 0 16px;
 
-        @media (max-width: 500px) {
+        @media (max-width: 425px) {
           width: 100%;
         }
       `}
