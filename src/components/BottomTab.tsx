@@ -4,61 +4,61 @@ import Text from './Text';
 import { Icons } from '.';
 import { colors } from '@/constants/colors';
 import { GlobalPortal } from '@/GlobalPortal';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { css } from '@emotion/react';
 //TODO: 모바일에서 탭 선택시 backdrop이 남아있는 문제
 
-const menus = [
-  { title: '홈', icon: 'Home24' },
-  { title: '플리등록', icon: 'PlusList24' },
-  { title: '찜한플리', icon: 'Heart24' },
-  { title: '마이', icon: 'My24' },
-] as const;
-
-type Menu = (typeof menus)[number];
-type Titles = Menu['title'];
-
 function BottomTab() {
-  const [selected, setSelected] = useState<Titles>('홈');
+  const router = useRouter();
+  const [selected, setSelected] = useState<string>(router.asPath);
+
+  const menus = [
+    {
+      title: '홈',
+      icon: 'Home24',
+      path: '/',
+    },
+    {
+      title: '플리등록',
+      icon: 'PlusList24',
+      path: '/a',
+    },
+    {
+      title: '찜한플리',
+      icon: 'Heart24',
+      path: '/b',
+    },
+    {
+      title: '마이',
+      icon: 'My24',
+      path: '/my',
+    },
+  ] as const;
 
   return (
     <GlobalPortal.Consumer>
-      <div
-        css={css`
-          position: fixed;
-          bottom: 0;
-          width: 100%;
-          max-width: 350px;
-          @media (max-width: 500px) {
-            max-width: none;
-          }
-        `}
-      >
-        <div className={classNames('bottom-tab')}>
-          {menus.map((menu) => {
-            const Icon = Icons[menu.icon];
-            return (
-              <div
-                key={menu.title}
-                className={classNames('bottom-tab__item')}
-                onClick={() => {
-                  setSelected(menu.title);
-                }}
-              >
-                {selected === menu.title && (
+      <div className={classNames('bottom-tab')}>
+        {menus.map((menu) => {
+          const Icon = Icons[menu.icon];
+          return (
+            <div key={menu.title} className={classNames('bottom-tab__item')}>
+              <Link href={menu.path} key={menu.title}>
+                {selected === menu.path && (
                   <div
                     className={classNames('bottom-tab__item__backdrop')}
                   ></div>
                 )}
                 <div
                   className={classNames('bottom-tab__item__icon', {
-                    'bottom-tab-selected': selected === menu.title,
+                    'bottom-tab-selected': selected === menu.path,
                   })}
                 >
                   <Icon
                     width={24}
                     height={24}
                     stroke={
-                      selected === menu.title ? colors.blue600 : colors.white
+                      selected === menu.path ? colors.blue600 : colors.white
                     }
                   />
                 </div>
@@ -67,16 +67,16 @@ function BottomTab() {
                   <Text
                     typography="cp"
                     color={
-                      selected === menu.title ? colors.blue600 : colors.white
+                      selected === menu.path ? colors.blue600 : colors.white
                     }
                   >
                     {menu.title}
                   </Text>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </GlobalPortal.Consumer>
   );
