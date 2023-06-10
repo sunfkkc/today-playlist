@@ -19,6 +19,10 @@ function Layout({ children }: { children: ReactNode }) {
         @media (max-width: 425px) {
           width: 100%;
         }
+        overflow: hidden;
+        ::-webkit-scrollbar {
+          display: none;
+        }
       `}
     >
       <GlobalPortal.Provider>{children}</GlobalPortal.Provider>
