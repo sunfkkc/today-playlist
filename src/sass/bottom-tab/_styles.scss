@@ -1,5 +1,6 @@
 .bottom-tab {
-  border: 1px solid transparent;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.466);
   position: fixed;
   bottom: 0;
   width: 350px;
@@ -7,27 +8,28 @@
     width: 100%;
   }
 
-  border-image-source: radial-gradient(
-      100% 100% at 92.68% 100%,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    radial-gradient(
-      100% 100% at 6.86% 0%,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    radial-gradient(
-      50% 155.02% at 50.91% 50%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    );
+  //TODO: 테두리 적용 안되는 문제
+  // border-image-source: radial-gradient(
+  //     100% 100% at 92.68% 100%,
+  //     rgba(255, 255, 255, 0.6) 0%,
+  //     rgba(255, 255, 255, 0) 100%
+  //   ),
+  //   radial-gradient(
+  //     100% 100% at 6.86% 0%,
+  //     rgba(255, 255, 255, 0.6) 0%,
+  //     rgba(255, 255, 255, 0) 100%
+  //   ),
+  //   radial-gradient(
+  //     50% 155.02% at 50.91% 50%,
+  //     #ffffff 0%,
+  //     rgba(255, 255, 255, 0) 100%
+  //   );
 
   display: flex;
 
   border-radius: 36px;
 
-  height: 64px;
+  height: 62px;
 
   background: linear-gradient(
       275.5deg,
