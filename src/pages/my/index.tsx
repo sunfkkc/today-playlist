@@ -42,7 +42,7 @@ function MyPage() {
             css={css`
               display: flex;
               flex-direction: row;
-              overflow: auto;
+
               margin: 40px 16px 0 16px;
             `}
           >
