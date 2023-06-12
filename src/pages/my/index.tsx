@@ -43,7 +43,7 @@ function MyPage() {
               display: flex;
               flex-direction: row;
 
-              margin: 40px 16px 0 16px;
+              margin-top: 40px;
             `}
           >
             <Container>
@@ -95,7 +95,7 @@ function MyPage() {
 
               border: 1px solid rgba(255, 255, 255, 0.466);
 
-              margin-top: 32px;
+              margin: 32px -16px 0 -16px;
               flex-grow: 1;
             `}
           >
