@@ -18,6 +18,7 @@ function Layout({ children }: { children: ReactNode }) {
           width: 100%;
         }
         overflow-y: scroll;
+        padding: 0 16px;
       `}
     >
       <GlobalPortal.Provider>{children}</GlobalPortal.Provider>
