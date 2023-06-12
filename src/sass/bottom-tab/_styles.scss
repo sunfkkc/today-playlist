@@ -3,11 +3,11 @@
   border: 1px solid rgba(255, 255, 255, 0.466);
   position: fixed;
   bottom: 0;
-  width: 314px;
+  width: 338px;
   @media (max-width: 425px) {
     width: calc(100% - 32px);
   }
-  margin-left: 16px;
+
   margin-bottom: 20px;
   //TODO: 테두리 적용 안되는 문제
   // border-image-source: radial-gradient(
