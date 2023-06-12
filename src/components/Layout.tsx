@@ -13,16 +13,11 @@ function Layout({ children }: { children: ReactNode }) {
         background-repeat: no-repeat;
         background-size: cover;
         margin: 0 auto;
-        //TODO: 글로벌 패딩 값을 주면 바텀 탭이 영역을 넘어감
-        //padding: 0 16px;
 
         @media (max-width: 425px) {
           width: 100%;
         }
-        overflow: hidden;
-        ::-webkit-scrollbar {
-          display: none;
-        }
+        overflow-y: scroll;
       `}
     >
       <GlobalPortal.Provider>{children}</GlobalPortal.Provider>
