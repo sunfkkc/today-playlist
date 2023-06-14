@@ -1,10 +1,19 @@
 import { GlobalPortal } from '@/GlobalPortal';
+import useScrollEndDetection from '@/hooks/useScrollEndDetection';
 import { css } from '@emotion/react';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef, createContext } from 'react';
+
+export const ScrollContext = createContext({
+  isBottom: false,
+});
 
 function Layout({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isBottom = useScrollEndDetection(ref);
+
   return (
     <div
+      ref={ref}
       css={css`
         position: relative;
         width: 350px;
@@ -21,7 +30,9 @@ function Layout({ children }: { children: ReactNode }) {
         padding: 0 16px;
       `}
     >
-      <GlobalPortal.Provider>{children}</GlobalPortal.Provider>
+      <ScrollContext.Provider value={{ isBottom }}>
+        <GlobalPortal.Provider>{children}</GlobalPortal.Provider>
+      </ScrollContext.Provider>
     </div>
   );
 }
