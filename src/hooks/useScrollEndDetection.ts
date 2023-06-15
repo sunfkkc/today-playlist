@@ -15,7 +15,7 @@ const useScrollEndDetection = (ref: React.RefObject<HTMLDivElement>) => {
           setIsBottom(false);
         }
       }
-    }, 1000);
+    }, 500);
     const currentRef = ref.current;
     if (currentRef) {
       currentRef.addEventListener('scroll', handleScroll);
