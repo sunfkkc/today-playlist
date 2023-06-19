@@ -7,3 +7,6 @@ textarea {
   font-family: 'SUIT';
   margin: 0;
 }
+a {
+  text-decoration: none;
+}
