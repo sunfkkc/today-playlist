@@ -6,6 +6,7 @@ function Layout({ children }: { children: ReactNode }) {
   return (
     <div
       css={css`
+        box-sizing: border-box;
         position: relative;
         width: 350px;
         height: 100vh;
