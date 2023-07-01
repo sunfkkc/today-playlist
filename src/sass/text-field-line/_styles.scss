@@ -1,0 +1,104 @@
+@import 'variables';
+@import '../mixins/z-index';
+
+.text-field-line {
+  cursor: text;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+
+  padding: 12px;
+
+  border-radius: 24px;
+  background: var(
+    --gradient-background-gradient-background-01,
+    linear-gradient(
+      333deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      207deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.8) 100%
+    )
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.466);
+
+  &.select {
+    width: 100%;
+    margin: 0;
+    border: 0 solid transparent;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    .text-field-line__input {
+      width: 100%;
+      text-align: left;
+      overflow: hidden;
+    }
+    &::after {
+      content: '⠀';
+      width: 0;
+    }
+  }
+
+  &.text-field-line--disabled {
+    cursor: default;
+  }
+}
+
+.text-field-line__input {
+  width: 100%;
+  max-width: 100%;
+
+  background-color: transparent;
+  border: none;
+  appearance: none;
+  padding: 0;
+
+  font-size: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  caret-color: $blue400;
+  height: 24px;
+
+  &::placeholder {
+    font-weight: 400;
+  }
+
+  &[type='search'] {
+    appearance: none;
+  }
+
+  .text-field-line--error & {
+    caret-color: $red600;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    color: $grey400;
+    -webkit-text-fill-color: $grey500;
+    opacity: 1;
+  }
+
+  &--secured {
+    -webkit-text-security: disc;
+  }
+}
+
+.text-field-line__space {
+  flex: 1;
+}
