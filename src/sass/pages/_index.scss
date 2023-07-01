@@ -1,0 +1,40 @@
+.homepage-container {
+  height: 100vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  padding-top: 16px;
+
+  .playlist-item-container {
+    flex-basis: 50%;
+    box-sizing: border-box;
+    &:nth-child(odd) {
+      padding-right: 8px;
+    }
+    &:nth-child(even) {
+      padding-left: 8px;
+    }
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  .playlist-image-container {
+    width: 100%;
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+  .playlist-stats-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 6px;
+  }
+  .playlist-title-container {
+    height: 36px;
+  }
+  .playlist-stat-text {
+    margin: auto 0;
+  }
+}
