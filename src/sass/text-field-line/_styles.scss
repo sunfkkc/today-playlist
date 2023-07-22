@@ -14,19 +14,17 @@
   padding: 12px;
 
   border-radius: 24px;
-  background: var(
-    --gradient-background-gradient-background-01,
-    linear-gradient(
-      333deg,
+  background: linear-gradient(
+      275.5deg,
       rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0) 100%
+      rgba(255, 255, 255, 0) 54.4%
     ),
     linear-gradient(
-      207deg,
-      rgba(255, 255, 255, 0) 0%,
+      264.5deg,
+      rgba(255, 255, 255, 0) 45.6%,
       rgba(255, 255, 255, 0.8) 100%
-    )
-  );
+    );
+
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.466);
 
