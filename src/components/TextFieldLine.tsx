@@ -51,6 +51,7 @@ export default function TextFieldLine({
           &::placeholder {
             color: ${placeholderColor};
           }
+          margin-left: ${inputAdornment?.start ? 'none' : '6px'};
         `}
         placeholder={inputProps.placeholder}
         onChange={(e) => {
