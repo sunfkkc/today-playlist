@@ -6,8 +6,6 @@ import { colors } from '@/constants/colors';
 import { GlobalPortal } from '@/GlobalPortal';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { css } from '@emotion/react';
-//TODO: 모바일에서 탭 선택시 backdrop이 남아있는 문제
 
 function BottomTab() {
   const router = useRouter();
@@ -22,12 +20,12 @@ function BottomTab() {
     {
       title: '플리등록',
       icon: 'PlusList24',
-      path: '/a',
+      path: '/enroll',
     },
     {
       title: '찜한플리',
       icon: 'Heart24',
-      path: '/b',
+      path: '/like',
     },
     {
       title: '마이',
@@ -45,9 +43,7 @@ function BottomTab() {
             <div key={menu.title} className={classNames('bottom-tab__item')}>
               <Link href={menu.path} key={menu.title}>
                 {selected === menu.path && (
-                  <div
-                    className={classNames('bottom-tab__item__backdrop')}
-                  ></div>
+                  <div className={classNames('bottom-tab__item__backdrop')} />
                 )}
                 <div
                   className={classNames('bottom-tab__item__icon', {
