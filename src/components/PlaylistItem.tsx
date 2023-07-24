@@ -14,11 +14,11 @@ function PlaylistItem(props: IPlaylistItem) {
     viewCount,
     hashtag = [],
     editable = false,
-    style,
+    ...rest
   } = props;
 
   return (
-    <Container style={style}>
+    <Container {...rest}>
       {isLiked && (
         <Icons.Heart24Filled width={24} height={24} fill={colors.white} />
       )}
@@ -53,7 +53,7 @@ const Container = styled.div`
   backdrop-filter: blur(8px);
 `;
 
-interface IPlaylistItem {
+interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   thumbnailUrl?: string;
   isLiked?: boolean;
@@ -61,5 +61,4 @@ interface IPlaylistItem {
   viewCount?: number;
   hashtag?: string[];
   editable?: boolean;
-  style?: React.CSSProperties;
 }
