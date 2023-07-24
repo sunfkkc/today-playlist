@@ -9,6 +9,8 @@ type Props = PropsWithChildren<{
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
   disabled?: boolean;
+
+  cta?: boolean;
 }>;
 function Button(props: Props) {
   const {
@@ -18,6 +20,7 @@ function Button(props: Props) {
     disabled,
     className,
     children,
+    cta = false,
     ...rest
   } = props;
 
@@ -30,6 +33,7 @@ function Button(props: Props) {
           [`button--type-${type}`]: type,
           [`button--style-${style}`]: style,
           [`button--display-${display}`]: display,
+          ['button--cta']: cta,
         },
         { disabled: disabled },
         className

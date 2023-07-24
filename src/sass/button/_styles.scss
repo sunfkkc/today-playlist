@@ -207,3 +207,14 @@ fieldset:disabled a.button {
   justify-content: center;
   box-sizing: border-box;
 }
+
+.button--cta {
+  position: fixed;
+  bottom: 0;
+  width: 318px;
+  @media (max-width: 425px) {
+    width: calc(100% - 32px);
+  }
+
+  margin-bottom: 20px;
+}
