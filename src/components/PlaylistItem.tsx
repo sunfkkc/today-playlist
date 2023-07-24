@@ -14,10 +14,11 @@ function PlaylistItem(props: IPlaylistItem) {
     viewCount,
     hashtag = [],
     editable = false,
+    style,
   } = props;
 
   return (
-    <Container>
+    <Container style={style}>
       {isLiked && (
         <Icons.Heart24Filled width={24} height={24} fill={colors.white} />
       )}
@@ -60,4 +61,5 @@ interface IPlaylistItem {
   viewCount?: number;
   hashtag?: string[];
   editable?: boolean;
+  style?: React.CSSProperties;
 }
