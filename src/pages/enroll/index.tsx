@@ -52,7 +52,7 @@ function Page() {
   );
 
   return (
-    <div>
+    <div className="homepage-container">
       <Header title="플리 등록" />
       <input
         type="file"
