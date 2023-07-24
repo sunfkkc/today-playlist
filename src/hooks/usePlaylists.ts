@@ -2,7 +2,7 @@ import queryKeys from '@/constants/queryKeys';
 import http from '@/http';
 import { useInfiniteQuery } from 'react-query';
 
-const getPlaylist = async (params: any) => {
+const getPlaylist = async (params: Params) => {
   const { data } = await http.get<{
     playlists: Playlist[];
     currentPage: number;
@@ -11,10 +11,11 @@ const getPlaylist = async (params: any) => {
   return data;
 };
 
-const usePlaylists = ({ size }: { size?: number }) => {
+const usePlaylists = (params: Params) => {
+  const { size } = params;
   const { data, fetchNextPage } = useInfiniteQuery(
-    [queryKeys.playlists],
-    ({ pageParam = 1 }) => getPlaylist({ page: pageParam, size }),
+    [queryKeys.playlists, params],
+    ({ pageParam = 1 }) => getPlaylist({ ...params, page: pageParam }),
     {
       getNextPageParam: ({ currentPage, totalPage }) =>
         currentPage === totalPage ? undefined : currentPage + 1,
@@ -27,6 +28,13 @@ const usePlaylists = ({ size }: { size?: number }) => {
 };
 
 export default usePlaylists;
+
+interface Params {
+  size?: number;
+  isLiked?: boolean;
+  searchWord?: string;
+  page?: number;
+}
 
 export interface Playlist {
   playlistId: string;
