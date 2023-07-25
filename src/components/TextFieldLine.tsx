@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useCallback, useRef } from 'react';
+import { CSSProperties, InputHTMLAttributes, useCallback, useRef } from 'react';
 import TextFieldLineContainer, {
   TextFieldLineContainerBaseProps,
 } from '@/components/TextFieldLineContainer';
@@ -10,6 +10,7 @@ export interface Props
     Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick'> {
   placeholderColor?: string;
   fontColor?: string;
+  containerStyle?: CSSProperties;
 }
 
 export default function TextFieldLine({
@@ -21,6 +22,7 @@ export default function TextFieldLine({
   placeholderColor = 'black',
   fontColor = 'black',
   inputAdornment,
+  containerStyle,
   ...inputProps
 }: Props) {
   const value = inputProps.value;
@@ -39,6 +41,7 @@ export default function TextFieldLine({
       onClick={handleClick}
       value={value as any}
       inputAdornment={inputAdornment}
+      style={containerStyle}
     >
       <input
         {...inputProps}

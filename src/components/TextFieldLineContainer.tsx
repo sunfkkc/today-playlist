@@ -46,7 +46,6 @@ function TextFieldLineContainer<T extends keyof JSX.IntrinsicElements = 'div'>(
     className,
     hasError,
     disabled,
-    style,
     hasValue,
     children,
     labelHtmlFor,
