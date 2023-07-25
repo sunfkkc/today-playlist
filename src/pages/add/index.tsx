@@ -1,7 +1,15 @@
 import { useEnrollPlaylistForm } from '@/atoms/enrollPlaylistForm';
-import { Button, Header, Icons, Text, TextFieldLine } from '@/components';
+import {
+  Button,
+  Divider,
+  Header,
+  Icons,
+  Text,
+  TextFieldLine,
+} from '@/components';
 import { colors } from '@/constants/colors';
 import useSearchSong, { SearchSongResponse } from '@/hooks/useSearchSong';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -47,7 +55,7 @@ function Page() {
   );
 
   return (
-    <>
+    <div className="homepage-container">
       <Header title="플레이리스트 추가" />
       <form onSubmit={search}>
         <TextFieldLine
@@ -67,47 +75,77 @@ function Page() {
             ),
           }}
         />
-        <Container>
-          {!list ? (
-            <Text>{`검색 내역이 없습니다.`}</Text>
-          ) : (
-            <div>
-              {list.map((v) => (
-                <React.Fragment key={v.videoId}>
-                  <div>
-                    <Text>{v.title}</Text>
-                    <Icons.Plus24Filled
-                      width={24}
-                      height={24}
-                      fill={colors.blue300}
-                      onClick={() => add(v.videoId, v.title)}
-                    />
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-          )}
-        </Container>
+
+        {!list ? (
+          <Container
+            css={css`
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            `}
+          >
+            <Text
+              typography="cp"
+              color={colors.grey500}
+              css={css`
+                margin: 20px 0;
+              `}
+            >{`검색 내역이 없습니다.`}</Text>
+          </Container>
+        ) : (
+          <Container>
+            {list.map((v) => (
+              <React.Fragment key={v.videoId}>
+                <Item>
+                  <Text
+                    typography="cp"
+                    fontWeight="regular"
+                    color={colors.grey900}
+                  >
+                    {v.title}
+                  </Text>
+                  <Icons.Plus24Filled
+                    width={24}
+                    height={24}
+                    fill={colors.blue300}
+                    onClick={() => add(v.videoId, v.title)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                </Item>
+                <Divider opacity={0.16} backgroundColor={colors.grey800} />
+              </React.Fragment>
+            ))}
+          </Container>
+        )}
+
         {form?.videoId?.length !== 0 && (
           <Container>
             {form?.videoId?.map((v, i) => (
               <React.Fragment key={i}>
-                <div>
-                  <Text>{v.title}</Text>
+                <Item>
+                  <Text
+                    typography="cp"
+                    fontWeight="regular"
+                    color={colors.grey900}
+                  >
+                    {v.title}
+                  </Text>
                   <Icons.Subtract24Filled
                     width={24}
                     height={24}
                     fill={colors.red400}
                     onClick={() => remove(i)}
+                    style={{ cursor: 'pointer' }}
                   />
-                </div>
+                </Item>
+                <Divider opacity={0.16} backgroundColor={colors.grey800} />
               </React.Fragment>
             ))}
           </Container>
         )}
       </form>
-      <Button onClick={() => router.back()}>{`등록하기`}</Button>
-    </>
+      <Button onClick={() => router.back()} cta>{`등록하기`}</Button>
+    </div>
   );
 }
 
@@ -127,7 +165,14 @@ const Container = styled.div`
       rgba(255, 255, 255, 0) 45.6%,
       rgba(255, 255, 255, 0.8) 100%
     );
+  margin-top: 16px;
+  padding: 20px;
+`;
+
+const Item = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  text-align: center;
   align-items: center;
+  padding: 5px 0;
 `;
