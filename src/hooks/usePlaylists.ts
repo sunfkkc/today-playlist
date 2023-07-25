@@ -1,8 +1,11 @@
 import queryKeys from '@/constants/queryKeys';
 import http from '@/http';
+import { RefObject, useEffect } from 'react';
 import { useInfiniteQuery } from 'react-query';
+import useScrollEndDetection from './useScrollEndDetection';
+import useLayoutHeight from './useLayoutHeight';
 
-const getPlaylist = async (params: Params) => {
+const getPlaylist = async (params: Omit<Params, 'ref' | 'itemHeight'>) => {
   const { data } = await http.get<{
     playlists: Playlist[];
     currentPage: number;
@@ -11,11 +14,16 @@ const getPlaylist = async (params: Params) => {
   return data;
 };
 
-const usePlaylists = (params: Params) => {
-  const { size } = params;
+const usePlaylists = ({ ref, itemHeight, ...params }: Params) => {
+  const height = useLayoutHeight();
+
+  const isBottom = useScrollEndDetection(ref);
+
+  const size = height && itemHeight && Math.ceil(height / itemHeight) * 2;
+
   const { data, fetchNextPage } = useInfiniteQuery(
     [queryKeys.playlists, params],
-    ({ pageParam = 1 }) => getPlaylist({ ...params, page: pageParam }),
+    ({ pageParam = 1 }) => getPlaylist({ ...params, page: pageParam, size }),
     {
       getNextPageParam: ({ currentPage, totalPage }) =>
         currentPage === totalPage ? undefined : currentPage + 1,
@@ -23,6 +31,12 @@ const usePlaylists = (params: Params) => {
     }
   );
   const playlists = data?.pages.flatMap((page) => page.playlists);
+
+  useEffect(() => {
+    if (isBottom) {
+      fetchNextPage();
+    }
+  }, [isBottom, fetchNextPage]);
 
   return { playlists, fetchNextPage };
 };
@@ -34,6 +48,8 @@ interface Params {
   isLiked?: boolean;
   searchWord?: string;
   page?: number;
+  ref?: RefObject<HTMLDivElement>;
+  itemHeight?: number;
 }
 
 export interface Playlist {
