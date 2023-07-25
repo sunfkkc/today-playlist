@@ -1,12 +1,12 @@
 import throttle from '@/utils/throttle';
 import { useEffect, useState } from 'react';
 
-const useScrollEndDetection = (ref: React.RefObject<HTMLDivElement>) => {
+const useScrollEndDetection = (ref?: React.RefObject<HTMLDivElement>) => {
   const [isBottom, setIsBottom] = useState(false);
 
   useEffect(() => {
     const handleScroll = throttle(() => {
-      if (ref.current) {
+      if (ref?.current) {
         const { scrollTop, scrollHeight, clientHeight } = ref.current;
 
         if (clientHeight + scrollTop >= scrollHeight) {
@@ -16,7 +16,7 @@ const useScrollEndDetection = (ref: React.RefObject<HTMLDivElement>) => {
         }
       }
     }, 500);
-    const currentRef = ref.current;
+    const currentRef = ref?.current;
     if (currentRef) {
       currentRef.addEventListener('scroll', handleScroll);
     }
