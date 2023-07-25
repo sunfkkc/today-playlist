@@ -1,28 +1,17 @@
 import { Text, Icons, BottomTab, TextFieldLine } from '@/components';
 import { colors } from '@/constants/colors';
-import useLayoutHeight from '@/hooks/useLayoutHeight';
 import usePlaylists from '@/hooks/usePlaylists';
-import useScrollEndDetection from '@/hooks/useScrollEndDetection';
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-
-const ITEM_HEIGHT = 228;
+import { useRef } from 'react';
 
 export default function Home() {
   const ref = useRef<HTMLDivElement>(null);
-  const isBottom = useScrollEndDetection(ref);
-  const height = useLayoutHeight();
-  const { playlists, fetchNextPage } = usePlaylists({
-    size: height && Math.ceil(height / ITEM_HEIGHT) * 2,
+  const { playlists } = usePlaylists({
+    itemHeight: 228,
+    ref,
   });
-
-  useEffect(() => {
-    if (isBottom) {
-      fetchNextPage();
-    }
-  }, [isBottom, fetchNextPage]);
 
   return (
     <div className="homepage-container" ref={ref}>

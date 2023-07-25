@@ -1,25 +1,23 @@
 import { BottomTab, Header, Icons, TextFieldLine } from '@/components';
 import PlaylistItem from '@/components/PlaylistItem';
 import { colors } from '@/constants/colors';
-import useLayoutHeight from '@/hooks/useLayoutHeight';
 import usePlaylists from '@/hooks/usePlaylists';
-import useScrollEndDetection from '@/hooks/useScrollEndDetection';
 import { useRouter } from 'next/router';
-import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
-
-const ITEM_HEIGHT = 164;
+import { FormEvent, useCallback, useRef, useState } from 'react';
 
 function Page() {
   const router = useRouter();
+
   const ref = useRef<HTMLDivElement>(null);
-  const isBottom = useScrollEndDetection(ref);
-  const height = useLayoutHeight();
+
   const [_searchWord, _setSearchWord] = useState('');
   const [searchWord, setSearchWord] = useState('');
-  const { playlists, fetchNextPage } = usePlaylists({
-    size: height && Math.ceil(height / ITEM_HEIGHT) * 2,
+
+  const { playlists } = usePlaylists({
     isLiked: true,
     searchWord,
+    ref,
+    itemHeight: 164,
   });
 
   const search = useCallback(
@@ -29,12 +27,6 @@ function Page() {
     },
     [setSearchWord, _searchWord]
   );
-
-  useEffect(() => {
-    if (isBottom) {
-      fetchNextPage();
-    }
-  }, [isBottom, fetchNextPage]);
 
   return (
     <div ref={ref} className="homepage-container">
