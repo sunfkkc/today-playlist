@@ -11,6 +11,7 @@ export interface Props
   placeholderColor?: string;
   fontColor?: string;
   containerStyle?: CSSProperties;
+  placeholderStyle?: CSSProperties;
 }
 
 export default function TextFieldLine({
@@ -23,6 +24,7 @@ export default function TextFieldLine({
   fontColor = 'black',
   inputAdornment,
   containerStyle,
+  placeholderStyle,
   ...inputProps
 }: Props) {
   const value = inputProps.value;
@@ -52,7 +54,9 @@ export default function TextFieldLine({
         style={{ ...style, color: fontColor }}
         css={css`
           &::placeholder {
-            color: ${placeholderColor};
+            color: ${placeholderColor ?? placeholderStyle?.color};
+            font-size: ${placeholderStyle?.fontSize};
+            font-weight: ${placeholderStyle?.fontWeight};
           }
           margin-left: ${inputAdornment?.start ? 'none' : '6px'};
         `}
