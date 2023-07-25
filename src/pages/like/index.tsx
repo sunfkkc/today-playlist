@@ -4,7 +4,6 @@ import { colors } from '@/constants/colors';
 import useLayoutHeight from '@/hooks/useLayoutHeight';
 import usePlaylists from '@/hooks/usePlaylists';
 import useScrollEndDetection from '@/hooks/useScrollEndDetection';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -47,6 +46,7 @@ function Page() {
           placeholder="검색어를 입력해주세요."
           fontColor={colors.white}
           placeholderColor={colors.white}
+          containerStyle={{ marginBottom: 16 }}
           inputAdornment={{
             start: (
               <Icons.Search24
@@ -73,12 +73,3 @@ function Page() {
 }
 
 export default Page;
-
-const Container = styled.div`
-  height: 100vh;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  padding-top: 16px;
-`;
