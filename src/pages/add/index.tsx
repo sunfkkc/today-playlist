@@ -144,7 +144,12 @@ function Page() {
           </Container>
         )}
       </form>
-      <Button onClick={() => router.back()} cta>{`등록하기`}</Button>
+      <Button onClick={() => router.back()}>{`등록하기`}</Button>
+      <div
+        css={css`
+          height: 32px;
+        `}
+      />
     </div>
   );
 }
@@ -167,6 +172,7 @@ const Container = styled.div`
     );
   margin-top: 16px;
   padding: 20px;
+  margin-bottom: 16px;
 `;
 
 const Item = styled.div`
