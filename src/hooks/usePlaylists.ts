@@ -50,6 +50,7 @@ interface Params {
   page?: number;
   ref?: RefObject<HTMLDivElement>;
   itemHeight?: number;
+  recentViewed?: boolean;
 }
 
 export interface Playlist {
