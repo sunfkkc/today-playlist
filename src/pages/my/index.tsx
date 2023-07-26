@@ -1,7 +1,7 @@
 import { BottomTab, Divider, Icons, Text } from '@/components';
 import GoogleLogin from '@/components/GoogleLogin';
 import { css } from '@emotion/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@/constants/colors';
 import Image from 'next/image';
@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 function MyPage() {
   const router = useRouter();
   const { data: user, logout } = useUser();
+
+  const openTerms = useCallback(() => {}, []);
 
   return (
     <>
@@ -102,44 +104,56 @@ function MyPage() {
               flex-grow: 1;
             `}
           >
-            <div
-              css={[
-                itemStyle,
-                css`
-                  margin-top: 16px;
-                `,
-              ]}
+            <a
+              href="https://www.notion.so/45fb68dcbb0443808ca23ebceba3f1c7?pvs=4"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Text
-                typography="b1"
-                fontWeight="regular"
-                color={colors.grey700}
-                css={css`
-                  margin: auto 0;
-                `}
-              >{`이용 약관`}</Text>
-              <Icons.RightArrow2
-                width={24}
-                height={24}
-                stroke={colors.grey500}
-              />
-            </div>
+              <div
+                css={[
+                  itemStyle,
+                  css`
+                    margin-top: 16px;
+                  `,
+                ]}
+              >
+                <Text
+                  typography="b1"
+                  fontWeight="regular"
+                  color={colors.grey700}
+                  css={css`
+                    margin: auto 0;
+                  `}
+                >{`이용 약관`}</Text>
+                <Icons.RightArrow2
+                  width={24}
+                  height={24}
+                  stroke={colors.grey500}
+                />
+              </div>
+            </a>
             <Divider opacity={0.4} />
-            <div css={itemStyle}>
-              <Text
-                typography="b1"
-                fontWeight="regular"
-                color={colors.grey700}
-                css={css`
-                  margin: auto 0;
-                `}
-              >{`개인정보처리방침`}</Text>
-              <Icons.RightArrow2
-                width={24}
-                height={24}
-                stroke={colors.grey500}
-              />
-            </div>
+            <a
+              href="https://www.notion.so/45fb68dcbb0443808ca23ebceba3f1c7?pvs=4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div css={itemStyle}>
+                <Text
+                  typography="b1"
+                  fontWeight="regular"
+                  color={colors.grey700}
+                  css={css`
+                    margin: auto 0;
+                  `}
+                >{`개인정보처리방침`}</Text>
+                <Icons.RightArrow2
+                  width={24}
+                  height={24}
+                  stroke={colors.grey500}
+                />
+              </div>
+            </a>
             <Divider opacity={0.4} />
 
             <Text
