@@ -11,9 +11,12 @@ function Page() {
   const ref = useRef<HTMLDivElement>(null);
   const { playlists } = usePlaylists({ ref, itemHeight: 116 });
 
-  const edit = useCallback(() => {
-    router.push('/enroll');
-  }, [router]);
+  const edit = useCallback(
+    (playlistId: string) => {
+      router.push(`/enroll?playlistId=${playlistId}`);
+    },
+    [router]
+  );
 
   return (
     <div className="homepage-container" ref={ref}>
@@ -23,14 +26,14 @@ function Page() {
           margin-bottom: 16px;
         `}
       />
-      {playlists?.map(({ hashtag, ...props }) => (
+      {playlists?.map((props) => (
         <PlaylistItem
           key={props.playlistId}
           {...props}
           style={{ marginBottom: 16, cursor: 'pointer' }}
           onClick={() => router.push(`/detail/${props.playlistId}`)}
           editable
-          edit={edit}
+          edit={() => edit(props.playlistId)}
         />
       ))}
     </div>
