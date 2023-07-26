@@ -1,5 +1,11 @@
 import { css } from '@emotion/react';
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Image from 'next/image';
 import {
   Button,
@@ -14,13 +20,18 @@ import { useEnrollPlaylistForm } from '@/atoms/enrollPlaylistForm';
 import useEnrollPlaylist from '@/hooks/useEnrollPlaylist';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
+import { getPlaylist } from '@/hooks/usePlaylist';
+import useEditPlaylist from '@/hooks/useEditPlaylist';
 
 function Page() {
   const router = useRouter();
+  const { playlistId } = router.query;
+
   const [tag, setTag] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useEnrollPlaylistForm();
-  const { mutate } = useEnrollPlaylist();
+  const { mutate: enroll } = useEnrollPlaylist();
+  const { mutate: edit } = useEditPlaylist();
 
   const selectImage = () => fileInputRef.current?.click();
 
@@ -52,9 +63,24 @@ function Page() {
     [setForm]
   );
 
+  const submit = useCallback(() => {
+    return playlistId
+      ? edit({ ...form, playlistId: playlistId as string })
+      : enroll(form);
+  }, [edit, enroll, playlistId, form]);
+
+  useEffect(() => {
+    if (playlistId) {
+      (async () => {
+        const data = await getPlaylist(playlistId as string);
+        setForm(data);
+      })();
+    }
+  }, [setForm, playlistId]);
+
   return (
     <div className="homepage-container">
-      <Header title="플리 등록" />
+      <Header title={`플리 ${playlistId ? '수정' : '등록'}`} />
       <div
         css={css`
           margin-bottom: 16px;
@@ -205,7 +231,7 @@ function Page() {
           </div>
         )}
       </TagContainer>
-      <Button onClick={() => mutate(form)}>{`등록하기`}</Button>
+      <Button onClick={submit}>{`등록하기`}</Button>
       <div
         css={css`
           margin-bottom: 32px;
