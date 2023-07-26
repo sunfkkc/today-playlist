@@ -1,7 +1,7 @@
 import usePlaylist from '@/hooks/usePlaylist';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Divider, Icons, Text } from '@/components';
+import { Divider, Header, Icons, Text } from '@/components';
 import throttle from '@/utils/throttle';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
@@ -32,6 +32,8 @@ function Page() {
   const hashtagDivRef = useRef<HTMLDivElement>(null);
   const figureDivRef = useRef<HTMLDivElement>(null);
 
+  const [header, setHeader] = useState(true);
+
   useEffect(() => {
     if (data) {
       setSongs(data.songs.map((song) => ({ ...song, isPlaying: false })));
@@ -42,6 +44,7 @@ function Page() {
     let lastScrollTop = 0;
 
     const handleScroll = throttle(() => {
+      setHeader(false);
       if (
         songsDivRef.current &&
         titleDivRef.current &&
@@ -55,6 +58,7 @@ function Page() {
           hashtagDivRef.current.style.display = 'block';
           figureDivRef.current.style.display = 'flex';
           lastScrollTop = 0;
+          setHeader(true);
           return;
         }
 
@@ -78,6 +82,12 @@ function Page() {
 
   return (
     <div className="playlist-detail-page-container">
+      {header && (
+        <Header
+          title="플레이리스트"
+          style={{ position: 'absolute', paddingTop: 16 }}
+        />
+      )}
       <div
         ref={titleDivRef}
         className="info-section"
