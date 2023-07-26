@@ -12,7 +12,7 @@ const enrollPlaylist = async (form: EnrollPlaylistForm) => {
   formData.append('file', form.image!);
   formData.append('title', form.title!);
   formData.append('hashtag', JSON.stringify(form.hashtag));
-  formData.append('videoId', JSON.stringify(form.videoId?.map((v) => v.id)));
+  formData.append('videoId', JSON.stringify(form.songs?.map((v) => v.id)));
 
   await http.post('/playlists/register', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -26,7 +26,7 @@ const useEnrollPlaylist = () => {
   return useMutation(enrollPlaylist, {
     onSuccess: () => {
       router.push('/');
-      setForm({ hashtag: [], videoId: [] });
+      setForm({ hashtag: [], songs: [] });
     },
   });
 };

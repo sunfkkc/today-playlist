@@ -2,7 +2,7 @@ import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const enrollPlaylistForm = atom<EnrollPlaylistForm>({
   key: 'enrollPlaylistForm',
-  default: { videoId: [], hashtag: [] },
+  default: { songs: [], hashtag: [] },
 });
 
 export const useEnrollPlaylistForm = (): TUseEnrollPlaylistFormReturn => {
@@ -18,7 +18,8 @@ export type TUseEnrollPlaylistFormReturn = [
 
 export interface EnrollPlaylistForm {
   title?: string;
-  videoId?: { id?: string; title?: string }[];
+  songs?: { id?: string; title?: string }[];
   hashtag?: string[];
   image?: File | null;
+  thumbnailUrl?: string;
 }

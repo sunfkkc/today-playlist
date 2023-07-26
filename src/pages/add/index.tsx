@@ -38,7 +38,7 @@ function Page() {
     (id?: string, title?: string) => {
       setForm((prev) => ({
         ...prev,
-        videoId: prev.videoId?.concat({ id, title }),
+        songs: prev.songs?.concat({ id, title }),
       }));
     },
     [setForm]
@@ -48,7 +48,7 @@ function Page() {
     (i: number) => {
       setForm((prev) => ({
         ...prev,
-        videoId: prev.videoId?.filter((_, _i) => _i !== i),
+        songs: prev.songs?.filter((_, _i) => _i !== i),
       }));
     },
     [setForm]
@@ -118,9 +118,9 @@ function Page() {
           </Container>
         )}
 
-        {form?.videoId?.length !== 0 && (
+        {form?.songs?.length !== 0 && (
           <Container>
-            {form?.videoId?.map((v, i) => (
+            {form?.songs?.map((v, i) => (
               <React.Fragment key={i}>
                 <Item>
                   <Text
