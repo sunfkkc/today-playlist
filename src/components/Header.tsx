@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Icons, Text } from '@/components';
 import { colors } from '@/constants/colors';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 
 function Header(props: Props) {
-  const { title } = props;
+  const { title, style } = props;
   const router = useRouter();
   return (
     <div
@@ -14,6 +14,7 @@ function Header(props: Props) {
         display: flex;
         align-items: center;
       `}
+      style={style}
     >
       <div>
         <Icons.LeftArrow
@@ -43,4 +44,5 @@ export default Header;
 
 interface Props {
   title: string;
+  style?: CSSProperties;
 }
