@@ -10,7 +10,7 @@ const getPlaylist = async (params: Omit<Params, 'ref' | 'itemHeight'>) => {
     playlists: Playlist[];
     currentPage: number;
     totalPage: number;
-  }>('/playlist', { params });
+  }>('/playlists', { params });
   return data;
 };
 
