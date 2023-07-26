@@ -18,7 +18,6 @@ import styled from '@emotion/styled';
 function Page() {
   const router = useRouter();
   const [tag, setTag] = useState('');
-  const [previewSrc, setPreviewSrc] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useEnrollPlaylistForm();
   const { mutate } = useEnrollPlaylist();
@@ -28,11 +27,6 @@ function Page() {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setForm((prev) => ({ ...prev, image: e.target.files![0] }));
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewSrc(reader.result as string);
-      };
-      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
@@ -61,6 +55,11 @@ function Page() {
   return (
     <div className="homepage-container">
       <Header title="플리 등록" />
+      <div
+        css={css`
+          margin-bottom: 16px;
+        `}
+      />
       <input
         type="file"
         onChange={handleFileChange}
@@ -70,12 +69,11 @@ function Page() {
           display: none;
         `}
       />
-      {!previewSrc && (
+      {!form.image && !form.thumbnailUrl ? (
         <ImageContainer onClick={selectImage}>
           <Icons.Plus24 width={24} height={24} stroke={colors.white} />
         </ImageContainer>
-      )}
-      {previewSrc && (
+      ) : (
         <div
           css={css`
             display: flex;
@@ -83,7 +81,11 @@ function Page() {
           `}
         >
           <Image
-            src={previewSrc}
+            src={
+              form.image
+                ? URL.createObjectURL(form.image)
+                : form.thumbnailUrl ?? ''
+            }
             alt="preview"
             onClick={selectImage}
             width={156}
@@ -96,6 +98,7 @@ function Page() {
         placeholder="써클 제목을 입력해주세요 (최대 34자)"
         placeholderColor={colors.grey500}
         fontColor={colors.grey900}
+        value={form.title}
         onChange={(evt) => setTitle(evt.target.value)}
         containerStyle={{ marginTop: 16, marginBottom: 16 }}
         style={{ fontSize: '14px', fontWeight: 400 }}
@@ -121,13 +124,13 @@ function Page() {
             style={{ cursor: 'pointer' }}
           />
         </div>
-        {form.videoId?.length !== 0 && (
+        {form.songs?.length !== 0 && (
           <div
             css={css`
               margin-top: 10px;
             `}
           >
-            {form.videoId?.map((v, i) => (
+            {form.songs?.map((v, i) => (
               <React.Fragment key={i}>
                 <Item>
                   <Text
@@ -278,7 +281,7 @@ const Item = styled.div`
   justify-content: space-between;
   text-align: center;
   align-items: center;
-  padding: 5px 0;
+  padding: 9px 0;
 `;
 
 const AddButton = styled.div`
