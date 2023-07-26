@@ -3,7 +3,7 @@ import http from '@/http';
 import { useQuery } from 'react-query';
 import { Playlist } from './usePlaylists';
 
-const getPlaylist = async (playlistId: string) => {
+export const getPlaylist = async (playlistId: string) => {
   const { data } = await http.get<Playlist>(`/playlist/${playlistId}`);
   return data;
 };
