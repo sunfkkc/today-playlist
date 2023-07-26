@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useCallback } from 'react';
 import Text from './Text';
 import Image from 'next/image';
 import { Icons } from '.';
@@ -15,11 +15,24 @@ function PlaylistItem(props: IPlaylistItem) {
     viewCount,
     hashtag = [],
     editable = false,
+    edit,
+    onClick,
     ...rest
   } = props;
 
+  const _onClick = useCallback(
+    (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if ((evt.target as Element).classList.contains('edit-icon')) {
+        edit?.();
+      } else {
+        onClick?.(evt);
+      }
+    },
+    [onClick, edit]
+  );
+
   return (
-    <Container {...rest}>
+    <Container {...rest} onClick={_onClick}>
       {isLiked && (
         <div
           css={css`
@@ -73,6 +86,7 @@ function PlaylistItem(props: IPlaylistItem) {
           <div
             css={css`
               display: flex;
+              justify-content: space-between;
             `}
           >
             <div
@@ -115,7 +129,29 @@ function PlaylistItem(props: IPlaylistItem) {
                   )}
               </Text>
             </div>
-            {editable && <Icons.Pen20 />}
+            {editable && (
+              <div
+                className="edit-icon"
+                css={css`
+                  border-radius: 8px;
+                  opacity: 0.6;
+                  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+                  width: 24px;
+                  height: 24px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                `}
+              >
+                <Icons.Pen20
+                  width={20}
+                  height={20}
+                  stroke={colors.grey500}
+                  onClick={edit}
+                  className="edit-icon"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -159,4 +195,5 @@ interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
   viewCount?: number;
   hashtag?: string[];
   editable?: boolean;
+  edit?: () => void;
 }
