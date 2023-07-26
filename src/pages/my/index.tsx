@@ -6,8 +6,10 @@ import styled from '@emotion/styled';
 import { colors } from '@/constants/colors';
 import Image from 'next/image';
 import useUser from '@/hooks/useUser';
+import { useRouter } from 'next/router';
 
 function MyPage() {
+  const router = useRouter();
   const { data: user, logout } = useUser();
 
   return (
@@ -46,7 +48,7 @@ function MyPage() {
               margin-top: 40px;
             `}
           >
-            <Container>
+            <Container onClick={() => router.push('/like')}>
               <Icons.Heart24Filled
                 width={24}
                 height={24}
@@ -60,6 +62,7 @@ function MyPage() {
               css={css`
                 margin: 0 17px;
               `}
+              onClick={() => router.push('/registered')}
             >
               <Icons.PlusList24
                 width={24}
@@ -70,7 +73,7 @@ function MyPage() {
 
               <Text typography="cp" fontWeight="regular">{`등록한 플리`}</Text>
             </Container>
-            <Container>
+            <Container onClick={() => router.push('/recent')}>
               <Icons.Eye24
                 width={24}
                 height={24}
