@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { Playlist } from './usePlaylists';
 
 export const getPlaylist = async (playlistId: string) => {
-  const { data } = await http.get<Playlist>(`/playlists/${playlistId}`);
+  const { data } = await http.get<Playlist>(`/playlists/view/${playlistId}`);
   return data;
 };
 
