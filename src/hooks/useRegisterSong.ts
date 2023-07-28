@@ -2,7 +2,7 @@ import http from '@/http';
 import { useMutation } from 'react-query';
 
 const registerSong = async (params: Params) => {
-  await http.post('/playlists/register/song', { params });
+  await http.post('/playlists/register/song', params);
 };
 
 const useRegisterSong = () => {
