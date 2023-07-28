@@ -12,6 +12,7 @@ const playlists = Array.from(Array(12).keys()).map(
     title:
       '[Playlist] 봄볕이 드는 창가에 앉아 🕊 | 나른한 주말, 커피 한 잔과 함께하는 휴식',
     viewCount: id * 1000,
+    songs: [],
   })
 );
 
