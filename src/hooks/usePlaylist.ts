@@ -9,8 +9,12 @@ export const getPlaylist = async (playlistId: string) => {
 };
 
 const usePlaylist = (playlistId?: string) => {
-  return useQuery([queryKeys.playlist], () => getPlaylist(playlistId!), {
-    enabled: Boolean(playlistId),
-  });
+  return useQuery(
+    [queryKeys.playlist, playlistId],
+    () => getPlaylist(playlistId!),
+    {
+      enabled: Boolean(playlistId),
+    }
+  );
 };
 export default usePlaylist;
