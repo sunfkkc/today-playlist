@@ -8,6 +8,7 @@ import {
   TextFieldLine,
 } from '@/components';
 import { colors } from '@/constants/colors';
+import useRegisterSong from '@/hooks/useRegisterSong';
 import useSearchSong, { SearchSongResponse } from '@/hooks/useSearchSong';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -20,6 +21,7 @@ function Page() {
   const [form, setForm] = useEnrollPlaylistForm();
   const [searchWord, setSearchWord] = useState('');
   const { search: searchSongs } = useSearchSong();
+  const { mutate } = useRegisterSong();
   const [list, setList] = useState<
     SearchSongResponse['searchResults'] | undefined
   >(undefined);
@@ -40,8 +42,10 @@ function Page() {
         ...prev,
         songs: prev.songs?.concat({ id, title }),
       }));
+
+      mutate({ videoId: id, title });
     },
-    [setForm]
+    [setForm, mutate]
   );
 
   const remove = useCallback(
