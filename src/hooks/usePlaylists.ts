@@ -6,11 +6,13 @@ import useScrollEndDetection from './useScrollEndDetection';
 import useLayoutHeight from './useLayoutHeight';
 
 const getPlaylist = async (params: Omit<Params, 'ref' | 'itemHeight'>) => {
+  const { url } = params;
+
   const { data } = await http.get<{
     playlists: Playlist[];
     currentPage: number;
     totalPage: number;
-  }>('/playlists', { params });
+  }>(url ?? '/playlists', { params });
   return data;
 };
 
@@ -50,7 +52,7 @@ interface Params {
   page?: number;
   ref?: RefObject<HTMLDivElement>;
   itemHeight?: number;
-  recentViewed?: boolean;
+  url?: string;
 }
 
 export interface Playlist {
