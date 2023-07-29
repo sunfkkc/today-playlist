@@ -9,7 +9,11 @@ function Page() {
   const router = useRouter();
 
   const ref = useRef<HTMLDivElement>(null);
-  const { playlists } = usePlaylists({ ref, itemHeight: 116 });
+  const { playlists } = usePlaylists({
+    ref,
+    itemHeight: 116,
+    url: '/playlists/registered',
+  });
 
   const edit = useCallback(
     (playlistId: string) => {
