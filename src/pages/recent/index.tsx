@@ -11,7 +11,7 @@ function Page() {
   const { playlists } = usePlaylists({
     ref,
     itemHeight: 164,
-    recentViewed: true,
+    url: '/playlists/recentViewed',
   });
   return (
     <div className="homepage-container" ref={ref}>
