@@ -2,11 +2,7 @@ import http from '@/http';
 import { useMutation } from 'react-query';
 
 const googleLogin = async () => {
-  const { data } = await http.get(`/auth/google`, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-  });
+  const { data } = await http.get(`/auth/google`);
   return data;
 };
 
