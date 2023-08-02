@@ -10,15 +10,18 @@ import useGoogle from '@/hooks/useGoogleLogin';
 function Login() {
   const { mutate } = useGoogle();
 
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      mutate(tokenResponse);
-    },
-    flow: 'auth-code',
-  });
+  // const onClick = () => {
+  //   const client_id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  //   const redirect_uri = 'https://api.todayplaylist.site/auth/google/redirect';
+
+  //   window.open(
+  //     `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=openid+profile+email`,
+  //     '_blank'
+  //   );
+  // };
 
   return (
-    <Contaier onClick={() => login()}>
+    <Contaier onClick={() => mutate()}>
       <Google />
       <Text
         typography="sh2"
