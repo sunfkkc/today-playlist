@@ -10,13 +10,13 @@ import { useRouter } from 'next/router';
 
 function MyPage() {
   const router = useRouter();
-  const { data: user, logout } = useUser();
+  //const { data: user, logout } = useUser();
 
   const openTerms = useCallback(() => {}, []);
 
   return (
     <>
-      {user ? (
+      {/* {user ? (
         <div
           css={css`
             display: flex;
@@ -170,7 +170,8 @@ function MyPage() {
         </div>
       ) : (
         <GoogleLogin />
-      )}
+      )} */}
+      <GoogleLogin />
       <BottomTab />
     </>
   );
