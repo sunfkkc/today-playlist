@@ -10,15 +10,15 @@ import useGoogle from '@/hooks/useGoogleLogin';
 function Login() {
   const { mutate } = useGoogle();
 
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      mutate(tokenResponse);
-    },
-    flow: 'auth-code',
-  });
+  // const login = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => {
+  //     mutate(tokenResponse);
+  //   },
+  //   flow: 'auth-code',
+  // });
 
   return (
-    <Contaier onClick={() => login()}>
+    <Contaier onClick={() => mutate()}>
       <Google />
       <Text
         typography="sh2"

@@ -1,8 +1,8 @@
 import http from '@/http';
 import { useMutation } from 'react-query';
 
-const googleLogin = async (token: any) => {
-  const { data } = await http.get(`/auth/google/redirect?code=${token.code}`);
+const googleLogin = async () => {
+  const { data } = await http.get(`/auth/google`);
   return data;
 };
 
