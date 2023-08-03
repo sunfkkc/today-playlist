@@ -169,7 +169,6 @@ function MyPage() {
       ) : (
         <GoogleLogin />
       )}
-      <GoogleLogin />
       <BottomTab />
     </>
   );

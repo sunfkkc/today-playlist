@@ -3,7 +3,7 @@ import queryKeys from '@/constants/queryKeys';
 import { useQuery, useQueryClient } from 'react-query';
 
 const getUser = async () => {
-  const { data } = await http.get('/auth/s');
+  const { data } = await http.get('/auth');
   return data;
 };
 
