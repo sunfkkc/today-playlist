@@ -24,7 +24,7 @@ function MyPage() {
         >
           <Image
             alt="profile-image"
-            src={user.picture}
+            src={user.profileImgUrl}
             width={100}
             height={100}
             css={css`

@@ -9,7 +9,7 @@ const getUser = async () => {
 
 const useUser = () => {
   const queryClient = useQueryClient();
-  const methods = useQuery<{ name: string; picture: string }>(
+  const methods = useQuery<{ name: string; profileImgUrl: string }>(
     queryKeys.user,
     getUser
   );
