@@ -6,6 +6,7 @@ import throttle from '@/utils/throttle';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import { Song } from '@/hooks/usePlaylists';
+import http from '@/http';
 
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
@@ -16,6 +17,8 @@ function Page() {
   } = useRouter();
 
   const { data } = usePlaylist(playlistId as string);
+  const [isLiked, setIsLiked] = useState(data?.isLiked);
+
   const [songs, setSongs] = useState<SongWithPlayingStatus[]>();
   const play = useCallback((song: SongWithPlayingStatus) => {
     setSongs((prev) =>
@@ -33,6 +36,11 @@ function Page() {
   const figureDivRef = useRef<HTMLDivElement>(null);
 
   const [header, setHeader] = useState(true);
+
+  const like = useCallback(async () => {
+    setIsLiked((prev) => !prev);
+    await http.patch(`/playlists/like`, { playlistId, like: !isLiked });
+  }, [playlistId, isLiked]);
 
   useEffect(() => {
     if (data) {
@@ -116,6 +124,7 @@ function Page() {
               height={20}
               stroke={colors.red400}
               fill={colors.red400}
+              onClick={like}
             />
             <Text
               typography="cp"
@@ -132,15 +141,23 @@ function Page() {
               {data?.likeCount}
             </Text>
           </div>
-          {data?.isLiked ? (
+          {isLiked ? (
             <Icons.Heart20Filled
               width={20}
               height={20}
               fill={colors.white}
               stroke={colors.white}
+              onClick={like}
+              style={{ cursor: 'pointer' }}
             />
           ) : (
-            <Icons.Heart24 width={20} height={20} stroke={colors.white} />
+            <Icons.Heart24
+              width={20}
+              height={20}
+              stroke={colors.white}
+              onClick={like}
+              style={{ cursor: 'pointer' }}
+            />
           )}
         </div>
         <Text
