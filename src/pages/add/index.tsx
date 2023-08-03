@@ -31,7 +31,7 @@ function Page() {
       evt.preventDefault();
 
       const { searchResults } = await searchSongs(searchWord);
-      setList(searchResults);
+      setList(searchResults?.filter((v) => v.videoId));
     },
     [searchWord, searchSongs]
   );
