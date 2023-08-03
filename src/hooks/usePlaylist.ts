@@ -3,18 +3,25 @@ import http from '@/http';
 import { useQuery } from 'react-query';
 import { Playlist } from './usePlaylists';
 
-export const getPlaylist = async (playlistId: string) => {
-  const { data } = await http.get<Playlist>(`/playlists/view/${playlistId}`);
+export const getPlaylist = async (playlistId: string, config?: Config) => {
+  const usage = config?.usage ?? 'view';
+  const { data } = await http.get<Playlist>(
+    `/playlists/${usage}/${playlistId}`
+  );
   return data;
 };
 
-const usePlaylist = (playlistId?: string) => {
+const usePlaylist = (playlistId?: string, config?: Config) => {
   return useQuery(
     [queryKeys.playlist, playlistId],
-    () => getPlaylist(playlistId!),
+    () => getPlaylist(playlistId!, config),
     {
       enabled: Boolean(playlistId),
     }
   );
 };
 export default usePlaylist;
+
+interface Config {
+  usage?: 'view' | 'modify';
+}
