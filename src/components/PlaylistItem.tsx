@@ -147,7 +147,10 @@ function PlaylistItem(props: IPlaylistItem) {
                   width={20}
                   height={20}
                   stroke={colors.grey500}
-                  onClick={edit}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    edit?.();
+                  }}
                   className="edit-icon"
                 />
               </div>
