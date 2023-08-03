@@ -5,9 +5,10 @@ import { useInfiniteQuery } from 'react-query';
 import useScrollEndDetection from './useScrollEndDetection';
 import useLayoutHeight from './useLayoutHeight';
 
-const getPlaylist = async (params: Omit<Params, 'ref' | 'itemHeight'>) => {
-  const { url } = params;
-
+const getPlaylist = async ({
+  url,
+  ...params
+}: Omit<Params, 'ref' | 'itemHeight'>) => {
   const { data } = await http.get<{
     playlists: Playlist[];
     currentPage: number;
