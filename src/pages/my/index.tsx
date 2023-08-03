@@ -1,7 +1,7 @@
 import { BottomTab, Divider, Icons, Text } from '@/components';
 import GoogleLogin from '@/components/GoogleLogin';
 import { css } from '@emotion/react';
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@/constants/colors';
 import Image from 'next/image';
@@ -10,13 +10,11 @@ import { useRouter } from 'next/router';
 
 function MyPage() {
   const router = useRouter();
-  //const { data: user, logout } = useUser();
-
-  const openTerms = useCallback(() => {}, []);
+  const { data: user, logout } = useUser();
 
   return (
     <>
-      {/* {user ? (
+      {user ? (
         <div
           css={css`
             display: flex;
@@ -170,7 +168,7 @@ function MyPage() {
         </div>
       ) : (
         <GoogleLogin />
-      )} */}
+      )}
       <GoogleLogin />
       <BottomTab />
     </>
