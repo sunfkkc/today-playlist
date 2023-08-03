@@ -1,4 +1,9 @@
-import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  atom,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 
 const enrollPlaylistForm = atom<EnrollPlaylistForm>({
   key: 'enrollPlaylistForm',
@@ -9,6 +14,10 @@ export const useEnrollPlaylistForm = (): TUseEnrollPlaylistFormReturn => {
   const form = useRecoilValue(enrollPlaylistForm);
   const setForm = useSetRecoilState(enrollPlaylistForm);
   return [form, setForm];
+};
+
+export const useResetEnrollPlaylistForm = () => {
+  return useResetRecoilState(enrollPlaylistForm);
 };
 
 export type TUseEnrollPlaylistFormReturn = [
