@@ -38,7 +38,7 @@ function MyPage() {
               margin: 0 auto;
             `}
           >
-            {user.name}
+            {user.nickname}
           </Text>
           <div
             css={css`
