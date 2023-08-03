@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 function BottomTab() {
   const router = useRouter();
-  const [selected, setSelected] = useState<string>(router.asPath);
+  const [selected, setSelected] = useState<string>(router.pathname);
 
   const menus = [
     {
