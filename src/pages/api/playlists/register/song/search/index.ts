@@ -4,7 +4,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({
     searchResults: [
       {
-        videoId: 'jeqdYqsrsA0' + 1,
+        videoId: undefined,
         title: 'title1',
         thumbnailUrl: 'https://i.ytimg.com/vi/jeqdYqsrsA0/default.jpg',
       },
