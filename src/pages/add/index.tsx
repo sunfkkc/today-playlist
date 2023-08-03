@@ -63,6 +63,7 @@ function Page() {
       <Header title="플레이리스트 추가" />
       <form onSubmit={search}>
         <TextFieldLine
+          containerStyle={{ marginTop: 16 }}
           value={searchWord}
           onChange={(evt) => setSearchWord(evt.target.value)}
           placeholder="검색어를 입력해주세요."
