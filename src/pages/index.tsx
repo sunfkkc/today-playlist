@@ -34,8 +34,9 @@ export default function Home() {
 
     if (__searchWord) {
       _setSearchWord(__searchWord);
+      setSearchWord(__searchWord);
     }
-  }, [router]);
+  }, [router.query.searchWord]);
 
   return (
     <div className="homepage-container" ref={ref}>
