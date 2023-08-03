@@ -17,7 +17,7 @@ function Page() {
 
   const edit = useCallback(
     (playlistId: string) => {
-      router.push(`/enroll?playlistId=${playlistId}`);
+      router.push(`/enroll?playlistId=${playlistId}&usage=modify`);
     },
     [router]
   );

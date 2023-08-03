@@ -20,16 +20,20 @@ import { useEnrollPlaylistForm } from '@/atoms/enrollPlaylistForm';
 import useEnrollPlaylist from '@/hooks/useEnrollPlaylist';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { getPlaylist } from '@/hooks/usePlaylist';
+import usePlaylist from '@/hooks/usePlaylist';
 import useEditPlaylist from '@/hooks/useEditPlaylist';
 
 function Page() {
   const router = useRouter();
-  const { playlistId } = router.query;
+  const { playlistId, usage } = router.query;
 
   const [tag, setTag] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useEnrollPlaylistForm();
+
+  const { data } = usePlaylist(playlistId as string, {
+    usage: usage as any,
+  });
   const { mutate: enroll } = useEnrollPlaylist();
   const { mutate: edit } = useEditPlaylist();
 
@@ -70,13 +74,10 @@ function Page() {
   }, [edit, enroll, playlistId, form]);
 
   useEffect(() => {
-    if (playlistId) {
-      (async () => {
-        const data = await getPlaylist(playlistId as string);
-        setForm(data);
-      })();
+    if (playlistId && data) {
+      setForm(data);
     }
-  }, [setForm, playlistId]);
+  }, [playlistId, data, setForm]);
 
   return (
     <div className="homepage-container">
