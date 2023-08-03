@@ -2,10 +2,13 @@ import { Text, Icons, BottomTab, TextFieldLine } from '@/components';
 import { colors } from '@/constants/colors';
 import usePlaylists from '@/hooks/usePlaylists';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
+const tag = ['출퇴근길', '집중타임', '새벽감성'];
 
 export default function Home() {
   const router = useRouter();
@@ -21,13 +24,16 @@ export default function Home() {
     searchWord,
   });
 
-  const search = useCallback(() => {
-    setSearchWord(_searchWord);
-    router.replace({
-      pathname: router.pathname,
-      query: { searchWord: _searchWord },
-    });
-  }, [setSearchWord, _searchWord, router]);
+  const search = useCallback(
+    (k: string) => {
+      setSearchWord(k);
+      router.replace({
+        pathname: router.pathname,
+        query: { searchWord: k },
+      });
+    },
+    [setSearchWord, router]
+  );
 
   useEffect(() => {
     const __searchWord = router.query.searchWord as string;
@@ -43,7 +49,7 @@ export default function Home() {
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
-          search();
+          search(_searchWord);
         }}
       >
         <TextFieldLine
@@ -59,12 +65,43 @@ export default function Home() {
                 height={24}
                 stroke={colors.white}
                 style={{ marginRight: 4, cursor: 'pointer' }}
-                onClick={search}
+                onClick={() => search(_searchWord)}
               />
             ),
           }}
         />
       </form>
+      <TagContainer>
+        {tag.map((v) => (
+          <Tag
+            key={v}
+            onClick={() => search(v)}
+            css={css`
+              background: ${searchWord === v
+                ? `linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+    radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    )`
+                : `radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15))`};
+            `}
+          >
+            <Text
+              typography="cp"
+              fontWeight="regular"
+              color={searchWord === v ? colors.white : 'rgba(88, 101, 137, 1)'}
+            >
+              {`#${v}`}
+            </Text>
+          </Tag>
+        ))}
+      </TagContainer>
       <div
         css={css`
           display: flex;
@@ -135,3 +172,32 @@ export default function Home() {
     </div>
   );
 }
+
+const TagContainer = styled.div`
+  display: flex;
+  margin-top: 16px;
+`;
+const Tag = styled.div`
+  margin-right: 8px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+    radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+
+  border: 1px solid;
+  border-image-source: radial-gradient(
+    100% 100% at 56.44% 0%,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  padding: 8px 12px 8px 12px;
+  border-radius: 16px;
+  gap: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
