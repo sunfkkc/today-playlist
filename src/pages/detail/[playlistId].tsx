@@ -134,11 +134,11 @@ function Page() {
                 margin-right: 12px;
               `}
             >
-              {data?.viewCount}
+              {data?.likeCount}
             </Text>
             <Icons.Eye20Filled width={20} height={20} fill={colors.white} />
             <Text typography="cp" fontWeight="regular" color={colors.white}>
-              {data?.likeCount}
+              {data?.viewCount}
             </Text>
           </div>
           {isLiked ? (
