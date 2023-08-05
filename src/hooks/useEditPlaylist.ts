@@ -14,7 +14,7 @@ const edit = async ({ playlistId, ...form }: EditPlaylistParams) => {
   formData.append('hashtag', JSON.stringify(form.hashtag));
   formData.append('videoId', JSON.stringify(form.songs?.map((v) => v.id)));
 
-  await http.patch(`/playlists/${playlistId}`, formData, {
+  await http.patch(`/playlists/modify/${playlistId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
