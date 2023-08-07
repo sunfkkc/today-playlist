@@ -1,6 +1,10 @@
 import throttle from '@/utils/throttle';
 import { useEffect, useState } from 'react';
 
+/**
+ * @param {React.RefObject<HTMLDivElement>} ref 이 매개변수는 deprecated 되었습니다.
+ */
+
 const useScrollEndDetection = (ref?: React.RefObject<HTMLDivElement>) => {
   const [isBottom, setIsBottom] = useState(false);
 
