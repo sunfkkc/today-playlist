@@ -69,8 +69,6 @@
 
   font-size: 14px;
 
-  font-weight: 700;
-
   line-height: 18px;
   letter-spacing: -0.4px;
 
@@ -85,6 +83,11 @@
     font-size: 14px;
     line-height: 18px;
     letter-spacing: -0.4px;
+    text-shadow: none;
+  }
+  &::-webkit-input-placeholder {
+    font-weight: 400;
+    text-shadow: none;
   }
 
   &[type='search'] {

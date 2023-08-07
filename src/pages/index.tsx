@@ -58,6 +58,7 @@ export default function Home() {
           placeholder="검색어를 입력해주세요."
           fontColor={colors.white}
           placeholderColor={colors.white}
+          placeholderStyle={{ fontSize: '14px', fontWeight: 400 }}
           inputAdornment={{
             start: (
               <Icons.Search24
