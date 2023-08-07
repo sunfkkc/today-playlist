@@ -51,14 +51,17 @@ export default function TextFieldLine({
         className={classNames('text-field-line__input')}
         value={value}
         autoComplete={autoComplete}
-        style={{ ...style, color: fontColor }}
+        style={{
+          ...style,
+          color: fontColor,
+          marginLeft: inputAdornment?.start ? '6px' : 'none',
+        }}
         css={css`
           &::placeholder {
             color: ${placeholderColor ?? placeholderStyle?.color};
             font-size: ${placeholderStyle?.fontSize};
             font-weight: ${placeholderStyle?.fontWeight};
           }
-          margin-left: ${inputAdornment?.start ? 'none' : '6px'};
         `}
         placeholder={inputProps.placeholder}
         onChange={(e) => {
