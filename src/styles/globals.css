@@ -17,8 +17,10 @@ body {
   background-size: 350px 100%;
   background-position: center;
   background-attachment: fixed;
+}
 
-  @media (max-width: 425px) {
+@media (max-width: 425px) {
+  body {
     background-size: cover;
   }
 }
