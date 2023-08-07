@@ -6,21 +6,18 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const tag = ['출퇴근길', '집중타임', '새벽감성'];
 
 export default function Home() {
   const router = useRouter();
 
-  const ref = useRef<HTMLDivElement>(null);
-
   const [_searchWord, _setSearchWord] = useState('');
   const [searchWord, setSearchWord] = useState('');
 
   const { playlists } = usePlaylists({
     itemHeight: 228,
-    ref,
     searchWord,
   });
 
@@ -59,7 +56,7 @@ export default function Home() {
   }, [router.query.searchWord]);
 
   return (
-    <div className="homepage-container" ref={ref}>
+    <div className="homepage-container">
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
