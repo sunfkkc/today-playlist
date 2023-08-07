@@ -26,6 +26,7 @@ export default function Home() {
 
   const search = useCallback(
     (k: string) => {
+      _setSearchWord(k);
       setSearchWord(k);
       router.replace({
         pathname: router.pathname,
@@ -33,6 +34,19 @@ export default function Home() {
       });
     },
     [setSearchWord, router]
+  );
+
+  const clickTag = useCallback(
+    (v: string) => {
+      const { searchWord } = router.query;
+
+      if ((searchWord as string) === v) {
+        search('');
+        return;
+      }
+      search(v);
+    },
+    [router.query, search]
   );
 
   useEffect(() => {
@@ -89,7 +103,7 @@ export default function Home() {
                   stroke={colors.grey500}
                   fill={colors.grey500}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => _setSearchWord('')}
+                  onClick={() => search('')}
                 />
               </div>
             ),
@@ -100,7 +114,7 @@ export default function Home() {
         {tag.map((v) => (
           <Tag
             key={v}
-            onClick={() => search(v)}
+            onClick={() => clickTag(v)}
             css={css`
               background: ${searchWord === v
                 ? `linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
