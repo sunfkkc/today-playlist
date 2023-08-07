@@ -1,9 +1,4 @@
 .homepage-container {
-  height: 100vh;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   padding-top: 16px;
 
   .playlist-item-container {

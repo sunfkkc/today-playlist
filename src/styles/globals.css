@@ -10,3 +10,15 @@ textarea {
 a {
   text-decoration: none;
 }
+
+body {
+  background-image: url('/images/Rectangle\ 30.png');
+  background-repeat: no-repeat;
+  background-size: 350px 100%;
+  background-position: center;
+  background-attachment: fixed;
+
+  @media (max-width: 425px) {
+    background-size: cover;
+  }
+}
