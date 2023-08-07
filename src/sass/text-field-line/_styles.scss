@@ -1,5 +1,7 @@
 @import 'variables';
 @import '../mixins/z-index';
+@import '../typography';
+@import '../font-size';
 
 .text-field-line {
   cursor: text;
@@ -65,14 +67,21 @@
   appearance: none;
   padding: 0;
 
-  font-size: inherit;
+  font-size: 14px;
+
   font-weight: 700;
-  line-height: inherit;
+
+  line-height: 18px;
+  letter-spacing: -0.4px;
+
   caret-color: $blue400;
   height: 24px;
 
   &::placeholder {
     font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.4px;
   }
 
   &[type='search'] {
