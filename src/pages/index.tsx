@@ -61,23 +61,37 @@ export default function Home() {
           placeholderStyle={{ fontSize: '14px', fontWeight: 400 }}
           inputAdornment={{
             start: (
-              <Icons.Search24
-                width={24}
-                height={24}
-                stroke={colors.white}
-                style={{ marginRight: 4, cursor: 'pointer' }}
-                onClick={() => search(_searchWord)}
-              />
+              <div
+                css={css`
+                  width: 24px;
+                  height: 24px;
+                `}
+              >
+                <Icons.Search24
+                  width={24}
+                  height={24}
+                  stroke={colors.white}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => search(_searchWord)}
+                />
+              </div>
             ),
             end: _searchWord && (
-              <Icons.X20Filled
-                width={20}
-                height={20}
-                stroke={colors.grey500}
-                fill={colors.grey500}
-                style={{ cursor: 'pointer' }}
-                onClick={() => _setSearchWord('')}
-              />
+              <div
+                css={css`
+                  width: 20px;
+                  height: 20px;
+                `}
+              >
+                <Icons.X20Filled
+                  width={20}
+                  height={20}
+                  stroke={colors.grey500}
+                  fill={colors.grey500}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => _setSearchWord('')}
+                />
+              </div>
             ),
           }}
         />
