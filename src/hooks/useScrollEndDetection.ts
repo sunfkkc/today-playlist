@@ -6,27 +6,21 @@ const useScrollEndDetection = (ref?: React.RefObject<HTMLDivElement>) => {
 
   useEffect(() => {
     const handleScroll = throttle(() => {
-      if (ref?.current) {
-        const { scrollTop, scrollHeight, clientHeight } = ref.current;
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight;
+      const clientHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
 
-        if (clientHeight + scrollTop >= scrollHeight) {
-          setIsBottom(true);
-        } else {
-          setIsBottom(false);
-        }
+      if (scrollTop + clientHeight === scrollHeight) {
+        setIsBottom(true);
       }
     }, 500);
-    const currentRef = ref?.current;
-    if (currentRef) {
-      currentRef.addEventListener('scroll', handleScroll);
-    }
+    window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      if (currentRef) {
-        currentRef.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [ref]);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return isBottom;
 };
