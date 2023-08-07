@@ -68,6 +68,16 @@ export default function Home() {
                 onClick={() => search(_searchWord)}
               />
             ),
+            end: _searchWord && (
+              <Icons.X20Filled
+                width={20}
+                height={20}
+                stroke={colors.grey500}
+                fill={colors.grey500}
+                style={{ cursor: 'pointer' }}
+                onClick={() => _setSearchWord('')}
+              />
+            ),
           }}
         />
       </form>
