@@ -77,7 +77,15 @@ function PlaylistItem(props: IPlaylistItem) {
             flex: 1;
           `}
         >
-          <Text typography="sh1" fontWeight="bold" color={colors.grey800}>
+          <Text
+            typography="sh1"
+            fontWeight="bold"
+            color={colors.grey800}
+            style={{
+              paddingTop: 10,
+              paddingRight: 10,
+            }}
+          >
             {title}
           </Text>
           <div
@@ -132,6 +140,7 @@ function PlaylistItem(props: IPlaylistItem) {
                   display: flex;
                   justify-content: center;
                   align-items: center;
+                  margin-right: 6px;
                 `}
               >
                 <Icon
@@ -177,7 +186,7 @@ const Container = styled.div`
   );
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(8px);
-  padding: 16px;
+  padding: 8px;
 `;
 
 interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
