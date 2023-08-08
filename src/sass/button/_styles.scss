@@ -143,6 +143,10 @@ $button-transition: color $button-transition-duration ease-in-out,
     max-height: $maxHeight;
     padding: $padding;
     z-index: z-index(button-content);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.4px;
   }
 
   .button__loader {
