@@ -106,7 +106,7 @@ function Page() {
                   </Text>
                   <Icon
                     name="PlusFilled24"
-                    color="blue300"
+                    fill={colors.blue300}
                     onClick={() => add(v.videoId, v.title)}
                   />
                 </Item>
@@ -130,8 +130,8 @@ function Page() {
                   </Text>
                   <Icon
                     name="SubtractFilled24"
-                    color="red400"
                     onClick={() => remove(i)}
+                    fill={colors.red400}
                   />
                 </Item>
                 <Divider opacity={0.16} backgroundColor={colors.grey800} />
