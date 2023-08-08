@@ -17,10 +17,6 @@ $overlap-height: 24px;
     top: -$overlap-height;
     transition: height 0.3s ease-in-out;
     box-sizing: border-box;
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
 
     background: linear-gradient(
       180deg,
@@ -32,7 +28,8 @@ $overlap-height: 24px;
 
     border-radius: 30px 30px 0px 0px;
 
-    height: calc(100vh - $initial-height + $overlap-height);
+    min-height: calc(100vh - $initial-height + $overlap-height);
+
     margin: 0 -16px;
 
     .song-detail-section {
@@ -40,7 +37,6 @@ $overlap-height: 24px;
       padding: 18px 0;
       display: flex;
       justify-content: space-between;
-      text-align: center;
 
       .play-icon {
         cursor: pointer;
