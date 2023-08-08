@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import Text from './Text';
-import { Icons } from '.';
+import { Icon } from '.';
 import { colors } from '@/constants/colors';
 import { GlobalPortal } from '@/GlobalPortal';
 import { useRouter } from 'next/router';
@@ -38,7 +38,6 @@ function BottomTab() {
     <GlobalPortal.Consumer>
       <div className={classNames('bottom-tab')}>
         {menus.map((menu) => {
-          const Icon = Icons[menu.icon];
           return (
             <div key={menu.title} className={classNames('bottom-tab__item')}>
               <Link href={menu.path} key={menu.title}>
@@ -51,11 +50,8 @@ function BottomTab() {
                   })}
                 >
                   <Icon
-                    width={24}
-                    height={24}
-                    stroke={
-                      selected === menu.path ? colors.blue600 : colors.white
-                    }
+                    name={menu.icon}
+                    color={selected === menu.path ? 'blue600' : 'white'}
                   />
                 </div>
 
