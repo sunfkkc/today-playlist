@@ -168,6 +168,8 @@ function Page() {
                     typography="cp"
                     fontWeight="regular"
                     color={colors.grey900}
+                    stringToJSX
+                    style={{ width: '76%' }}
                   >
                     {v.title}
                   </Text>
@@ -175,7 +177,8 @@ function Page() {
                     typography="cp"
                     fontWeight="regular"
                     color={colors.grey700}
-                  >{`3:35`}</Text>
+                    stringToJSX
+                  >{`1:03:35`}</Text>
                 </Item>
                 <Divider opacity={0.16} backgroundColor={colors.grey800} />
               </React.Fragment>
@@ -340,7 +343,6 @@ const TagContainer = styled.div`
 const Item = styled.div`
   display: flex;
   justify-content: space-between;
-  text-align: center;
   align-items: center;
   padding: 9px 0;
 `;
