@@ -37,6 +37,9 @@ function Page() {
   const { mutate: enroll } = useEnrollPlaylist();
   const { mutate: edit } = useEditPlaylist();
 
+  const canSubmit =
+    form.title && (form.image || form.thumbnailUrl) && form.songs?.length !== 0;
+
   const selectImage = () => fileInputRef.current?.click();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,14 +73,14 @@ function Page() {
   );
 
   const submit = useCallback(() => {
-    if (!form.title || !form.image || form.songs?.length === 0) {
+    if (!canSubmit) {
       return;
     }
 
     return playlistId
       ? edit({ ...form, playlistId: playlistId as string })
       : enroll(form);
-  }, [edit, enroll, playlistId, form]);
+  }, [edit, enroll, playlistId, form, canSubmit]);
 
   useEffect(() => {
     if (playlistId && data) {
@@ -268,10 +271,7 @@ function Page() {
           </div>
         )}
       </TagContainer>
-      <Button
-        onClick={submit}
-        disabled={!form.title || !form.image || form.songs?.length === 0}
-      >{`등록하기`}</Button>
+      <Button onClick={submit} disabled={!canSubmit}>{`등록하기`}</Button>
       <div
         css={css`
           margin-bottom: 32px;
