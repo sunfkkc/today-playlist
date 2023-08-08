@@ -107,6 +107,7 @@ function Page() {
                     typography="cp"
                     fontWeight="regular"
                     color={colors.grey900}
+                    stringToJSX
                   >
                     {v.title}
                   </Text>
@@ -131,6 +132,7 @@ function Page() {
                     typography="cp"
                     fontWeight="regular"
                     color={colors.grey900}
+                    stringToJSX
                   >
                     {v.title}
                   </Text>
@@ -180,7 +182,6 @@ const Container = styled.div`
 const Item = styled.div`
   display: flex;
   justify-content: space-between;
-  text-align: center;
   align-items: center;
   padding: 5px 0;
 `;
