@@ -180,7 +180,9 @@ function Page() {
                     stringToJSX
                   >{`1:03:35`}</Text>
                 </Item>
-                <Divider opacity={0.16} backgroundColor={colors.grey800} />
+                {form.songs && form.songs?.length - 1 !== i && (
+                  <Divider opacity={0.16} backgroundColor={colors.grey800} />
+                )}
               </React.Fragment>
             ))}
           </div>
@@ -344,7 +346,7 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 0;
+  padding: 12px 0;
 `;
 
 const AddButton = styled.div`
