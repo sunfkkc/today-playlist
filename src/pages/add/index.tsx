@@ -107,7 +107,7 @@ function Page() {
           </Container>
         ) : (
           <Container>
-            {list.map((v) => (
+            {list.map((v, i) => (
               <React.Fragment key={v.videoId}>
                 <Item>
                   <Text
@@ -125,7 +125,9 @@ function Page() {
                     onClick={() => add(v.videoId, v.title)}
                   />
                 </Item>
-                <Divider opacity={0.16} backgroundColor={colors.grey800} />
+                {list.length - 1 !== i && (
+                  <Divider opacity={0.16} backgroundColor={colors.grey800} />
+                )}
               </React.Fragment>
             ))}
           </Container>
@@ -151,7 +153,9 @@ function Page() {
                     fill={colors.red400}
                   />
                 </Item>
-                <Divider opacity={0.16} backgroundColor={colors.grey800} />
+                {form.songs && form.songs?.length - 1 !== i && (
+                  <Divider opacity={0.16} backgroundColor={colors.grey800} />
+                )}
               </React.Fragment>
             ))}
           </Container>
@@ -195,5 +199,5 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
+  padding: 12px 0;
 `;
