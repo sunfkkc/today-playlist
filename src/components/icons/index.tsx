@@ -19,3 +19,16 @@ export { default as Stop24Filled } from 'public/icons/icon_stop_24_filled.svg';
 export { default as Subtract24Filled } from 'public/icons/icon_subtract_24_filled.svg';
 export { default as X20Filled } from 'public/icons/icon_x_20_filled.svg';
 export { default as Google } from 'public/icons/Google__G__Logo 1.svg';
+
+export { default as LeftArrow24 } from 'public/icons/icon_arrow_left_24_2.svg';
+export { default as RightArrow24 } from 'public/icons/icon_arrow_right_24_2.svg';
+export { default as LeftArrow2_24 } from 'public/icons/icon_arrow2_left_24_2.svg';
+export { default as RightArrow2_24 } from 'public/icons/icon_arrow2_right_24_2.svg';
+export { default as EyeFilled20 } from 'public/icons/icon_eye_20_filled.svg';
+export { default as HeartFilled20 } from 'public/icons/icon_heart_20_filled.svg';
+export { default as HeartFilled24 } from 'public/icons/icon_heart_24_filled.svg';
+export { default as PlayFilled24 } from 'public/icons/icon_play_24_filled.svg';
+export { default as PlusFilled24 } from 'public/icons/icon_plus_24_filled.svg';
+export { default as StopFilled24 } from 'public/icons/icon_stop_24_filled.svg';
+export { default as SubtractFilled24 } from 'public/icons/icon_subtract_24_filled.svg';
+export { default as XFilled20 } from 'public/icons/icon_x_20_filled.svg';
