@@ -58,6 +58,13 @@ function Page() {
     [setForm]
   );
 
+  const submit = useCallback(() => {
+    if (form.songs?.length === 0) {
+      return;
+    }
+    router.back();
+  }, [form, router]);
+
   return (
     <div className="homepage-container">
       <Header title="플레이리스트 추가" />
@@ -148,7 +155,10 @@ function Page() {
           </Container>
         )}
       </form>
-      <Button onClick={() => router.back()}>{`등록하기`}</Button>
+      <Button
+        onClick={submit}
+        disabled={form.songs?.length === 0}
+      >{`등록하기`}</Button>
       <div
         css={css`
           height: 32px;
