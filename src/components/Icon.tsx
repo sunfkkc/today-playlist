@@ -16,7 +16,7 @@ function Icon(props: IconProps) {
       css={css`
         ${color && `filter: ${filterColors[color]};`}
       `}
-      style={{ cursor: onClick ? 'pointer' : 'inherit' }}
+      style={{ ...props.style, cursor: onClick ? 'pointer' : 'inherit' }}
       {...rest}
     />
   );
