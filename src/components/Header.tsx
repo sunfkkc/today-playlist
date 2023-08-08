@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { Icons, Text } from '@/components';
+import { Icon, Text } from '@/components';
 import { colors } from '@/constants/colors';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
@@ -17,14 +17,10 @@ function Header(props: Props) {
       style={style}
     >
       <div>
-        <Icons.LeftArrow
-          width={20}
-          height={20}
-          stroke={colors.primary900}
+        <Icon
+          name="LeftArrow24"
+          color="primary900"
           onClick={() => router.back()}
-          css={css`
-            cursor: pointer;
-          `}
         />
       </div>
       <div
