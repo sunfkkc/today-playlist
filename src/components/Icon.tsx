@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { colors, filterColors } from '@/constants/colors';
 
 function Icon(props: IconProps) {
-  const { name, onClick, color, ...rest } = props;
+  const { name, onClick, color, fill, ...rest } = props;
   const size = props.size ?? name.slice(-2);
   const Icon = Icons[name];
 
@@ -17,6 +17,7 @@ function Icon(props: IconProps) {
         ${color && `filter: ${filterColors[color]};`}
       `}
       style={{ ...props.style, cursor: onClick ? 'pointer' : 'inherit' }}
+      fill={fill ?? 'none'}
       {...rest}
     />
   );
