@@ -1,4 +1,4 @@
-import { BottomTab, Divider, Icons, Text } from '@/components';
+import { BottomTab, Divider, Icon, Icons, Text } from '@/components';
 import GoogleLogin from '@/components/GoogleLogin';
 import { css } from '@emotion/react';
 import React from 'react';
@@ -49,13 +49,8 @@ function MyPage() {
             `}
           >
             <Container onClick={() => router.push('/like')}>
-              <Icons.Heart24Filled
-                width={24}
-                height={24}
-                stroke={colors.red500}
-                fill={colors.red500}
-                css={iconStyle}
-              />
+              <Icon name="HeartFilled24" color="red500" css={iconStyle} />
+
               <Text typography="cp" fontWeight="regular">{`찜한 플리`}</Text>
             </Container>
             <Container
@@ -64,22 +59,12 @@ function MyPage() {
               `}
               onClick={() => router.push('/registered')}
             >
-              <Icons.PlusList24
-                width={24}
-                height={24}
-                stroke={colors.blue600}
-                css={iconStyle}
-              />
+              <Icon name="PlusList24" color="blue600" css={iconStyle} />
 
               <Text typography="cp" fontWeight="regular">{`등록한 플리`}</Text>
             </Container>
             <Container onClick={() => router.push('/recent')}>
-              <Icons.Eye24
-                width={24}
-                height={24}
-                stroke={colors.grey600}
-                css={iconStyle}
-              />
+              <Icon name="Eye24" color="grey600" css={iconStyle} />
 
               <Text typography="cp" fontWeight="regular">{`최근 본 플리`}</Text>
             </Container>
@@ -123,11 +108,7 @@ function MyPage() {
                     margin: auto 0;
                   `}
                 >{`이용 약관`}</Text>
-                <Icons.RightArrow2
-                  width={24}
-                  height={24}
-                  stroke={colors.grey500}
-                />
+                <Icon name="RightArrow2_24" color="grey500" />
               </div>
             </a>
             <Divider opacity={0.4} />
@@ -145,11 +126,7 @@ function MyPage() {
                     margin: auto 0;
                   `}
                 >{`개인정보처리방침`}</Text>
-                <Icons.RightArrow2
-                  width={24}
-                  height={24}
-                  stroke={colors.grey500}
-                />
+                <Icon name="RightArrow2_24" color="grey500" />
               </div>
             </a>
             <Divider opacity={0.4} />
