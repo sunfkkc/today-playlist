@@ -54,7 +54,7 @@ export default function TextFieldLine({
         style={{
           ...style,
           color: fontColor,
-          marginLeft: inputAdornment?.start ? '6px' : 'none',
+          marginLeft: 6,
         }}
         css={css`
           &::placeholder {
