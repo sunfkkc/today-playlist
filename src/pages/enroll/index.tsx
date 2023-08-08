@@ -46,8 +46,10 @@ function Page() {
   };
 
   const addTag = useCallback(() => {
-    setForm((prev) => ({ ...prev, hashtag: form.hashtag?.concat(tag) }));
-    setTag('');
+    if (tag) {
+      setForm((prev) => ({ ...prev, hashtag: form.hashtag?.concat(tag) }));
+      setTag('');
+    }
   }, [setForm, setTag, tag, form]);
 
   const removeTag = useCallback(
@@ -68,6 +70,10 @@ function Page() {
   );
 
   const submit = useCallback(() => {
+    if (!form.title || !form.image || form.songs?.length === 0) {
+      return;
+    }
+
     return playlistId
       ? edit({ ...form, playlistId: playlistId as string })
       : enroll(form);
@@ -219,6 +225,7 @@ function Page() {
                 radial-gradient(100% 100% at 6.86% 0%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%),
                 radial-gradient(100% 100% at 92.68% 100%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%)
                 `,
+                  cursor: tag ? 'pointer' : 'inherit',
                 }}
               >
                 <Text
@@ -342,7 +349,6 @@ const AddButton = styled.div`
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
     linear-gradient(114.48deg, rgba(252, 190, 204, 0.4) 0%, #c0deff 83.65%);
   border-radius: 100px;
-  cursor: pointer;
   height: 32px;
   width: 74px;
   display: flex;
