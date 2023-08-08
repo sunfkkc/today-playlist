@@ -52,11 +52,12 @@ function PlaylistItem(props: IPlaylistItem) {
         {thumbnailUrl && (
           <div
             css={css`
-              width: 80%;
+              width: 100px;
               height: 100px;
               position: relative;
               overflow: hidden;
               border-radius: 20px;
+              flex-shrink: 0;
             `}
           >
             <Image
