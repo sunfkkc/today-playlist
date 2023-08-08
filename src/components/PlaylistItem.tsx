@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
 import Text from './Text';
 import Image from 'next/image';
-import { Icons } from '.';
+import { Icon } from '.';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 
@@ -41,12 +41,7 @@ function PlaylistItem(props: IPlaylistItem) {
             z-index: 2;
           `}
         >
-          <Icons.Heart24Filled
-            width={24}
-            height={24}
-            fill={colors.white}
-            stroke={colors.white}
-          />
+          <Icon name="HeartFilled24" color="white" />
         </div>
       )}
       <div
@@ -94,12 +89,7 @@ function PlaylistItem(props: IPlaylistItem) {
                 display: flex;
               `}
             >
-              <Icons.Heart20Filled
-                width={20}
-                height={20}
-                stroke={colors.red400}
-                fill={colors.red400}
-              />
+              <Icon name="HeartFilled20" color="red400" />
               <Text
                 typography="cp"
                 fontWeight="regular"
@@ -111,10 +101,9 @@ function PlaylistItem(props: IPlaylistItem) {
                     likeCount
                   )}
               </Text>
-              <Icons.Eye20Filled
-                width={20}
-                height={20}
-                fill={colors.grey400}
+              <Icon
+                name="EyeFilled20"
+                color="grey400"
                 style={{ marginLeft: 8 }}
               />
               <Text
@@ -143,10 +132,9 @@ function PlaylistItem(props: IPlaylistItem) {
                   align-items: center;
                 `}
               >
-                <Icons.Pen20
-                  width={20}
-                  height={20}
-                  stroke={colors.grey500}
+                <Icon
+                  name="Pen20"
+                  color="grey500"
                   onClick={(e) => {
                     e.stopPropagation();
                     edit?.();

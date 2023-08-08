@@ -1,4 +1,4 @@
-import { BottomTab, Header, Icons, TextFieldLine } from '@/components';
+import { BottomTab, Header, Icon, TextFieldLine } from '@/components';
 import PlaylistItem from '@/components/PlaylistItem';
 import { colors } from '@/constants/colors';
 import usePlaylists from '@/hooks/usePlaylists';
@@ -41,12 +41,7 @@ function Page() {
           containerStyle={{ marginBottom: 16 }}
           inputAdornment={{
             start: (
-              <Icons.Search24
-                width={24}
-                height={24}
-                stroke={colors.white}
-                style={{ marginRight: 4 }}
-              />
+              <Icon name="Search24" color="white" style={{ marginRight: 4 }} />
             ),
           }}
         />

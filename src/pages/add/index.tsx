@@ -3,7 +3,7 @@ import {
   Button,
   Divider,
   Header,
-  Icons,
+  Icon,
   Text,
   TextFieldLine,
 } from '@/components';
@@ -71,12 +71,7 @@ function Page() {
           placeholderColor={colors.white}
           inputAdornment={{
             start: (
-              <Icons.Search24
-                width={24}
-                height={24}
-                stroke={colors.white}
-                style={{ marginRight: 4 }}
-              />
+              <Icon name="Search24" color="white" style={{ marginRight: 4 }} />
             ),
           }}
         />
@@ -109,12 +104,10 @@ function Page() {
                   >
                     {v.title}
                   </Text>
-                  <Icons.Plus24Filled
-                    width={24}
-                    height={24}
-                    fill={colors.blue300}
+                  <Icon
+                    name="PlusFilled24"
+                    color="blue300"
                     onClick={() => add(v.videoId, v.title)}
-                    style={{ cursor: 'pointer' }}
                   />
                 </Item>
                 <Divider opacity={0.16} backgroundColor={colors.grey800} />
@@ -135,12 +128,10 @@ function Page() {
                   >
                     {v.title}
                   </Text>
-                  <Icons.Subtract24Filled
-                    width={24}
-                    height={24}
-                    fill={colors.red400}
+                  <Icon
+                    name="SubtractFilled24"
+                    color="red400"
                     onClick={() => remove(i)}
-                    style={{ cursor: 'pointer' }}
                   />
                 </Item>
                 <Divider opacity={0.16} backgroundColor={colors.grey800} />

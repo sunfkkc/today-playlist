@@ -1,4 +1,4 @@
-import { Text, Icons, BottomTab, TextFieldLine } from '@/components';
+import { Text, BottomTab, TextFieldLine, Icon } from '@/components';
 import { colors } from '@/constants/colors';
 import usePlaylists from '@/hooks/usePlaylists';
 import { css } from '@emotion/react';
@@ -78,11 +78,9 @@ export default function Home() {
                   height: 24px;
                 `}
               >
-                <Icons.Search24
-                  width={24}
-                  height={24}
-                  stroke={colors.white}
-                  style={{ cursor: 'pointer' }}
+                <Icon
+                  name="Search24"
+                  color="white"
                   onClick={() => search(_searchWord)}
                 />
               </div>
@@ -94,12 +92,9 @@ export default function Home() {
                   height: 20px;
                 `}
               >
-                <Icons.X20Filled
-                  width={20}
-                  height={20}
-                  stroke={colors.grey500}
-                  fill={colors.grey500}
-                  style={{ cursor: 'pointer' }}
+                <Icon
+                  name="XFilled20"
+                  color="grey500"
                   onClick={() => search('')}
                 />
               </div>
@@ -168,12 +163,7 @@ export default function Home() {
                 </Text>
               </div>
               <div className="playlist-stats-container">
-                <Icons.Heart20Filled
-                  width={20}
-                  height={20}
-                  stroke={colors.red400}
-                  fill={colors.red400}
-                />
+                <Icon name="HeartFilled20" color="red400" />
                 <Text
                   typography="cp"
                   fontWeight="regular"
@@ -184,11 +174,7 @@ export default function Home() {
                     playlist.likeCount
                   )}
                 </Text>
-                <Icons.Eye20Filled
-                  width={20}
-                  height={20}
-                  fill={colors.grey400}
-                />
+                <Icon name="EyeFilled20" color="grey400" />
                 <Text
                   typography="cp"
                   fontWeight="regular"

@@ -11,7 +11,7 @@ import {
   Button,
   Divider,
   Header,
-  Icons,
+  Icon,
   Text,
   TextFieldLine,
 } from '@/components';
@@ -98,7 +98,7 @@ function Page() {
       />
       {!form.image && !form.thumbnailUrl ? (
         <ImageContainer onClick={selectImage}>
-          <Icons.Plus24 width={24} height={24} stroke={colors.white} />
+          <Icon name="Plus24" color="white" />
         </ImageContainer>
       ) : (
         <div
@@ -143,12 +143,10 @@ function Page() {
             color={colors.grey800}
             fontWeight="bold"
           >{`플레이리스트 추가`}</Text>
-          <Icons.Plus24
-            width={24}
-            height={24}
-            stroke={colors.grey500}
+          <Icon
+            name="Plus24"
+            color="grey500"
             onClick={() => router.push('/add')}
-            style={{ cursor: 'pointer' }}
           />
         </div>
         {form.songs?.length !== 0 && (
@@ -220,12 +218,11 @@ function Page() {
                   fontWeight="regular"
                   color="#586589"
                 >{`#${v}`}</Text>
-                <Icons.X20Filled
-                  width={20}
-                  height={20}
-                  fill={colors.grey400}
+
+                <Icon
+                  name="XFilled20"
+                  color="grey400"
                   onClick={() => removeTag(i)}
-                  style={{ cursor: 'pointer' }}
                 />
               </TagItem>
             ))}
