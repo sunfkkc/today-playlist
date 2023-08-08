@@ -174,7 +174,11 @@ export default function Home() {
                     playlist.likeCount
                   )}
                 </Text>
-                <Icon name="EyeFilled20" color="grey400" />
+                <Icon
+                  name="EyeFilled20"
+                  color="grey400"
+                  style={{ marginLeft: 8 }}
+                />
                 <Text
                   typography="cp"
                   fontWeight="regular"
