@@ -8,3 +8,4 @@ export { default as Header } from './Header';
 export { default as Layout } from './Layout';
 export { default as Divider } from './Divider';
 export { default as TextFieldLine } from './TextFieldLine';
+export { default as Icon } from './Icon';

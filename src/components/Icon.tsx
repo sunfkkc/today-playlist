@@ -9,29 +9,16 @@ function Icon(props: IconProps) {
   const Icon = Icons[name];
 
   return (
-    <div
+    <Icon
+      width={size}
+      height={size}
       onClick={onClick}
       css={css`
-        width: ${size}px;
-        height: ${size}px;
+        ${color && `filter: ${filterColors[color]};`}
       `}
-      style={{
-        cursor: onClick ? 'pointer' : 'default',
-      }}
-    >
-      <Icon
-        width={size}
-        height={size}
-        onClick={(evt) => {
-          evt.stopPropagation();
-          onClick?.();
-        }}
-        css={css`
-          ${color && `filter: ${filterColors[color]};`}
-        `}
-        {...rest}
-      />
-    </div>
+      style={{ cursor: onClick ? 'pointer' : 'inherit' }}
+      {...rest}
+    />
   );
 }
 
@@ -40,6 +27,5 @@ export default Icon;
 interface IconProps extends SVGAttributes<SVGElement> {
   name: keyof typeof Icons;
   color?: keyof typeof colors;
-  onClick?: () => void;
   size?: number;
 }
