@@ -115,6 +115,7 @@ function Page() {
                     fontWeight="regular"
                     color={colors.grey900}
                     stringToJSX
+                    style={{ width: '70%' }}
                   >
                     {v.title}
                   </Text>
@@ -140,6 +141,7 @@ function Page() {
                     fontWeight="regular"
                     color={colors.grey900}
                     stringToJSX
+                    style={{ width: '70%' }}
                   >
                     {v.title}
                   </Text>
