@@ -29,7 +29,11 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['picsum.photos', 'hypeboybucket.s3.ap-northeast-2.amazonaws.com'],
+    domains: [
+      'picsum.photos',
+      'hypeboybucket.s3.ap-northeast-2.amazonaws.com',
+      'lh3.googleusercontent.com',
+    ],
   },
 };
 
