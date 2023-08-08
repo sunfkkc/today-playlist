@@ -70,6 +70,12 @@ export default function Home() {
           fontColor={colors.white}
           placeholderColor={colors.white}
           placeholderStyle={{ fontSize: '14px', fontWeight: 400 }}
+          style={{
+            textShadow: `
+          0px 0px 6px rgba(0, 0, 0, 0.2),
+    0px 1px 2px rgba(74, 134, 255, 0.12)
+          `,
+          }}
           inputAdornment={{
             start: (
               <div
