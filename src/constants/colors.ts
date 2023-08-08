@@ -48,7 +48,8 @@ export const filterColors = {
   white:
     'brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(2%) hue-rotate(120deg) brightness(110%) contrast(101%);',
   black: '#000000',
-  primary900: '#192347',
+  primary900:
+    ' brightness(0) saturate(100%) invert(12%) sepia(25%) saturate(1917%) hue-rotate(192deg) brightness(95%) contrast(96%);',
   primary800: '#283358',
   primary700: '#2f3c65',
   primary600: '#364570',
