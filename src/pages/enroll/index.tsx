@@ -122,7 +122,7 @@ function Page() {
         </div>
       )}
       <TextFieldLine
-        placeholder="써클 제목을 입력해주세요 (최대 34자)"
+        placeholder="플리 제목을 입력해주세요"
         placeholderColor={colors.grey500}
         fontColor={colors.grey900}
         value={form.title}
@@ -186,14 +186,41 @@ function Page() {
         <TextFieldLine
           value={tag}
           onChange={(evt) => setTag(evt.target.value)}
-          placeholderColor={colors.black}
-          placeholder="# 태그를 입력해주세요. (최대 5개)"
-          placeholderStyle={{ fontSize: '12px', fontWeight: 400 }}
-          containerStyle={{ marginTop: 10 }}
-          style={{ fontWeight: 700, fontSize: '12px' }}
+          placeholderColor={colors.white}
+          placeholder="# 태그를 입력해주세요. (선택사항)"
+          placeholderStyle={{
+            fontSize: '12px',
+            fontWeight: 400,
+            lineHeight: 16,
+            letterSpacing: -0.4,
+          }}
+          containerStyle={{
+            marginTop: 10,
+            background: 'rgba(25, 35, 71, 0.08)',
+            padding: '5px 5px 5px 10px',
+          }}
+          style={{
+            fontWeight: 700,
+            fontSize: '12px',
+            textShadow: '0px 0px 4px rgba(0, 0, 0, 0.1)',
+          }}
+          fontColor={colors.white}
           inputAdornment={{
             end: (
-              <AddButton onClick={() => addTag()}>
+              <AddButton
+                onClick={() => addTag()}
+                style={{
+                  background: tag
+                    ? `linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+                linear-gradient(114.48deg, rgba(252, 190, 204, 0.4) 0%, #c0deff 83.65%)`
+                    : `
+                linear-gradient(114.48deg, rgba(193, 199, 213, 0.6) 35.21%, rgba(255, 255, 255, 0.4) 100%),
+                radial-gradient(50% 155.02% at 50.91% 50%, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%) ,
+                radial-gradient(100% 100% at 6.86% 0%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%),
+                radial-gradient(100% 100% at 92.68% 100%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%)
+                `,
+                }}
+              >
                 <Text
                   typography="sh1"
                   fontWeight="bold"
@@ -221,7 +248,7 @@ function Page() {
 
                 <Icon
                   name="XFilled20"
-                  color="grey400"
+                  fill={colors.grey400}
                   onClick={() => removeTag(i)}
                 />
               </TagItem>
@@ -229,7 +256,10 @@ function Page() {
           </div>
         )}
       </TagContainer>
-      <Button onClick={submit}>{`등록하기`}</Button>
+      <Button
+        onClick={submit}
+        disabled={!form.title || !form.image || form.songs?.length === 0}
+      >{`등록하기`}</Button>
       <div
         css={css`
           margin-bottom: 32px;
@@ -312,8 +342,12 @@ const AddButton = styled.div`
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
     linear-gradient(114.48deg, rgba(252, 190, 204, 0.4) 0%, #c0deff 83.65%);
   border-radius: 100px;
-  padding: 4px 8px 4px 8px;
   cursor: pointer;
+  height: 32px;
+  width: 74px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TagItem = styled.div`
