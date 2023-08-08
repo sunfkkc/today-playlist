@@ -93,7 +93,8 @@ export const filterColors = {
   red800: '#b42851',
   red700: '#c92e54',
   red600: '#de3458',
-  red500: '#ef3959',
+  red500:
+    'brightness(0) saturate(100%) invert(40%) sepia(55%) saturate(5922%) hue-rotate(330deg) brightness(97%) contrast(94%);',
   red400:
     'invert(56%) sepia(52%) saturate(6329%) hue-rotate(320deg) brightness(99%) contrast(92%)',
   red300: '#f76b8a',
