@@ -100,7 +100,7 @@ export default function Home() {
               >
                 <Icon
                   name="XFilled20"
-                  color="grey500"
+                  fill={colors.grey500}
                   onClick={() => search('')}
                 />
               </div>
