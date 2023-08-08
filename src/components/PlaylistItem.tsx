@@ -74,6 +74,7 @@ function PlaylistItem(props: IPlaylistItem) {
             justify-content: space-between;
             display: flex;
             flex-direction: column;
+            flex: 1;
           `}
         >
           <Text typography="sh1" fontWeight="bold" color={colors.grey800}>
