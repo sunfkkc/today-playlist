@@ -358,7 +358,13 @@ const AddButton = styled.div`
 
 const TagItem = styled.div`
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.15);
+  background: radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
+
   flex-shrink: 0;
   display: flex;
   align-items: center;
