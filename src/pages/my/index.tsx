@@ -22,15 +22,22 @@ function MyPage() {
             height: 100vh;
           `}
         >
-          <Image
-            alt="profile-image"
-            src={user.profileImgUrl}
-            width={100}
-            height={100}
+          <div
             css={css`
+              overflow: hidden;
+              width: 100px;
+              height: 100px;
+              border-radius: 50px;
               margin: 60px auto 12px auto;
             `}
-          />
+          >
+            <Image
+              alt="profile-image"
+              src={user.profileImgUrl}
+              width={100}
+              height={100}
+            />
+          </div>
           <Text
             typography="h2"
             fontWeight="bold"
