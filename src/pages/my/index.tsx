@@ -13,7 +13,11 @@ function MyPage() {
   const { data: user, logout } = useUser();
 
   return (
-    <>
+    <div
+      css={css`
+        height: 100vh;
+      `}
+    >
       {user ? (
         <div
           css={css`
@@ -154,7 +158,7 @@ function MyPage() {
         <GoogleLogin />
       )}
       <BottomTab />
-    </>
+    </div>
   );
 }
 
