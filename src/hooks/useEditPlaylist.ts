@@ -9,7 +9,8 @@ import { useRouter } from 'next/router';
 const edit = async ({ playlistId, ...form }: EditPlaylistParams) => {
   const formData = new FormData();
 
-  formData.append('file', form.image!);
+  formData.append('file', form.image ?? '');
+  formData.append('thumbnailUrl', form.thumbnailUrl ?? '');
   formData.append('title', form.title!);
   formData.append('hashtag', JSON.stringify(form.hashtag));
   formData.append('videoId', JSON.stringify(form.songs?.map((v) => v.id)));
