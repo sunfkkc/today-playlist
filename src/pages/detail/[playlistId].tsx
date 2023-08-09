@@ -1,12 +1,13 @@
 import usePlaylist from '@/hooks/usePlaylist';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Divider, Header, Icons, Text } from '@/components';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Divider, Header, Icon, Text } from '@/components';
 import throttle from '@/utils/throttle';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import { Song } from '@/hooks/usePlaylists';
 import http from '@/http';
+import styled from '@emotion/styled';
 
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
@@ -30,13 +31,6 @@ function Page() {
     );
   }, []);
 
-  const songsDivRef = useRef<HTMLDivElement>(null);
-  const titleDivRef = useRef<HTMLDivElement>(null);
-  const hashtagDivRef = useRef<HTMLDivElement>(null);
-  const figureDivRef = useRef<HTMLDivElement>(null);
-
-  const [header, setHeader] = useState(true);
-
   const like = useCallback(async () => {
     setIsLiked((prev) => !prev);
     await http.patch(`/playlists/like`, { playlistId, like: !isLiked });
@@ -49,63 +43,30 @@ function Page() {
   }, [data]);
 
   useEffect(() => {
-    let lastScrollTop = 0;
+    const handleScroll = throttle(() => {}, 500);
 
-    const handleScroll = throttle(() => {
-      setHeader(false);
-      if (
-        songsDivRef.current &&
-        titleDivRef.current &&
-        hashtagDivRef.current &&
-        figureDivRef.current
-      ) {
-        const { scrollTop } = songsDivRef.current;
-        if (scrollTop == 0 && lastScrollTop !== 0) {
-          titleDivRef.current.style.height = `${INITIAL_HEIGHT}px`;
-          songsDivRef.current.style.height = `calc(100vh - ${INITIAL_HEIGHT}px + ${OVERLAP_HEIGHT}px)`;
-          hashtagDivRef.current.style.display = 'block';
-          figureDivRef.current.style.display = 'flex';
-          lastScrollTop = 0;
-          setHeader(true);
-          return;
-        }
+    window.addEventListener('scroll', handleScroll);
 
-        lastScrollTop = Math.max(lastScrollTop, scrollTop);
-
-        const height = Math.max(INITIAL_HEIGHT - lastScrollTop, 100);
-
-        titleDivRef.current.style.height = `${height}px`;
-        songsDivRef.current.style.height = `calc(100vh - ${height}px + ${OVERLAP_HEIGHT}px)`;
-        if (height < 120) {
-          hashtagDivRef.current.style.display = 'none';
-          figureDivRef.current.style.display = 'none';
-        }
-      }
-    }, 100);
-
-    const ref = songsDivRef.current;
-    ref?.addEventListener('scroll', handleScroll);
-    return () => ref?.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="playlist-detail-page-container">
-      {header && (
-        <Header
-          title="플레이리스트"
-          style={{ position: 'absolute', paddingTop: 16 }}
-        />
-      )}
-      <div
-        ref={titleDivRef}
-        className="info-section"
+    <div
+      css={css`
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      `}
+    >
+      {<Header title="" style={{ position: 'absolute', paddingTop: 16 }} />}
+      <InfoContainer
         css={css`
           background-image: url(${data?.thumbnailUrl});
           background-size: cover;
+          height: ${`${INITIAL_HEIGHT}px`};
         `}
       >
         <div
-          ref={figureDivRef}
           css={css`
             display: flex;
             justify-content: space-between;
@@ -119,13 +80,7 @@ function Page() {
               align-items: center;
             `}
           >
-            <Icons.Heart20Filled
-              width={20}
-              height={20}
-              stroke={colors.red400}
-              fill={colors.red400}
-              onClick={like}
-            />
+            <Icon name="HeartFilled20" color="red400" onClick={like} />
             <Text
               typography="cp"
               fontWeight="regular"
@@ -136,28 +91,15 @@ function Page() {
             >
               {data?.likeCount}
             </Text>
-            <Icons.Eye20Filled width={20} height={20} fill={colors.white} />
+            <Icon name="EyeFilled20" color="white" />
             <Text typography="cp" fontWeight="regular" color={colors.white}>
               {data?.viewCount}
             </Text>
           </div>
           {isLiked ? (
-            <Icons.Heart20Filled
-              width={20}
-              height={20}
-              fill={colors.white}
-              stroke={colors.white}
-              onClick={like}
-              style={{ cursor: 'pointer' }}
-            />
+            <Icon name="HeartFilled24" color="white" onClick={like} />
           ) : (
-            <Icons.Heart24
-              width={20}
-              height={20}
-              stroke={colors.white}
-              onClick={like}
-              style={{ cursor: 'pointer' }}
-            />
+            <Icon name="Heart24" color="white" onClick={like} />
           )}
         </div>
         <Text
@@ -170,7 +112,6 @@ function Page() {
           {data?.title}
         </Text>
         <div
-          ref={hashtagDivRef}
           css={css`
             margin-top: 10px;
           `}
@@ -189,8 +130,8 @@ function Page() {
             </Text>
           ))}
         </div>
-      </div>
-      <div className="songs-section" ref={songsDivRef}>
+      </InfoContainer>
+      <SongContainer>
         <div
           css={css`
             padding: 32px 20px 0 20px;
@@ -204,7 +145,7 @@ function Page() {
           >{`플레이리스트`}</Text>
           {songs?.map((song, i) => (
             <React.Fragment key={i}>
-              <div key={i} className="song-detail-section">
+              <SongDetailContainer key={i}>
                 <div>
                   <Text
                     typography="sh2"
@@ -230,12 +171,12 @@ function Page() {
                     {song.length}
                   </Text>
                   {!song.isPlaying && (
-                    <div className="play-icon" onClick={() => play(song)}>
-                      <Icons.Play24Filled width={24} height={24} fill="white" />
-                    </div>
+                    <PlayIcon onClick={() => play(song)}>
+                      <Icon name="PlayFilled24" color="white" />
+                    </PlayIcon>
                   )}
                 </div>
-              </div>
+              </SongDetailContainer>
               {song.isPlaying && (
                 <YouTubeVideoComponent videoId={song.videoId} />
               )}
@@ -243,7 +184,7 @@ function Page() {
             </React.Fragment>
           ))}
         </div>
-      </div>
+      </SongContainer>
     </div>
   );
 }
@@ -263,3 +204,60 @@ function YouTubeVideoComponent({ videoId }: { videoId: string }) {
 }
 
 type SongWithPlayingStatus = Song & { isPlaying: boolean };
+
+const InfoContainer = styled.div`
+  box-sizing: border-box;
+  transition: height 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  margin: 0 -16px;
+  justify-content: flex-end;
+  padding: 0 16px 40px 16px;
+  position: absolute;
+`;
+
+const SongContainer = styled.div`
+  transition: height 0.3s ease-in-out;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.5) 9.9%,
+    rgba(255, 255, 255, 0.1) 30.87%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  backdrop-filter: blur(20px);
+
+  border-radius: 30px 30px 0px 0px;
+
+  min-height: calc(100vh - ${INITIAL_HEIGHT}px + ${OVERLAP_HEIGHT}px);
+
+  margin: 0 -16px;
+  margin-top: calc(${INITIAL_HEIGHT}px - ${OVERLAP_HEIGHT}px);
+`;
+
+const SongDetailContainer = styled.div`
+  align-items: center;
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PlayIcon = styled.div`
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.466);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 14px;
+  border-radius: 40px;
+  background: linear-gradient(
+    180deg,
+    rgba(86, 165, 255, 0.3) 14.06%,
+    rgba(239, 57, 89, 0) 100%
+  );
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+`;
