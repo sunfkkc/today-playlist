@@ -21,10 +21,10 @@ function Page() {
   const [isLiked, setIsLiked] = useState(data?.isLiked);
 
   const [songs, setSongs] = useState<SongWithPlayingStatus[]>();
-  const play = useCallback((song: SongWithPlayingStatus) => {
+  const play = useCallback((i: number) => {
     setSongs((prev) =>
-      prev?.map((_song) =>
-        _song.title === song.title
+      prev?.map((_song, _i) =>
+        i === _i
           ? { ..._song, isPlaying: true }
           : { ..._song, isPlaying: false }
       )
@@ -171,7 +171,7 @@ function Page() {
                     {song.length}
                   </Text>
                   {!song.isPlaying && (
-                    <PlayIcon onClick={() => play(song)}>
+                    <PlayIcon onClick={() => play(i)}>
                       <Icon name="PlayFilled24" color="white" />
                     </PlayIcon>
                   )}
