@@ -160,6 +160,8 @@ function PlaylistItem(props: IPlaylistItem) {
       <div
         css={css`
           margin-top: 12px;
+          padding-left: 8px;
+          padding-bottom: 4px;
         `}
       >
         {hashtag.map((v, i) => (
