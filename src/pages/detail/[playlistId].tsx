@@ -8,6 +8,7 @@ import { css } from '@emotion/react';
 import { Song } from '@/hooks/usePlaylists';
 import http from '@/http';
 import styled from '@emotion/styled';
+import { debounce } from '@/utils/debounce';
 
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
@@ -18,7 +19,7 @@ function Page() {
   } = useRouter();
 
   const { data } = usePlaylist(playlistId as string);
-  const [isLiked, setIsLiked] = useState(data?.isLiked);
+  const [isLiked, setIsLiked] = useState<Boolean | undefined>(undefined);
 
   const [songs, setSongs] = useState<SongWithPlayingStatus[]>();
   const play = useCallback((i: number) => {
@@ -31,9 +32,12 @@ function Page() {
     );
   }, []);
 
-  const like = useCallback(async () => {
+  const like = useCallback(() => {
     setIsLiked((prev) => !prev);
-    await http.patch(`/playlists/like`, { playlistId, like: !isLiked });
+
+    debounce(() => {
+      http.patch(`/playlists/like`, { playlistId, like: !isLiked });
+    }, 1000);
   }, [playlistId, isLiked]);
 
   useEffect(() => {
@@ -49,6 +53,12 @@ function Page() {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setIsLiked(data.isLiked);
+    }
+  }, [data]);
 
   return (
     <div
