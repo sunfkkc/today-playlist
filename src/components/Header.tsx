@@ -13,6 +13,7 @@ function Header(props: Props) {
         height: 48px;
         display: flex;
         align-items: center;
+        z-index: 100;
       `}
       style={style}
     >
