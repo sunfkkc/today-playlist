@@ -10,7 +10,7 @@ function Page() {
   console.log(rest.code, state);
   useEffect(() => {
     (async () => {
-      if (redirect) {
+      if (rest && redirect !== 'undefined') {
         const res = await http.get('/auth/google/redirect', {
           params: { ...rest, redirect },
         });
