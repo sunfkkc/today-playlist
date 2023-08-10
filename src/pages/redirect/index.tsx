@@ -11,7 +11,7 @@ function Page() {
       const params = { ...rest, redirect: state as string };
 
       const queryString = new URLSearchParams(params).toString();
-      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URI}/redirect?${queryString}`;
+      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/google/redirect?${queryString}`;
     }
   }, [state, rest]);
   return <div></div>;
