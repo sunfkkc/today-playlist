@@ -10,10 +10,12 @@ function Page() {
   console.log(rest.code, state);
   useEffect(() => {
     (async () => {
-      const res = await http.get('/auth/google/redirect', {
-        params: { ...rest, redirect },
-      });
-      console.log(res);
+      if (redirect) {
+        const res = await http.get('/auth/google/redirect', {
+          params: { ...rest, redirect },
+        });
+        console.log(res);
+      }
     })();
   }, [rest, redirect]);
   return <div></div>;
