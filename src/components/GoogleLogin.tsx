@@ -14,7 +14,7 @@ function Login() {
     const client_id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     const redirect_uri = 'https://www.todayplaylist.site/redirect';
 
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=openid+profile+email&state=test`;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=openid+profile+email&state=/my`;
   };
 
   return (
