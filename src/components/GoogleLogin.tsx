@@ -4,17 +4,20 @@ import Text from './Text';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useGoogleLogin } from '@react-oauth/google';
-import useGoogle from '@/hooks/useGoogleLogin';
+import { useRouter } from 'next/router';
 
-function Login() {
-  const { mutate } = useGoogle();
+function GoogleLogin() {
+  const router = useRouter();
+  const { redirect } = router.query;
 
   const onClick = () => {
     const client_id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    const redirect_uri = 'https://www.todayplaylist.site/redirect';
+    const redirect_uri = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_REDIRECT_URI;
+    const state = Boolean(redirect)
+      ? encodeURIComponent(redirect as string)
+      : encodeURIComponent('/my');
 
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=openid+profile+email&state=/my`;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=openid+profile+email&state=${state}`;
   };
 
   return (
@@ -34,7 +37,7 @@ function Login() {
   );
 }
 
-export default Login;
+export default GoogleLogin;
 
 const Contaier = styled.div`
   height: 50px;
