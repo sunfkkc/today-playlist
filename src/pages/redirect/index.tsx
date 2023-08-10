@@ -6,18 +6,16 @@ function Page() {
   const router = useRouter();
   const { state, ...rest } = router.query;
 
-  const redirect = encodeURIComponent(state as string);
-  console.log(rest.code, state);
   useEffect(() => {
     (async () => {
-      if (rest && redirect !== 'undefined') {
+      if (rest && state !== 'undefined') {
         const res = await http.get('/auth/google/redirect', {
-          params: { ...rest, redirect },
+          params: { ...rest, redirect: state },
         });
         console.log(res);
       }
     })();
-  }, [rest, redirect]);
+  }, [rest, state]);
   return <div></div>;
 }
 
