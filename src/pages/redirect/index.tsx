@@ -7,15 +7,13 @@ function Page() {
   const { state, ...rest } = router.query;
 
   useEffect(() => {
-    (async () => {
-      if (rest && state !== 'undefined') {
-        const res = await http.get('/auth/google/redirect', {
-          params: { ...rest, redirect: state },
-        });
-        console.log(res);
-      }
-    })();
-  }, [rest, state]);
+    if (state && rest) {
+      const params = { ...rest, redirect: state as string };
+
+      const queryString = new URLSearchParams(params).toString();
+      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URI}/redirect?${queryString}`;
+    }
+  }, [state, rest]);
   return <div></div>;
 }
 
