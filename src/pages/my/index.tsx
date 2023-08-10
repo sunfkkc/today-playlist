@@ -18,7 +18,7 @@ function MyPage() {
         height: 100vh;
       `}
     >
-      {user ? (
+      {/* {user ? (
         <div
           css={css`
             display: flex;
@@ -156,7 +156,8 @@ function MyPage() {
         </div>
       ) : (
         <GoogleLogin />
-      )}
+      )} */}
+      <GoogleLogin />
       <BottomTab />
     </div>
   );
