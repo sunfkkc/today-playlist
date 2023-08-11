@@ -1,6 +1,7 @@
-import { Text, BottomTab, TextFieldLine, Icon } from '@/components';
+import { Text, BottomTab, TextFieldLine, Icon, Button } from '@/components';
 import { colors } from '@/constants/colors';
 import usePlaylists from '@/hooks/usePlaylists';
+import useUser from '@/hooks/useUser';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
@@ -12,6 +13,7 @@ const tag = ['출퇴근길', '집중타임', '새벽감성'];
 
 export default function Home() {
   const router = useRouter();
+  const { logout } = useUser();
 
   const [_searchWord, _setSearchWord] = useState('');
   const [searchWord, setSearchWord] = useState('');
@@ -57,6 +59,7 @@ export default function Home() {
 
   return (
     <div className="homepage-container">
+      <Button onClick={() => logout()}>로그아웃</Button>
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
@@ -110,29 +113,14 @@ export default function Home() {
       </form>
       <TagContainer>
         {tag.map((v) => (
-          <Tag
-            key={v}
-            onClick={() => clickTag(v)}
-            css={css`
-              background: ${searchWord === v
-                ? `linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-    radial-gradient(
-      100% 100% at 56.44% 0%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    )`
-                : `radial-gradient(
-      100% 100% at 56.44% 0%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15))`};
-            `}
-          >
+          <Tag key={v} onClick={() => clickTag(v)}>
             <Text
               typography="cp"
               fontWeight="regular"
               color={searchWord === v ? colors.white : 'rgba(88, 101, 137, 1)'}
+              css={css`
+                padding: 8px 12px 8px 12px;
+              `}
             >
               {`#${v}`}
             </Text>
@@ -211,25 +199,26 @@ const TagContainer = styled.div`
 `;
 const Tag = styled.div`
   margin-right: 8px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  background-image: radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
     radial-gradient(
       100% 100% at 56.44% 0%,
       #ffffff 0%,
       rgba(255, 255, 255, 0) 100%
     );
+  border: 1px solid transparent;
 
-  border: 1px solid;
-  border-image-source: radial-gradient(
-    100% 100% at 56.44% 0%,
-    #ffffff 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-
-  padding: 8px 12px 8px 12px;
+  //padding: 8px 12px 8px 12px;
   border-radius: 16px;
   gap: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
