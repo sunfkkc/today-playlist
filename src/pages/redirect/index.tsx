@@ -1,19 +1,25 @@
-import http from '@/http';
+import useGoogleLogin from '@/hooks/useGoogleLogin';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
 function Page() {
   const router = useRouter();
-  const { state, ...rest } = router.query;
+  const { mutateAsync } = useGoogleLogin();
 
   useEffect(() => {
-    if (state && rest) {
-      const params = { ...rest, redirect: state as string };
-
-      const queryString = new URLSearchParams(params).toString();
-      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/google/redirect?${queryString}`;
+    if (router.isReady) {
+      const { state, ...rest } = router.query;
+      (async () => {
+        try {
+          await mutateAsync(rest);
+          router.replace(state as string);
+        } catch (err) {
+          alert('로그인 실패');
+          router.replace('/my');
+        }
+      })();
     }
-  }, [state, rest]);
+  }, [mutateAsync, router]);
   return <div></div>;
 }
 
