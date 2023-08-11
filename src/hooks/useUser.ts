@@ -13,7 +13,8 @@ const useUser = () => {
     queryKeys.user,
     getUser
   );
-  const logout = () => {
+  const logout = async () => {
+    await http.delete('/auth/logout');
     queryClient.invalidateQueries({
       queryKey: [queryKeys.user],
     });
