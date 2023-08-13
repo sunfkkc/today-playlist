@@ -1,6 +1,6 @@
 import http from '@/http';
 import queryKeys from '@/constants/queryKeys';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 const getUser = async () => {
   const { data } = await http.get('/auth');
@@ -8,9 +8,16 @@ const getUser = async () => {
 };
 
 const useUser = () => {
+  const queryClient = useQueryClient();
   const methods = useQuery<{ nickname: string; profileImgUrl: string }>(
     queryKeys.user,
-    getUser
+    getUser,
+    {
+      onError: () => {
+        queryClient.invalidateQueries({ queryKey: [queryKeys.user] });
+      },
+      retry: false,
+    }
   );
   const logout = async () => {
     await http.delete('/auth/logout');
