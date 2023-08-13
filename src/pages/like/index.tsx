@@ -2,8 +2,9 @@ import { BottomTab, Header, Icon, TextFieldLine } from '@/components';
 import PlaylistItem from '@/components/PlaylistItem';
 import { colors } from '@/constants/colors';
 import usePlaylists from '@/hooks/usePlaylists';
+import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
-import { FormEvent, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 function Page() {
   const router = useRouter();
@@ -20,17 +21,18 @@ function Page() {
     itemHeight: 164,
   });
 
-  const search = useCallback(
-    (evt: FormEvent<HTMLFormElement>) => {
-      evt.preventDefault();
-      setSearchWord(_searchWord);
-    },
-    [setSearchWord, _searchWord]
-  );
+  const search = useCallback(() => {
+    setSearchWord(_searchWord);
+  }, [setSearchWord, _searchWord]);
 
   return (
     <div ref={ref} className="homepage-container">
-      <form onSubmit={search}>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          search();
+        }}
+      >
         <Header title="찜한 플리" />
         <TextFieldLine
           value={_searchWord}
@@ -39,6 +41,7 @@ function Page() {
           fontColor={colors.white}
           placeholderColor={colors.white}
           containerStyle={{ marginBottom: 16 }}
+          placeholderStyle={{ fontSize: '14px', fontWeight: 400 }}
           style={{
             textShadow: `
             0px 0px 6px rgba(0, 0, 0, 0.2),
@@ -47,7 +50,28 @@ function Page() {
           }}
           inputAdornment={{
             start: (
-              <Icon name="Search24" color="white" style={{ marginRight: 4 }} />
+              <div
+                css={css`
+                  width: 24px;
+                  height: 24px;
+                `}
+              >
+                <Icon name="Search24" color="white" onClick={search} />
+              </div>
+            ),
+            end: _searchWord && (
+              <div
+                css={css`
+                  width: 20px;
+                  height: 20px;
+                `}
+              >
+                <Icon
+                  name="XFilled20"
+                  fill={colors.grey500}
+                  onClick={() => _setSearchWord('')}
+                />
+              </div>
             ),
           }}
         />
