@@ -22,8 +22,10 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import usePlaylist from '@/hooks/usePlaylist';
 import useEditPlaylist from '@/hooks/useEditPlaylist';
+import { useAuthCheck } from '@/hooks/useAuthCheck';
 
 function Page() {
+  useAuthCheck();
   const router = useRouter();
   const { playlistId, usage } = router.query;
 

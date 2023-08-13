@@ -1,12 +1,14 @@
 import { BottomTab, Header, Icon, TextFieldLine } from '@/components';
 import PlaylistItem from '@/components/PlaylistItem';
 import { colors } from '@/constants/colors';
+import { useAuthCheck } from '@/hooks/useAuthCheck';
 import usePlaylists from '@/hooks/usePlaylists';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 
 function Page() {
+  useAuthCheck();
   const router = useRouter();
 
   const ref = useRef<HTMLDivElement>(null);
