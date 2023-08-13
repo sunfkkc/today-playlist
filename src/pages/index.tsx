@@ -164,12 +164,12 @@ function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
 
   const like = useCallback(
     (evt: React.MouseEvent<SVGElement, MouseEvent>) => {
+      evt.stopPropagation();
+
       if (!hasAuth) {
         router.push('/my');
         return;
       }
-
-      evt.stopPropagation();
 
       setLikedForDisplay((prev) => !prev);
 
