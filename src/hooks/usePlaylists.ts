@@ -24,7 +24,7 @@ const usePlaylists = ({ ref, itemHeight, ...params }: Params) => {
 
   const size = height && itemHeight && Math.ceil(height / itemHeight) * 2;
 
-  const { data, fetchNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, ...rest } = useInfiniteQuery(
     [queryKeys.playlists, params],
     ({ pageParam = 1 }) => getPlaylist({ ...params, page: pageParam, size }),
     {
@@ -41,7 +41,7 @@ const usePlaylists = ({ ref, itemHeight, ...params }: Params) => {
     }
   }, [isBottom, fetchNextPage]);
 
-  return { playlists, fetchNextPage };
+  return { playlists, fetchNextPage, ...rest };
 };
 
 export default usePlaylists;

@@ -1,27 +1,44 @@
 import { Text, BottomTab, TextFieldLine, Icon } from '@/components';
 import { colors } from '@/constants/colors';
-import usePlaylists from '@/hooks/usePlaylists';
+import usePlaylists, { Playlist } from '@/hooks/usePlaylists';
 import useUser from '@/hooks/useUser';
+import http from '@/http';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
 const tag = ['출퇴근길', '집중타임', '새벽감성'];
 
 export default function Home() {
+  const { data: user } = useUser();
   const router = useRouter();
-  const { logout } = useUser();
 
   const [_searchWord, _setSearchWord] = useState('');
   const [searchWord, setSearchWord] = useState('');
 
-  const { playlists } = usePlaylists({
+  const { playlists, refetch } = usePlaylists({
     itemHeight: 228,
     searchWord,
   });
+
+  const like = useCallback(async (playlistId: string, like: boolean) => {
+    await http.patch(`/playlists/like`, { playlistId, like });
+  }, []);
+
+  const onHeartClick = useCallback(
+    async (playlist: Playlist) => {
+      if (!user) {
+        router.push('/my');
+        return;
+      }
+
+      await like(playlist.playlistId, !playlist.isLiked);
+      refetch();
+    },
+    [like, refetch, router, user]
+  );
 
   const search = useCallback(
     (k: string) => {
@@ -135,61 +152,78 @@ export default function Home() {
       >
         {playlists?.map((playlist) => (
           <div key={playlist.playlistId} className="playlist-item-container">
-            <Link href={`/detail/${playlist.playlistId}`}>
-              <div className="playlist-image-container">
-                <Image
-                  alt=""
-                  src={playlist.thumbnailUrl}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-                {playlist.isLiked ? (
-                  <Icon name="HeartFilled24" color="white" css={heartStyle} />
-                ) : (
-                  <Icon name="Heart24" color="white" css={heartStyle} />
-                )}
-              </div>
-              <div className="playlist-title-container">
-                <Text
-                  stringToJSX
-                  ellipsisAfterLines={2}
-                  typography="sh2"
-                  fontWeight="bold"
-                  color={colors.grey700}
-                  style={{ marginTop: 12, marginBottom: 5 }}
-                >
-                  {playlist.title}
-                </Text>
-              </div>
-              <div className="playlist-stats-container">
-                <Icon name="HeartFilled20" color="red400" />
-                <Text
-                  typography="cp"
-                  fontWeight="regular"
-                  color={colors.grey600}
-                  className="playlist-stat-text"
-                >
-                  {new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                    playlist.likeCount
-                  )}
-                </Text>
+            <div
+              className="playlist-image-container"
+              onClick={() => router.push(`/detail/${playlist.playlistId}`)}
+            >
+              <Image
+                alt=""
+                src={playlist.thumbnailUrl}
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+              {playlist.isLiked ? (
                 <Icon
-                  name="EyeFilled20"
-                  color="grey400"
-                  style={{ marginLeft: 8 }}
+                  name="HeartFilled24"
+                  color="white"
+                  css={heartStyle}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    onHeartClick(playlist);
+                  }}
                 />
-                <Text
-                  typography="cp"
-                  fontWeight="regular"
-                  color={colors.grey600}
-                  className="playlist-stat-text"
-                >
-                  {new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                    playlist.viewCount
-                  )}
-                </Text>
-              </div>
-            </Link>
+              ) : (
+                <Icon
+                  name="Heart24"
+                  color="white"
+                  css={heartStyle}
+                  onClick={(evt) => {
+                    evt.stopPropagation();
+                    onHeartClick(playlist);
+                  }}
+                />
+              )}
+            </div>
+            <div className="playlist-title-container">
+              <Text
+                stringToJSX
+                ellipsisAfterLines={2}
+                typography="sh2"
+                fontWeight="bold"
+                color={colors.grey700}
+                style={{ marginTop: 12, marginBottom: 5 }}
+              >
+                {playlist.title}
+              </Text>
+            </div>
+            <div className="playlist-stats-container">
+              <Icon name="HeartFilled20" color="red400" />
+              <Text
+                typography="cp"
+                fontWeight="regular"
+                color={colors.grey600}
+                className="playlist-stat-text"
+              >
+                {new Intl.NumberFormat('en', { notation: 'compact' }).format(
+                  playlist.likeCount
+                )}
+              </Text>
+              <Icon
+                name="EyeFilled20"
+                color="grey400"
+                style={{ marginLeft: 8 }}
+              />
+              <Text
+                typography="cp"
+                fontWeight="regular"
+                color={colors.grey600}
+                className="playlist-stat-text"
+              >
+                {new Intl.NumberFormat('en', { notation: 'compact' }).format(
+                  playlist.viewCount
+                )}
+              </Text>
+            </div>
           </div>
         ))}
       </div>
