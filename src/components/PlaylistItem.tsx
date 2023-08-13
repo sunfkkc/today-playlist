@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Text from './Text';
 import Image from 'next/image';
 import { Icon } from '.';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
+import { debounce } from '@/utils/debounce';
+import http from '@/http';
 
 function PlaylistItem(props: IPlaylistItem) {
   const {
+    playlistId,
     title,
     thumbnailUrl,
     isLiked,
@@ -17,8 +20,13 @@ function PlaylistItem(props: IPlaylistItem) {
     editable = false,
     edit,
     onClick,
+    disableLike = false,
     ...rest
   } = props;
+
+  const [likedForDisplay, setLikedForDisplay] = useState<Boolean | undefined>(
+    isLiked
+  );
 
   const _onClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -31,17 +39,30 @@ function PlaylistItem(props: IPlaylistItem) {
     [onClick, edit]
   );
 
+  const like = useCallback(
+    (evt: React.MouseEvent<SVGElement, MouseEvent>) => {
+      if (!disableLike) {
+        evt.stopPropagation();
+
+        setLikedForDisplay((prev) => !prev);
+
+        debounce(() => {
+          http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
+        }, 1000);
+      }
+    },
+    [likedForDisplay, playlistId, disableLike]
+  );
+
   return (
     <Container {...rest} onClick={_onClick}>
-      {isLiked && (
-        <div
-          css={css`
-            position: absolute;
-            padding: 8px 0px 0px 8px;
-            z-index: 2;
-          `}
-        >
-          <Icon name="HeartFilled24" color="white" />
+      {likedForDisplay ? (
+        <div css={heartStyle}>
+          <Icon name="HeartFilled24" color="white" onClick={like} />
+        </div>
+      ) : (
+        <div css={heartStyle}>
+          <Icon name="Heart24" color="white" onClick={like} />
         </div>
       )}
       <div
@@ -191,6 +212,12 @@ const Container = styled.div`
   padding: 8px;
 `;
 
+const heartStyle = css`
+  position: absolute;
+  padding: 8px 0px 0px 8px;
+  z-index: 2;
+`;
+
 interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   thumbnailUrl?: string;
@@ -200,4 +227,6 @@ interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
   hashtag?: string[];
   editable?: boolean;
   edit?: () => void;
+  playlistId?: string;
+  disableLike?: boolean;
 }
