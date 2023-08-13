@@ -8,7 +8,6 @@ import { Song } from '@/hooks/usePlaylists';
 import http from '@/http';
 import styled from '@emotion/styled';
 import { debounce } from '@/utils/debounce';
-
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
 
@@ -60,19 +59,25 @@ function Page() {
       `}
     >
       {<Header title="" style={{ position: 'absolute', paddingTop: 16 }} />}
+
       <div
         css={css`
           background-image: url(${data?.thumbnailUrl});
           background-size: cover;
+          background-position: center;
+          position: fixed;
           height: ${`${INITIAL_HEIGHT}px`};
-          position: absolute;
-          box-sizing: border-box;
-          transition: height 0.3s ease-in-out;
-          display: flex;
-          flex-direction: column;
-          margin: 0 -16px;
-          justify-content: flex-end;
-          padding: 0 16px 40px 16px;
+          width: 350px;
+          @media (max-width: 425px) {
+            width: 100%;
+          }
+          transform: translateX(-16px);
+        `}
+      />
+
+      <InfoContainer
+        css={css`
+          height: ${`${INITIAL_HEIGHT}px`};
         `}
       >
         <div
@@ -80,6 +85,7 @@ function Page() {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
+            z-index: 2;
           `}
         >
           <div
@@ -139,7 +145,7 @@ function Page() {
             </Text>
           ))}
         </div>
-      </div>
+      </InfoContainer>
       <SongContainer>
         <div
           css={css`
@@ -214,16 +220,16 @@ function YouTubeVideoComponent({ videoId }: { videoId: string }) {
 
 type SongWithPlayingStatus = Song & { isPlaying: boolean };
 
-// const InfoContainer = styled.div`
-//   position: absolute;
-//   box-sizing: border-box;
-//   transition: height 0.3s ease-in-out;
-//   display: flex;
-//   flex-direction: column;
-//   margin: 0 -16px;
-//   justify-content: flex-end;
-//   padding: 0 16px 40px 16px;
-// `;
+const InfoContainer = styled.div`
+  position: absolute;
+  box-sizing: border-box;
+  transition: height 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  margin: 0 -16px;
+  justify-content: flex-end;
+  padding: 0 16px 40px 16px;
+`;
 
 const SongContainer = styled.div`
   transition: height 0.3s ease-in-out;
