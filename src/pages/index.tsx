@@ -3,6 +3,7 @@ import { colors } from '@/constants/colors';
 import usePlaylists, { Playlist } from '@/hooks/usePlaylists';
 import useUser from '@/hooks/useUser';
 import http from '@/http';
+import { debounce } from '@/utils/debounce';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
@@ -18,27 +19,10 @@ export default function Home() {
   const [_searchWord, _setSearchWord] = useState('');
   const [searchWord, setSearchWord] = useState('');
 
-  const { playlists, refetch } = usePlaylists({
+  const { playlists } = usePlaylists({
     itemHeight: 228,
     searchWord,
   });
-
-  const like = useCallback(async (playlistId: string, like: boolean) => {
-    await http.patch(`/playlists/like`, { playlistId, like });
-  }, []);
-
-  const onHeartClick = useCallback(
-    async (playlist: Playlist) => {
-      if (!user) {
-        router.push('/my');
-        return;
-      }
-
-      await like(playlist.playlistId, !playlist.isLiked);
-      refetch();
-    },
-    [like, refetch, router, user]
-  );
 
   const search = useCallback(
     (k: string) => {
@@ -150,84 +134,106 @@ export default function Home() {
           flex-wrap: wrap;
         `}
       >
-        {playlists?.map((playlist) => (
-          <div key={playlist.playlistId} className="playlist-item-container">
-            <div
-              className="playlist-image-container"
-              onClick={() => router.push(`/detail/${playlist.playlistId}`)}
-            >
-              <Image
-                alt=""
-                src={playlist.thumbnailUrl}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-              {playlist.isLiked ? (
-                <Icon
-                  name="HeartFilled24"
-                  color="white"
-                  css={heartStyle}
-                  onClick={(evt) => {
-                    evt.stopPropagation();
-                    onHeartClick(playlist);
-                  }}
-                />
-              ) : (
-                <Icon
-                  name="Heart24"
-                  color="white"
-                  css={heartStyle}
-                  onClick={(evt) => {
-                    evt.stopPropagation();
-                    onHeartClick(playlist);
-                  }}
-                />
-              )}
-            </div>
-            <div className="playlist-title-container">
-              <Text
-                stringToJSX
-                ellipsisAfterLines={2}
-                typography="sh2"
-                fontWeight="bold"
-                color={colors.grey700}
-                style={{ marginTop: 12, marginBottom: 5 }}
-              >
-                {playlist.title}
-              </Text>
-            </div>
-            <div className="playlist-stats-container">
-              <Icon name="HeartFilled20" color="red400" />
-              <Text
-                typography="cp"
-                fontWeight="regular"
-                color={colors.grey600}
-                className="playlist-stat-text"
-              >
-                {new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                  playlist.likeCount
-                )}
-              </Text>
-              <Icon
-                name="EyeFilled20"
-                color="grey400"
-                style={{ marginLeft: 8 }}
-              />
-              <Text
-                typography="cp"
-                fontWeight="regular"
-                color={colors.grey600}
-                className="playlist-stat-text"
-              >
-                {new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                  playlist.viewCount
-                )}
-              </Text>
-            </div>
-          </div>
+        {playlists?.map((playlist, i) => (
+          <PlaylistItem {...playlist} key={i} hasAuth={user !== undefined} />
         ))}
       </div>
       <BottomTab />
+    </div>
+  );
+}
+
+function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
+  const {
+    playlistId,
+    title,
+    thumbnailUrl,
+    isLiked,
+    likeCount,
+    viewCount,
+    hashtag = [],
+    hasAuth = false,
+    ...rest
+  } = props;
+
+  const [likedForDisplay, setLikedForDisplay] = useState<Boolean | undefined>(
+    isLiked
+  );
+
+  const router = useRouter();
+
+  const like = useCallback(
+    (evt: React.MouseEvent<SVGElement, MouseEvent>) => {
+      if (!hasAuth) {
+        router.push('/my');
+        return;
+      }
+
+      evt.stopPropagation();
+
+      setLikedForDisplay((prev) => !prev);
+
+      debounce(() => {
+        http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
+      }, 1000);
+    },
+    [likedForDisplay, playlistId, hasAuth, router]
+  );
+
+  return (
+    <div className="playlist-item-container">
+      <div
+        className="playlist-image-container"
+        onClick={() => router.push(`/detail/${playlistId}`)}
+      >
+        <Image alt="" src={thumbnailUrl} fill style={{ objectFit: 'cover' }} />
+        {likedForDisplay ? (
+          <Icon
+            name="HeartFilled24"
+            color="white"
+            css={heartStyle}
+            onClick={like}
+          />
+        ) : (
+          <Icon name="Heart24" color="white" css={heartStyle} onClick={like} />
+        )}
+      </div>
+      <div className="playlist-title-container">
+        <Text
+          stringToJSX
+          ellipsisAfterLines={2}
+          typography="sh2"
+          fontWeight="bold"
+          color={colors.grey700}
+          style={{ marginTop: 12, marginBottom: 5 }}
+        >
+          {title}
+        </Text>
+      </div>
+      <div className="playlist-stats-container">
+        <Icon name="HeartFilled20" color="red400" />
+        <Text
+          typography="cp"
+          fontWeight="regular"
+          color={colors.grey600}
+          className="playlist-stat-text"
+        >
+          {new Intl.NumberFormat('en', { notation: 'compact' }).format(
+            likeCount
+          )}
+        </Text>
+        <Icon name="EyeFilled20" color="grey400" style={{ marginLeft: 8 }} />
+        <Text
+          typography="cp"
+          fontWeight="regular"
+          color={colors.grey600}
+          className="playlist-stat-text"
+        >
+          {new Intl.NumberFormat('en', { notation: 'compact' }).format(
+            viewCount
+          )}
+        </Text>
+      </div>
     </div>
   );
 }

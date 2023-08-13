@@ -83,6 +83,7 @@ function Page() {
             {...props}
             style={{ marginBottom: 16, cursor: 'pointer' }}
             onClick={() => router.push(`/detail/${props.playlistId}`)}
+            disableLike
           />
         ))}
       </form>
