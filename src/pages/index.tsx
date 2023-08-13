@@ -121,6 +121,7 @@ export default function Home() {
               css={css`
                 padding: 8px 12px 8px 12px;
               `}
+              stringToJSX
             >
               {`#${v}`}
             </Text>
@@ -143,6 +144,11 @@ export default function Home() {
                   fill
                   style={{ objectFit: 'cover' }}
                 />
+                {playlist.isLiked ? (
+                  <Icon name="HeartFilled24" color="white" css={heartStyle} />
+                ) : (
+                  <Icon name="Heart24" color="white" css={heartStyle} />
+                )}
               </div>
               <div className="playlist-title-container">
                 <Text
@@ -221,4 +227,10 @@ const Tag = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+`;
+
+const heartStyle = css`
+  position: absolute;
+  right: 0;
+  padding: 16px;
 `;
