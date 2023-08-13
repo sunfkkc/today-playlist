@@ -19,6 +19,7 @@ const useUser = () => {
   const logout = async () => {
     await http.delete('/auth/logout');
     queryClient.removeQueries(queryKeys.user);
+    methods.refetch();
   };
   return { ...methods, logout };
 };

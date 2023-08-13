@@ -1,4 +1,4 @@
-import { Text, BottomTab, TextFieldLine, Icon, Button } from '@/components';
+import { Text, BottomTab, TextFieldLine, Icon } from '@/components';
 import { colors } from '@/constants/colors';
 import usePlaylists from '@/hooks/usePlaylists';
 import useUser from '@/hooks/useUser';
@@ -59,7 +59,6 @@ export default function Home() {
 
   return (
     <div className="homepage-container">
-      <Button onClick={() => logout()}>로그아웃</Button>
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
