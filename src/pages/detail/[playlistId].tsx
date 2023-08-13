@@ -229,6 +229,10 @@ const InfoContainer = styled.div`
   margin: 0 -16px;
   justify-content: flex-end;
   padding: 0 16px 40px 16px;
+  width: 350px;
+  @media (max-width: 425px) {
+    width: 100%;
+  }
 `;
 
 const SongContainer = styled.div`
