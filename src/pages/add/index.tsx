@@ -14,7 +14,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { FormEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 function Page() {
   const router = useRouter();
@@ -26,15 +26,10 @@ function Page() {
     SearchSongResponse['searchResults'] | undefined
   >(undefined);
 
-  const search = useCallback(
-    async (evt: FormEvent<HTMLFormElement>) => {
-      evt.preventDefault();
-
-      const { searchResults } = await searchSongs(searchWord);
-      setList(searchResults?.filter((v) => v.videoId));
-    },
-    [searchWord, searchSongs]
-  );
+  const search = useCallback(async () => {
+    const { searchResults } = await searchSongs(searchWord);
+    setList(searchResults?.filter((v) => v.videoId));
+  }, [searchWord, searchSongs]);
 
   const add = useCallback(
     (id?: string, title?: string) => {
@@ -68,7 +63,12 @@ function Page() {
   return (
     <div className="homepage-container">
       <Header title="플레이리스트 추가" />
-      <form onSubmit={search}>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          search();
+        }}
+      >
         <TextFieldLine
           containerStyle={{ marginTop: 16 }}
           value={searchWord}
@@ -76,6 +76,7 @@ function Page() {
           placeholder="검색어를 입력해주세요."
           fontColor={colors.white}
           placeholderColor={colors.white}
+          placeholderStyle={{ fontSize: '14px', fontWeight: 400 }}
           style={{
             textShadow: `
             0px 0px 6px rgba(0, 0, 0, 0.2),
@@ -84,7 +85,28 @@ function Page() {
           }}
           inputAdornment={{
             start: (
-              <Icon name="Search24" color="white" style={{ marginRight: 4 }} />
+              <div
+                css={css`
+                  width: 24px;
+                  height: 24px;
+                `}
+              >
+                <Icon name="Search24" color="white" onClick={search} />
+              </div>
+            ),
+            end: searchWord && (
+              <div
+                css={css`
+                  width: 20px;
+                  height: 20px;
+                `}
+              >
+                <Icon
+                  name="XFilled20"
+                  fill={colors.grey500}
+                  onClick={() => setSearchWord('')}
+                />
+              </div>
             ),
           }}
         />
