@@ -2,7 +2,6 @@ import usePlaylist from '@/hooks/usePlaylist';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Divider, Header, Icon, Text } from '@/components';
-import throttle from '@/utils/throttle';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import { Song } from '@/hooks/usePlaylists';
@@ -47,14 +46,6 @@ function Page() {
   }, [data]);
 
   useEffect(() => {
-    const handleScroll = throttle(() => {}, 500);
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
     if (data) {
       setIsLiked(data.isLiked);
     }
@@ -69,11 +60,19 @@ function Page() {
       `}
     >
       {<Header title="" style={{ position: 'absolute', paddingTop: 16 }} />}
-      <InfoContainer
+      <div
         css={css`
           background-image: url(${data?.thumbnailUrl});
           background-size: cover;
           height: ${`${INITIAL_HEIGHT}px`};
+          position: absolute;
+          box-sizing: border-box;
+          transition: height 0.3s ease-in-out;
+          display: flex;
+          flex-direction: column;
+          margin: 0 -16px;
+          justify-content: flex-end;
+          padding: 0 16px 40px 16px;
         `}
       >
         <div
@@ -140,7 +139,7 @@ function Page() {
             </Text>
           ))}
         </div>
-      </InfoContainer>
+      </div>
       <SongContainer>
         <div
           css={css`
@@ -215,16 +214,16 @@ function YouTubeVideoComponent({ videoId }: { videoId: string }) {
 
 type SongWithPlayingStatus = Song & { isPlaying: boolean };
 
-const InfoContainer = styled.div`
-  box-sizing: border-box;
-  transition: height 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  margin: 0 -16px;
-  justify-content: flex-end;
-  padding: 0 16px 40px 16px;
-  position: absolute;
-`;
+// const InfoContainer = styled.div`
+//   position: absolute;
+//   box-sizing: border-box;
+//   transition: height 0.3s ease-in-out;
+//   display: flex;
+//   flex-direction: column;
+//   margin: 0 -16px;
+//   justify-content: flex-end;
+//   padding: 0 16px 40px 16px;
+// `;
 
 const SongContainer = styled.div`
   transition: height 0.3s ease-in-out;
