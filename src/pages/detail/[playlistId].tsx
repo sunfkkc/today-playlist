@@ -221,7 +221,7 @@ function YouTubeVideoComponent({ videoId }: { videoId: string }) {
 type SongWithPlayingStatus = Song & { isPlaying: boolean };
 
 const InfoContainer = styled.div`
-  position: absolute;
+  position: fixed;
   box-sizing: border-box;
   transition: height 0.3s ease-in-out;
   display: flex;
