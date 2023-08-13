@@ -29,6 +29,8 @@ const nextConfig = {
     return config;
   },
   images: {
+    imageSizes: [180],
+    deviceSizes: [200],
     domains: [
       'picsum.photos',
       'hypeboybucket.s3.ap-northeast-2.amazonaws.com',
