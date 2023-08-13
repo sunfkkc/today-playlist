@@ -65,11 +65,11 @@ function Page() {
           background-image: url(${data?.thumbnailUrl});
           background-size: cover;
           background-position: center;
-          position: fixed;
+          position: absolute;
           height: ${`${INITIAL_HEIGHT}px`};
           width: 350px;
           @media (max-width: 425px) {
-            width: 100%;
+            width: 100vw;
           }
           transform: translateX(-16px);
         `}
@@ -221,7 +221,7 @@ function YouTubeVideoComponent({ videoId }: { videoId: string }) {
 type SongWithPlayingStatus = Song & { isPlaying: boolean };
 
 const InfoContainer = styled.div`
-  position: fixed;
+  position: absolute;
   box-sizing: border-box;
   transition: height 0.3s ease-in-out;
   display: flex;
@@ -231,7 +231,7 @@ const InfoContainer = styled.div`
   padding: 0 16px 40px 16px;
   width: 350px;
   @media (max-width: 425px) {
-    width: 100%;
+    width: 100vw;
   }
 `;
 
