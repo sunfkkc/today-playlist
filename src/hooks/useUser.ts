@@ -16,7 +16,7 @@ const useUser = () => {
   const logout = async () => {
     await http.delete('/auth/logout');
     queryClient.invalidateQueries({
-      queryKey: [queryKeys.user],
+      queryKey: queryKeys.user,
     });
   };
   return { ...methods, logout };
