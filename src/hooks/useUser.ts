@@ -13,9 +13,9 @@ const useUser = () => {
     queryKeys.user,
     getUser,
     {
-      onError: () => {
-        queryClient.invalidateQueries({ queryKey: [queryKeys.user] });
-      },
+      // onError: () => {
+      //   queryClient.invalidateQueries({ queryKey: [queryKeys.user] });
+      // },
       retry: false,
     }
   );
