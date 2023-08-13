@@ -20,6 +20,9 @@
     position: relative;
     overflow: hidden;
     border-radius: 20px;
+    @media (max-width: 425px) {
+      height: 45vw;
+    }
   }
   .playlist-stats-container {
     display: flex;
