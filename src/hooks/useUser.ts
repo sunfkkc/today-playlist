@@ -21,6 +21,7 @@ const useUser = () => {
     queryClient.removeQueries(queryKeys.user);
     queryClient.removeQueries(queryKeys.playlists);
     queryClient.removeQueries(queryKeys.playlist);
+    methods.refetch();
   };
   return { ...methods, logout };
 };
