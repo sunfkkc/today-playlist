@@ -27,7 +27,7 @@ export type TUseEnrollPlaylistFormReturn = [
 
 export interface EnrollPlaylistForm {
   title?: string;
-  songs?: { id?: string; title?: string }[];
+  songs?: { id?: string; title?: string; time?: string }[];
   hashtag?: string[];
   image?: File | null;
   thumbnailUrl?: string;

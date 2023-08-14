@@ -21,7 +21,7 @@ function Page() {
   const [form, setForm] = useEnrollPlaylistForm();
   const [searchWord, setSearchWord] = useState('');
   const { search: searchSongs } = useSearchSong();
-  const { mutate } = useRegisterSong();
+  const { mutateAsync } = useRegisterSong();
   const [list, setList] = useState<
     SearchSongResponse['searchResults'] | undefined
   >(undefined);
@@ -32,15 +32,15 @@ function Page() {
   }, [searchWord, searchSongs]);
 
   const add = useCallback(
-    (id?: string, title?: string) => {
+    async (id?: string, title?: string) => {
+      const { time } = await mutateAsync({ videoId: id, title });
+
       setForm((prev) => ({
         ...prev,
-        songs: prev.songs?.concat({ id, title }),
+        songs: prev.songs?.concat({ id, title, time }),
       }));
-
-      mutate({ videoId: id, title });
     },
-    [setForm, mutate]
+    [setForm, mutateAsync]
   );
 
   const remove = useCallback(
@@ -157,6 +157,12 @@ function Page() {
 
         {form?.songs?.length !== 0 && (
           <Container>
+            <Text
+              typography="sh2"
+              fontWeight="bold"
+              color={colors.grey800}
+              style={{ marginTop: 4, marginBottom: 12 }}
+            >{`선택한 영상 리스트`}</Text>
             {form?.songs?.map((v, i) => (
               <React.Fragment key={i}>
                 <Item>
@@ -169,11 +175,29 @@ function Page() {
                   >
                     {v.title}
                   </Text>
-                  <Icon
-                    name="SubtractFilled24"
-                    onClick={() => remove(i)}
-                    fill={colors.red400}
-                  />
+                  <div
+                    css={css`
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-shrink: 0;
+                    `}
+                  >
+                    <Text
+                      typography="cp"
+                      fontWeight="regular"
+                      stringToJSX
+                      color={colors.grey700}
+                      style={{ marginRight: 4 }}
+                    >
+                      {v.time}
+                    </Text>
+                    <Icon
+                      name="SubtractFilled24"
+                      onClick={() => remove(i)}
+                      fill={colors.red400}
+                    />
+                  </div>
                 </Item>
                 {form.songs && form.songs?.length - 1 !== i && (
                   <Divider opacity={0.16} backgroundColor={colors.grey800} />
