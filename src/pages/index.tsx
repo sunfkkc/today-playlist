@@ -113,7 +113,31 @@ export default function Home() {
       </form>
       <TagContainer>
         {tag.map((v) => (
-          <Tag key={v} onClick={() => clickTag(v)}>
+          <Tag
+            key={v}
+            onClick={() => clickTag(v)}
+            css={css`
+              background-image: ${searchWord === v
+                ? `
+                linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), radial-gradient(100% 100% at 56.44% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 100%),
+                radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+                `
+                : `radial-gradient(
+      100% 100% at 56.44% 0%,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );`};
+            `}
+          >
             <Text
               typography="cp"
               fontWeight="regular"
@@ -246,19 +270,8 @@ const Tag = styled.div`
   margin-right: 8px;
   background-origin: border-box;
   background-clip: content-box, border-box;
-  background-image: radial-gradient(
-      100% 100% at 56.44% 0%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    radial-gradient(
-      100% 100% at 56.44% 0%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    );
   border: 1px solid transparent;
 
-  //padding: 8px 12px 8px 12px;
   border-radius: 16px;
   gap: 10px;
   cursor: pointer;
