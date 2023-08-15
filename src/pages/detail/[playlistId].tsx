@@ -112,9 +112,19 @@ function Page() {
             </Text>
           </div>
           {isLiked ? (
-            <Icon name="HeartFilled24" color="white" onClick={like} />
+            <Icon
+              name="HeartFilled24"
+              color="white"
+              onClick={like}
+              shadow="0px 0px 10px rgba(0, 0, 0, 0.4)"
+            />
           ) : (
-            <Icon name="Heart24" color="white" onClick={like} />
+            <Icon
+              name="Heart24"
+              color="white"
+              onClick={like}
+              shadow="0px 0px 10px rgba(0, 0, 0, 0.4)"
+            />
           )}
         </div>
         <Text
