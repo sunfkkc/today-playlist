@@ -324,6 +324,7 @@ const PlaylistContainer = styled.div`
   backdrop-filter: blur(8px);
   padding: 20px;
   margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 `;
 
 const TagContainer = styled.div`
@@ -342,6 +343,7 @@ const TagContainer = styled.div`
   backdrop-filter: blur(8px);
   padding: 20px;
   margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 `;
 
 const Item = styled.div`
@@ -360,6 +362,7 @@ const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 `;
 
 const TagItem = styled.div`

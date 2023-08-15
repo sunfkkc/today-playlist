@@ -239,6 +239,7 @@ const Container = styled.div`
   margin-top: 16px;
   padding: 20px;
   margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 `;
 
 const Item = styled.div`
