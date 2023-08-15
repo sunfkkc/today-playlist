@@ -182,7 +182,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.466);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
 const iconStyle = css`
