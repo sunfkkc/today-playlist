@@ -4,13 +4,14 @@ import usePlaylists, { Playlist } from '@/hooks/usePlaylists';
 import useUser from '@/hooks/useUser';
 import http from '@/http';
 import { debounce } from '@/utils/debounce';
+import throttle from '@/utils/throttle';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-const tag = ['출퇴근길', '집중타임', '새벽감성'];
+const tag = ['출퇴근길', '집중타임', '새벽감성', '과제', '숙면', '드라이브'];
 
 export default function Home() {
   const { data: user } = useUser();
@@ -111,47 +112,7 @@ export default function Home() {
           }}
         />
       </form>
-      <TagContainer>
-        {tag.map((v) => (
-          <Tag
-            key={v}
-            onClick={() => clickTag(v)}
-            css={css`
-              background-image: ${searchWord === v
-                ? `
-                linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), radial-gradient(100% 100% at 56.44% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 100%),
-                radial-gradient(
-      100% 100% at 56.44% 0%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    );
-                `
-                : `radial-gradient(
-      100% 100% at 56.44% 0%,
-      rgba(255, 255, 255, 0.15),
-      rgba(255, 255, 255, 0) 100%
-    ),
-    radial-gradient(
-      100% 100% at 56.44% 0%,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0) 100%
-    );`};
-            `}
-          >
-            <Text
-              typography="cp"
-              fontWeight="regular"
-              color={searchWord === v ? colors.white : 'rgba(88, 101, 137, 1)'}
-              css={css`
-                padding: 8px 12px 8px 12px;
-              `}
-              stringToJSX
-            >
-              {`#${v}`}
-            </Text>
-          </Tag>
-        ))}
-      </TagContainer>
+      <TagSection clickTag={clickTag} />
       <div
         css={css`
           display: flex;
@@ -164,6 +125,99 @@ export default function Home() {
       </div>
       <BottomTab />
     </div>
+  );
+}
+
+interface TagSectionProps {
+  clickTag: (v: string) => void;
+}
+
+function TagSection({ clickTag }: TagSectionProps) {
+  const router = useRouter();
+  const { searchWord } = router.query;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDrag, setIsDrag] = useState(false);
+  const [clickForDrag, setClickForDrag] = useState(false);
+  const [startX, setStartX] = useState(0);
+
+  const onDragStart = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+      e.preventDefault();
+      setClickForDrag(false);
+
+      if (scrollRef.current) {
+        setIsDrag(true);
+        setStartX(e.pageX + scrollRef.current.scrollLeft);
+      }
+    },
+    []
+  );
+
+  const onDragEnd = useCallback(() => {
+    setIsDrag(false);
+  }, []);
+
+  const onDragMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (isDrag && scrollRef.current) {
+        scrollRef.current.scrollLeft = startX - e.pageX;
+        setClickForDrag(true);
+      }
+    },
+    [isDrag, startX]
+  );
+  return (
+    <TagContainer
+      ref={scrollRef}
+      onMouseDown={onDragStart}
+      onMouseMove={throttle(onDragMove, 20)}
+      onMouseUp={onDragEnd}
+      onMouseLeave={onDragEnd}
+    >
+      {tag.map((v) => (
+        <Tag
+          key={v}
+          onClick={() => {
+            if (!clickForDrag) {
+              clickTag(v);
+            }
+          }}
+          css={css`
+            background-image: ${searchWord === v
+              ? `
+                linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), radial-gradient(100% 100% at 56.44% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 100%),
+                radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+                `
+              : `radial-gradient(
+      100% 100% at 56.44% 0%,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      100% 100% at 56.44% 0%,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0) 100%
+    );`};
+          `}
+        >
+          <Text
+            typography="cp"
+            fontWeight="regular"
+            color={searchWord === v ? colors.white : 'rgba(88, 101, 137, 1)'}
+            css={css`
+              padding: 8px 12px 8px 12px;
+            `}
+            stringToJSX
+          >
+            {`#${v}`}
+          </Text>
+        </Tag>
+      ))}
+    </TagContainer>
   );
 }
 
@@ -265,6 +319,14 @@ function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
 const TagContainer = styled.div`
   display: flex;
   margin-top: 16px;
+  width: 333px;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  @media (max-width: 425px) {
+    width: 100%;
+  }
 `;
 const Tag = styled.div`
   margin-right: 8px;
@@ -279,6 +341,7 @@ const Tag = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  flex-shrink: 0;
 `;
 
 const heartStyle = css`
