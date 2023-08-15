@@ -46,10 +46,10 @@ export const colors = {
 
 export const filterColors = {
   white:
-    'brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(2%) hue-rotate(120deg) brightness(110%) contrast(101%);',
+    'brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(2%) hue-rotate(120deg) brightness(110%) contrast(101%)',
   black: '#000000',
   primary900:
-    ' brightness(0) saturate(100%) invert(12%) sepia(25%) saturate(1917%) hue-rotate(192deg) brightness(95%) contrast(96%);',
+    ' brightness(0) saturate(100%) invert(12%) sepia(25%) saturate(1917%) hue-rotate(192deg) brightness(95%) contrast(96%)',
   primary800: '#283358',
   primary700: '#2f3c65',
   primary600: '#364570',
@@ -95,7 +95,7 @@ export const filterColors = {
   red700: '#c92e54',
   red600: '#de3458',
   red500:
-    'brightness(0) saturate(100%) invert(40%) sepia(55%) saturate(5922%) hue-rotate(330deg) brightness(97%) contrast(94%);',
+    'brightness(0) saturate(100%) invert(40%) sepia(55%) saturate(5922%) hue-rotate(330deg) brightness(97%) contrast(94%)',
   red400:
     'invert(56%) sepia(52%) saturate(6329%) hue-rotate(320deg) brightness(99%) contrast(92%)',
   red300: '#f76b8a',
