@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { colors, filterColors } from '@/constants/colors';
 
 function Icon(props: IconProps) {
-  const { name, onClick, color, fill, ...rest } = props;
+  const { name, onClick, color, fill, shadow, ...rest } = props;
   const size = props.size ?? name.slice(-2);
   const Icon = Icons[name];
 
@@ -14,7 +14,10 @@ function Icon(props: IconProps) {
       height={size}
       onClick={onClick}
       css={css`
-        ${color && `filter: ${filterColors[color]};`}
+        ${color &&
+        `filter: ${filterColors[color]} ${
+          shadow ? `drop-shadow(${shadow})` : ''
+        };`}
       `}
       style={{ ...props.style, cursor: onClick ? 'pointer' : 'inherit' }}
       fill={fill ?? 'none'}
@@ -29,4 +32,5 @@ interface IconProps extends SVGAttributes<SVGElement> {
   name: keyof typeof Icons;
   color?: keyof typeof colors;
   size?: number;
+  shadow?: string;
 }
