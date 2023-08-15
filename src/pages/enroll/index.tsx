@@ -25,7 +25,7 @@ import useEditPlaylist from '@/hooks/useEditPlaylist';
 import { useAuthCheck } from '@/hooks/useAuthCheck';
 
 function Page() {
-  //useAuthCheck();
+  useAuthCheck();
   const router = useRouter();
   const { playlistId, usage } = router.query;
 
