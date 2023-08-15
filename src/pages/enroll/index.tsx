@@ -25,7 +25,7 @@ import useEditPlaylist from '@/hooks/useEditPlaylist';
 import { useAuthCheck } from '@/hooks/useAuthCheck';
 
 function Page() {
-  useAuthCheck();
+  //useAuthCheck();
   const router = useRouter();
   const { playlistId, usage } = router.query;
 
@@ -363,7 +363,7 @@ const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
 const TagItem = styled.div`
