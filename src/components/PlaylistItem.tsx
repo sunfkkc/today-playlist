@@ -210,6 +210,7 @@ const Container = styled.div`
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(8px);
   padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 `;
 
 const heartStyle = css`

@@ -253,6 +253,7 @@ function Page() {
             css={css`
               display: flex;
               flex-wrap: wrap;
+              margin-top: 6px;
             `}
           >
             {form.hashtag?.map((v, i) => (
@@ -366,7 +367,7 @@ const AddButton = styled.div`
 `;
 
 const TagItem = styled.div`
-  border-radius: 16px;
+  border-radius: 20px;
   background: radial-gradient(
       100% 100% at 56.44% 0%,
       #ffffff 0%,
@@ -379,5 +380,6 @@ const TagItem = styled.div`
   align-items: center;
   margin-top: 8px;
   margin-right: 8px;
-  padding: 8px 12px;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 `;
