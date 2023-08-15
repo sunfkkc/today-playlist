@@ -28,6 +28,10 @@ export default function App({ Component, pageProps }: AppProps) {
           property="og:image"
           content={`https://www.todayplaylist.site/ogimage.png`}
         />
+        <meta
+          name="description"
+          content="오늘의 무드에 맞는, 당신만을 위한 플레이리스트"
+        />
         <title>오늘의 플리</title>
       </Head>
       <QueryClientProvider client={queryClient}>
