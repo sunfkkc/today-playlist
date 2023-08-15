@@ -19,6 +19,16 @@ export default function App({ Component, pageProps }: AppProps) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
+        <meta property="og:title" content="오늘의 플리" />
+        <meta
+          property="og:description"
+          content="오늘의 무드에 맞는, 당신만을 위한 플레이리스트"
+        />
+        <meta
+          property="og:image"
+          content={`https://www.todayplaylist.site/ogimage.png`}
+        />
+        <title>오늘의 플리</title>
       </Head>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
