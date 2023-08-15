@@ -1,6 +1,8 @@
 import throttle from '@/utils/throttle';
 import { useEffect, useState } from 'react';
 
+const OFFSET = 70;
+
 /**
  * @param {React.RefObject<HTMLDivElement>} ref 이 매개변수는 deprecated 되었습니다.
  */
@@ -17,7 +19,7 @@ const useScrollEndDetection = (ref?: React.RefObject<HTMLDivElement>) => {
       const clientHeight =
         document.documentElement.clientHeight || document.body.clientHeight;
 
-      if (scrollTop + clientHeight === scrollHeight) {
+      if (scrollTop + clientHeight >= scrollHeight - OFFSET) {
         setIsBottom(true);
       }
     }, 500);
