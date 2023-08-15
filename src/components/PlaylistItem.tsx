@@ -48,7 +48,7 @@ function PlaylistItem(props: IPlaylistItem) {
 
         debounce(() => {
           http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
-        }, 1000);
+        }, 500);
       }
     },
     [likedForDisplay, playlistId, disableLike]

@@ -1,7 +1,7 @@
 import throttle from '@/utils/throttle';
 import { useEffect, useState } from 'react';
 
-const OFFSET = 70;
+const OFFSET = 80;
 
 /**
  * @param {React.RefObject<HTMLDivElement>} ref 이 매개변수는 deprecated 되었습니다.

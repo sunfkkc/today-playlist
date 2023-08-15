@@ -253,7 +253,7 @@ function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
 
       debounce(() => {
         http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
-      }, 1000);
+      }, 500);
     },
     [likedForDisplay, playlistId, hasAuth, router]
   );
