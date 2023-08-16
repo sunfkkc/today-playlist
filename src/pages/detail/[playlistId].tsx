@@ -12,11 +12,21 @@ import { GetServerSidePropsContext } from 'next';
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
 
-function Page() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const playlistId = context.req.url?.split('/')[1];
+
+  const { data: playlist } = await http.get<Playlist>(
+    `/playlists/view/${playlistId}`
+  );
+
+  return { props: { playlist } };
+}
+
+function Page({ playlist }: { playlist: Playlist }) {
   const router = useRouter();
   const { playlistId } = router.query;
 
-  const { data } = usePlaylist(playlistId as string);
+  const { data } = usePlaylist(playlistId as string, { initialData: playlist });
   const [isLiked, setIsLiked] = useState<Boolean | undefined>(undefined);
 
   const [songs, setSongs] = useState<SongWithPlayingStatus[]>();
