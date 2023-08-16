@@ -256,6 +256,7 @@ const SongContainer = styled.div`
 
   background: linear-gradient(
     180deg,
+    rgba(255, 255, 255, 0.6) 0.9%,
     rgba(255, 255, 255, 0.5) 9.9%,
     rgba(255, 255, 255, 0.1) 30.87%,
     rgba(0, 0, 0, 0.04) 100%
@@ -269,6 +270,7 @@ const SongContainer = styled.div`
 
   margin: 0 -16px;
   margin-top: calc(${INITIAL_HEIGHT}px - ${OVERLAP_HEIGHT}px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 `;
 
 const SongDetailContainer = styled.div`
