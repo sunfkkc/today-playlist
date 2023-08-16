@@ -13,9 +13,15 @@ const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const https = require('https');
   const playlistId = context.resolvedUrl.split('/')[2];
   const { data: playlist } = await http.get<Playlist>(
-    `/playlists/view/${playlistId}`
+    `/playlists/view/${playlistId}`,
+    {
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false,
+      }),
+    }
   );
 
   return { props: { playlist } };
