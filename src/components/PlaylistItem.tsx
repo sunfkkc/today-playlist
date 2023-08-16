@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Text from './Text';
 import Image from 'next/image';
 import { Icon } from '.';
@@ -53,6 +53,10 @@ function PlaylistItem(props: IPlaylistItem) {
     },
     [likedForDisplay, playlistId, disableLike]
   );
+
+  useEffect(() => {
+    setLikedForDisplay(isLiked);
+  }, [isLiked]);
 
   return (
     <Container {...rest} onClick={_onClick}>

@@ -258,6 +258,10 @@ function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
     [likedForDisplay, playlistId, hasAuth, router]
   );
 
+  useEffect(() => {
+    setLikedForDisplay(isLiked);
+  }, [isLiked]);
+
   return (
     <div className="playlist-item-container">
       <div
