@@ -1,7 +1,6 @@
 import { Text, BottomTab, TextFieldLine, Icon } from '@/components';
 import { colors } from '@/constants/colors';
 import usePlaylists, { Playlist } from '@/hooks/usePlaylists';
-import useUser from '@/hooks/useUser';
 import http from '@/http';
 import { debounce } from '@/utils/debounce';
 import throttle from '@/utils/throttle';
@@ -14,7 +13,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const tag = ['출퇴근길', '집중타임', '새벽감성', '과제', '숙면', '드라이브'];
 
 export default function Home() {
-  const { data: user } = useUser();
   const router = useRouter();
 
   const [_searchWord, _setSearchWord] = useState('');
@@ -120,7 +118,7 @@ export default function Home() {
         `}
       >
         {playlists?.map((playlist, i) => (
-          <PlaylistItem {...playlist} key={i} hasAuth={user !== undefined} />
+          <PlaylistItem {...playlist} key={i} />
         ))}
       </div>
       <BottomTab />
@@ -221,7 +219,7 @@ function TagSection({ clickTag }: TagSectionProps) {
   );
 }
 
-function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
+function PlaylistItem(props: Playlist) {
   const {
     playlistId,
     title,
@@ -230,7 +228,6 @@ function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
     likeCount,
     viewCount,
     hashtag = [],
-    hasAuth = false,
     ...rest
   } = props;
 
@@ -241,21 +238,22 @@ function PlaylistItem(props: Playlist & { hasAuth?: boolean }) {
   const router = useRouter();
 
   const like = useCallback(
-    (evt: React.MouseEvent<SVGElement, MouseEvent>) => {
+    async (evt: React.MouseEvent<SVGElement, MouseEvent>) => {
       evt.stopPropagation();
 
-      if (!hasAuth) {
+      try {
+        await http.get('/auth');
+
+        setLikedForDisplay((prev) => !prev);
+
+        debounce(() => {
+          http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
+        }, 500);
+      } catch (e) {
         router.push('/my');
-        return;
       }
-
-      setLikedForDisplay((prev) => !prev);
-
-      debounce(() => {
-        http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
-      }, 500);
     },
-    [likedForDisplay, playlistId, hasAuth, router]
+    [likedForDisplay, playlistId, router]
   );
 
   useEffect(() => {
