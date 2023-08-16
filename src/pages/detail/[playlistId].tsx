@@ -13,15 +13,13 @@ const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const playlistId = context.query.playlistId;
-  console.log(playlistId);
+  const playlistId = context.resolvedUrl.split('/')[2];
   const { data: playlist } = await http.get<Playlist>(
     `/playlists/view/${playlistId}`
   );
 
   return { props: { playlist } };
 }
-//www.todayplaylist.site/_next/static/chunks/pages/detail/%5BplaylistId%5D-c9bf9eba03929174
 
 function Page({ playlist }: { playlist: Playlist }) {
   const router = useRouter();
