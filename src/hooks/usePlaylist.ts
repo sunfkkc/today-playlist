@@ -17,6 +17,7 @@ const usePlaylist = (playlistId?: string, config?: Config) => {
     () => getPlaylist(playlistId!, config),
     {
       enabled: Boolean(playlistId),
+      initialData: config?.initialData,
     }
   );
 };
@@ -24,4 +25,5 @@ export default usePlaylist;
 
 interface Config {
   usage?: 'view' | 'modify';
+  initialData?: Playlist;
 }
