@@ -14,7 +14,6 @@ const OVERLAP_HEIGHT = 24;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const playlistId = context.req.url?.split('/')[2];
-  console.log(playlistId);
   const { data: playlist } = await http.get<Playlist>(
     `/playlists/view/${playlistId}`
   );
