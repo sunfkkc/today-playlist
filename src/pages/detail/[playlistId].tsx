@@ -4,17 +4,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Divider, Header, Icon, Text } from '@/components';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
-import { Song } from '@/hooks/usePlaylists';
+import { Playlist, Song } from '@/hooks/usePlaylists';
 import http from '@/http';
 import styled from '@emotion/styled';
 import { debounce } from '@/utils/debounce';
+import { GetServerSidePropsContext } from 'next';
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
 
 function Page() {
-  const {
-    query: { playlistId },
-  } = useRouter();
+  const router = useRouter();
+  const { playlistId } = router.query;
 
   const { data } = usePlaylist(playlistId as string);
   const [isLiked, setIsLiked] = useState<Boolean | undefined>(undefined);
@@ -30,13 +30,19 @@ function Page() {
     );
   }, []);
 
-  const like = useCallback(() => {
-    setIsLiked((prev) => !prev);
+  const like = useCallback(async () => {
+    try {
+      await http.get('/auth');
 
-    debounce(() => {
-      http.patch(`/playlists/like`, { playlistId, like: !isLiked });
-    }, 1000);
-  }, [playlistId, isLiked]);
+      setIsLiked((prev) => !prev);
+
+      debounce(() => {
+        http.patch(`/playlists/like`, { playlistId, like: !isLiked });
+      }, 1000);
+    } catch (e) {
+      router.push('/my');
+    }
+  }, [playlistId, isLiked, router]);
 
   useEffect(() => {
     if (data) {
@@ -85,7 +91,6 @@ function Page() {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
-            z-index: 2;
           `}
         >
           <div
@@ -95,7 +100,7 @@ function Page() {
               align-items: center;
             `}
           >
-            <Icon name="HeartFilled20" color="red400" onClick={like} />
+            <Icon name="HeartFilled20" color="red400" />
             <Text
               typography="cp"
               fontWeight="regular"
@@ -255,7 +260,8 @@ const SongContainer = styled.div`
     rgba(255, 255, 255, 0.1) 30.87%,
     rgba(0, 0, 0, 0.04) 100%
   );
-  backdrop-filter: blur(20px);
+
+  backdrop-filter: blur(10px);
 
   border-radius: 30px 30px 0px 0px;
 
