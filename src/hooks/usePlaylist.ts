@@ -18,6 +18,7 @@ const usePlaylist = (playlistId?: string, config?: Config) => {
     {
       enabled: Boolean(playlistId),
       initialData: config?.initialData,
+      keepPreviousData: true,
     }
   );
 };
