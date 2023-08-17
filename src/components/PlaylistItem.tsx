@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Text from './Text';
 import Image from 'next/image';
 import { Icon } from '.';
@@ -32,16 +32,22 @@ function PlaylistItem(props: IPlaylistItem) {
   );
 
   const [isPrefetched, setisPrefetched] = useState(false);
+  const [isPrefetching, setisPrefetching] = useState(false);
+  const readyQ = useRef<any>(null);
 
   const _onClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       if ((evt.target as Element).classList.contains('edit-icon')) {
         edit?.();
       } else {
-        onClick?.(evt);
+        if (isPrefetching) {
+          readyQ.current = onClick;
+        } else {
+          onClick?.(evt);
+        }
       }
     },
-    [onClick, edit]
+    [onClick, edit, isPrefetching]
   );
 
   const like = useCallback(
@@ -60,16 +66,24 @@ function PlaylistItem(props: IPlaylistItem) {
   );
 
   const prefetch = useCallback(async () => {
+    setisPrefetching(true);
     await queryClient.prefetchQuery({
       queryKey: [queryKeys.playlist, playlistId],
       queryFn: () => getPlaylist(playlistId as string),
     });
-    setisPrefetched(true);
+    setisPrefetching(false);
   }, [queryClient, playlistId]);
 
   useEffect(() => {
     setLikedForDisplay(isLiked);
   }, [isLiked]);
+
+  useEffect(() => {
+    if (!isPrefetching && readyQ.current) {
+      readyQ.current();
+      readyQ.current = null;
+    }
+  }, [isPrefetching]);
 
   return (
     <Container
@@ -78,6 +92,7 @@ function PlaylistItem(props: IPlaylistItem) {
       onMouseEnter={(evt) => {
         if (!isPrefetched) {
           prefetch();
+          setisPrefetched(true);
         }
       }}
     >
