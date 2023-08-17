@@ -7,6 +7,9 @@ import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import { debounce } from '@/utils/debounce';
 import http from '@/http';
+import { useQueryClient } from 'react-query';
+import queryKeys from '@/constants/queryKeys';
+import { getPlaylist } from '@/hooks/usePlaylist';
 
 function PlaylistItem(props: IPlaylistItem) {
   const {
@@ -23,10 +26,12 @@ function PlaylistItem(props: IPlaylistItem) {
     disableLike = false,
     ...rest
   } = props;
-
+  const queryClient = useQueryClient();
   const [likedForDisplay, setLikedForDisplay] = useState<Boolean | undefined>(
     isLiked
   );
+
+  const [isPrefetched, setisPrefetched] = useState(false);
 
   const _onClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -54,12 +59,28 @@ function PlaylistItem(props: IPlaylistItem) {
     [likedForDisplay, playlistId, disableLike]
   );
 
+  const prefetch = useCallback(async () => {
+    await queryClient.prefetchQuery({
+      queryKey: [queryKeys.playlist, playlistId],
+      queryFn: () => getPlaylist(playlistId as string),
+    });
+    setisPrefetched(true);
+  }, [queryClient, playlistId]);
+
   useEffect(() => {
     setLikedForDisplay(isLiked);
   }, [isLiked]);
 
   return (
-    <Container {...rest} onClick={_onClick}>
+    <Container
+      {...rest}
+      onClick={_onClick}
+      onMouseEnter={(evt) => {
+        if (!isPrefetched) {
+          prefetch();
+        }
+      }}
+    >
       {likedForDisplay ? (
         <div css={heartStyle}>
           <Icon name="HeartFilled24" color="white" onClick={like} />
