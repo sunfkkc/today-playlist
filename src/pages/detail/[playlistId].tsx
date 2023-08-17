@@ -4,34 +4,18 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Divider, Header, Icon, Text } from '@/components';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
-import { Playlist, Song } from '@/hooks/usePlaylists';
+import { Song } from '@/hooks/usePlaylists';
 import http from '@/http';
 import styled from '@emotion/styled';
 import { debounce } from '@/utils/debounce';
-import { GetServerSidePropsContext } from 'next';
 const INITIAL_HEIGHT = 360;
 const OVERLAP_HEIGHT = 24;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const https = require('https');
-  const playlistId = context.resolvedUrl.split('/')[2];
-  const { data: playlist } = await http.get<Playlist>(
-    `/playlists/view/${playlistId}`,
-    {
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
-      }),
-    }
-  );
-
-  return { props: { playlist } };
-}
-
-function Page({ playlist }: { playlist: Playlist }) {
+function Page() {
   const router = useRouter();
   const { playlistId } = router.query;
 
-  const { data } = usePlaylist(playlistId as string, { initialData: playlist });
+  const { data } = usePlaylist(playlistId as string);
   const [isLiked, setIsLiked] = useState<Boolean | undefined>(undefined);
 
   const [songs, setSongs] = useState<SongWithPlayingStatus[]>();
