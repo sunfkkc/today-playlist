@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Text from './Text';
 import Image from 'next/image';
 import { Icon } from '.';
@@ -7,9 +7,6 @@ import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import { debounce } from '@/utils/debounce';
 import http from '@/http';
-import { useQueryClient } from 'react-query';
-import queryKeys from '@/constants/queryKeys';
-import { getPlaylist } from '@/hooks/usePlaylist';
 
 function PlaylistItem(props: IPlaylistItem) {
   const {
@@ -26,28 +23,19 @@ function PlaylistItem(props: IPlaylistItem) {
     disableLike = false,
     ...rest
   } = props;
-  const queryClient = useQueryClient();
   const [likedForDisplay, setLikedForDisplay] = useState<Boolean | undefined>(
     isLiked
   );
-
-  const [isPrefetched, setisPrefetched] = useState(false);
-  const [isPrefetching, setisPrefetching] = useState(false);
-  const readyQ = useRef<any>(null);
 
   const _onClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       if ((evt.target as Element).classList.contains('edit-icon')) {
         edit?.();
       } else {
-        if (isPrefetching) {
-          readyQ.current = onClick;
-        } else {
-          onClick?.(evt);
-        }
+        onClick?.(evt);
       }
     },
-    [onClick, edit, isPrefetching]
+    [onClick, edit]
   );
 
   const like = useCallback(
@@ -65,37 +53,12 @@ function PlaylistItem(props: IPlaylistItem) {
     [likedForDisplay, playlistId, disableLike]
   );
 
-  const prefetch = useCallback(async () => {
-    setisPrefetching(true);
-    await queryClient.prefetchQuery({
-      queryKey: [queryKeys.playlist, playlistId],
-      queryFn: () => getPlaylist(playlistId as string),
-    });
-    setisPrefetching(false);
-  }, [queryClient, playlistId]);
-
   useEffect(() => {
     setLikedForDisplay(isLiked);
   }, [isLiked]);
 
-  useEffect(() => {
-    if (!isPrefetching && readyQ.current) {
-      readyQ.current();
-      readyQ.current = null;
-    }
-  }, [isPrefetching]);
-
   return (
-    <Container
-      {...rest}
-      onClick={_onClick}
-      onMouseEnter={(evt) => {
-        if (!isPrefetched) {
-          prefetch();
-          setisPrefetched(true);
-        }
-      }}
-    >
+    <Container {...rest} onClick={_onClick}>
       {likedForDisplay ? (
         <div css={heartStyle}>
           <Icon name="HeartFilled24" color="white" onClick={like} />
