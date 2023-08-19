@@ -7,6 +7,7 @@ import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 import { debounce } from '@/utils/debounce';
 import http from '@/http';
+import { useRouter } from 'next/router';
 
 function PlaylistItem(props: IPlaylistItem) {
   const {
@@ -18,24 +19,30 @@ function PlaylistItem(props: IPlaylistItem) {
     viewCount,
     hashtag = [],
     editable = false,
-    edit,
-    onClick,
     disableLike = false,
     ...rest
   } = props;
+  const router = useRouter();
   const [likedForDisplay, setLikedForDisplay] = useState<Boolean | undefined>(
     isLiked
   );
 
-  const _onClick = useCallback(
+  const navigateToEditPage = useCallback(
+    (playlistId: string) => {
+      router.push(`/enroll?playlistId=${playlistId}&usage=modify`);
+    },
+    [router]
+  );
+
+  const onClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       if ((evt.target as Element).classList.contains('edit-icon')) {
-        edit?.();
+        navigateToEditPage(playlistId!);
       } else {
-        onClick?.(evt);
+        router.push(`/detail/${playlistId}`);
       }
     },
-    [onClick, edit]
+    [playlistId, router, navigateToEditPage]
   );
 
   const like = useCallback(
@@ -58,7 +65,7 @@ function PlaylistItem(props: IPlaylistItem) {
   }, [isLiked]);
 
   return (
-    <Container {...rest} onClick={_onClick}>
+    <Container {...rest} onClick={onClick} className="playlist-item--component">
       {likedForDisplay ? (
         <div css={heartStyle}>
           <Icon name="HeartFilled24" color="white" onClick={like} />
@@ -166,16 +173,12 @@ function PlaylistItem(props: IPlaylistItem) {
                   align-items: center;
                   margin-right: 6px;
                 `}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigateToEditPage(playlistId!);
+                }}
               >
-                <Icon
-                  name="Pen20"
-                  color="grey500"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    edit?.();
-                  }}
-                  className="edit-icon"
-                />
+                <Icon name="Pen20" color="grey500" />
               </div>
             )}
           </div>
@@ -223,6 +226,7 @@ const heartStyle = css`
 `;
 
 interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
+  playlistId?: string;
   title?: string;
   thumbnailUrl?: string;
   isLiked?: boolean;
@@ -230,7 +234,5 @@ interface IPlaylistItem extends React.HTMLAttributes<HTMLDivElement> {
   viewCount?: number;
   hashtag?: string[];
   editable?: boolean;
-  edit?: () => void;
-  playlistId?: string;
   disableLike?: boolean;
 }
