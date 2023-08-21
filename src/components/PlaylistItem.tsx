@@ -23,9 +23,12 @@ function PlaylistItem(props: IPlaylistItem) {
     ...rest
   } = props;
   const router = useRouter();
-  const [likedForDisplay, setLikedForDisplay] = useState<Boolean | undefined>(
+  const [likedForDisplay, setLikedForDisplay] = useState<boolean | undefined>(
     isLiked
   );
+  const [likedCountForDisplay, setLikedCountForDisplay] = useState<
+    number | undefined
+  >(likeCount);
 
   const navigateToEditPage = useCallback(
     (playlistId: string) => {
@@ -46,23 +49,28 @@ function PlaylistItem(props: IPlaylistItem) {
   );
 
   const like = useCallback(
-    (evt: React.MouseEvent<SVGElement, MouseEvent>) => {
-      if (!disableLike) {
-        evt.stopPropagation();
+    (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      evt.stopPropagation();
 
-        setLikedForDisplay((prev) => !prev);
+      setLikedForDisplay((prev) => !prev);
+      setLikedCountForDisplay((prev) =>
+        likedForDisplay ? prev! - 1 : prev! + 1
+      );
 
-        debounce(() => {
-          http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
-        }, 500);
-      }
+      debounce(() => {
+        http.patch(`/playlists/like`, { playlistId, like: !likedForDisplay });
+      }, 500);
     },
-    [likedForDisplay, playlistId, disableLike]
+    [likedForDisplay, playlistId]
   );
 
   useEffect(() => {
     setLikedForDisplay(isLiked);
   }, [isLiked]);
+
+  useEffect(() => {
+    setLikedCountForDisplay(likeCount);
+  }, [likeCount]);
 
   return (
     <Container
@@ -71,12 +79,20 @@ function PlaylistItem(props: IPlaylistItem) {
       data-testid="playlist-item-container"
     >
       {likedForDisplay ? (
-        <div css={heartStyle}>
-          <Icon name="HeartFilled24" color="white" onClick={like} />
+        <div
+          css={heartStyle}
+          data-testid="filled-heart-icon"
+          onClick={disableLike ? undefined : like}
+        >
+          <Icon name="HeartFilled24" color="white" />
         </div>
       ) : (
-        <div css={heartStyle}>
-          <Icon name="Heart24" color="white" onClick={like} />
+        <div
+          css={heartStyle}
+          data-testid="outlined-heart-icon"
+          onClick={disableLike ? undefined : like}
+        >
+          <Icon name="Heart24" color="white" />
         </div>
       )}
       <div
@@ -141,9 +157,9 @@ function PlaylistItem(props: IPlaylistItem) {
                 color={colors.grey600}
                 style={{ margin: 'auto 0' }}
               >
-                {likeCount &&
+                {likedCountForDisplay &&
                   new Intl.NumberFormat('en', { notation: 'compact' }).format(
-                    likeCount
+                    likedCountForDisplay
                   )}
               </Text>
               <Icon
