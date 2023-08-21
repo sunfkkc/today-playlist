@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import http from '@/http';
 import userEvent from '@testing-library/user-event';
 
-describe('<PlaylistItem />', () => {
+describe('<PlaylistItem /> 컴포넌트 테스트', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
