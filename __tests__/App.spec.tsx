@@ -78,4 +78,35 @@ describe('<PlaylistItem />', () => {
       });
     });
   });
+
+  it('좋아요를 해제하면 아이콘이 바뀌고 좋아요 카운트가 1 감소하고 api 요청이 발생한다', async () => {
+    const playlistId = '123';
+    const likeCount = 1;
+
+    render(
+      <PlaylistItem
+        title="테스트 플레이리스트"
+        playlistId={playlistId}
+        isLiked={true}
+        likeCount={likeCount}
+      />
+    );
+    const filledIcon = await screen.findByTestId('filled-heart-icon');
+
+    expect(filledIcon).toBeInTheDocument();
+
+    userEvent.click(filledIcon);
+
+    const outlinedIcon = await screen.findByTestId('outlined-heart-icon');
+
+    expect(outlinedIcon).toBeInTheDocument();
+    expect(await screen.findByText(0));
+
+    await waitFor(() => {
+      expect(http.patch).toHaveBeenCalledWith(`/playlists/like`, {
+        playlistId,
+        like: false,
+      });
+    });
+  });
 });
