@@ -65,7 +65,11 @@ function PlaylistItem(props: IPlaylistItem) {
   }, [isLiked]);
 
   return (
-    <Container {...rest} onClick={onClick} className="playlist-item--component">
+    <Container
+      {...rest}
+      onClick={onClick}
+      data-testid="playlist-item-container"
+    >
       {likedForDisplay ? (
         <div css={heartStyle}>
           <Icon name="HeartFilled24" color="white" onClick={like} />
@@ -161,6 +165,7 @@ function PlaylistItem(props: IPlaylistItem) {
             </div>
             {editable && (
               <div
+                data-testid="edit-icon"
                 className="edit-icon"
                 css={css`
                   border-radius: 8px;
