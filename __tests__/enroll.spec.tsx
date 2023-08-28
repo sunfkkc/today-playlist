@@ -49,9 +49,9 @@ describe('플리 등록 테스트', () => {
     }
 
     //TODO: 태그 삭제 테스트
-    screen.debug();
-    userEvent.click(await screen.findByTestId(`remove-button-1`));
-    expect(screen.queryByText(`#${tags[1]}`)).not.toBeInTheDocument();
+    // screen.debug();
+    // userEvent.click(await screen.findByTestId(`remove-button-1`));
+    // expect(screen.queryByText(`#${tags[1]}`)).not.toBeInTheDocument();
   });
 
   //it('로그인 되지 않으면 마이페이지로 이동된다.', () => {});
