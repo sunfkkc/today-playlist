@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <div className="homepage-container">
-      <div>무중단 배포 테스트3</div>
+      <div>무중단 배포 테스트4</div>
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
