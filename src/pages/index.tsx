@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <div className="homepage-container">
-      <div>마지막일듯</div>
+      <div>찐막</div>
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
