@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <div className="homepage-container">
-      <div>변경사항2</div>
+      <div>변경사항3</div>
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
