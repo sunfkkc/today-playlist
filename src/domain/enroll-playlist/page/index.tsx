@@ -146,7 +146,7 @@ function Page() {
                     fontWeight="regular"
                     color={colors.grey700}
                     stringToJSX
-                  >{`${v.time}`}</Text>
+                  >{`${usage ? v.length : v.time}`}</Text>
                 </Item>
                 {form.songs && form.songs?.length - 1 !== i && (
                   <Divider opacity={0.16} backgroundColor={colors.grey800} />

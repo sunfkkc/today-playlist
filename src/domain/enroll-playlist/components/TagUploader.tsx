@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon, Text, TextFieldLine } from '@/components';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
@@ -14,6 +14,10 @@ function TagUploader(props: Props) {
   const { addTagHandler, initialData = [], removeTagHandler } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState(initialData);
+
+  useEffect(() => {
+    setTags(initialData);
+  }, [initialData]);
 
   return (
     <TagContainer>
