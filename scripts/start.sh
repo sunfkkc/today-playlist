@@ -6,4 +6,6 @@ yarn
 
 nohup yarn start -p $TARGET_PORT &
 
+sleep 5
+
 echo "$TARGET_PORT 에서 next 프로젝트 실행"

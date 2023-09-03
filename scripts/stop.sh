@@ -8,6 +8,7 @@ PID=$(lsof -t -i:$TARGET_PORT)
 # PID가 존재하면 종료하기
 if [ ! -z "$PID" ]; then
     kill -9 $PID
+    sleep 5
     echo "Process on port $TARGET_PORT has been terminated."
 else
     echo "No process found on port $TARGET_PORT."
