@@ -6,7 +6,7 @@ files:
     overwrite: yes
 
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: scripts/permission.sh
       timeout: 300
       runas: root
