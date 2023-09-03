@@ -7,8 +7,8 @@ source ${ABSDIR}/switch.sh
 
 PORT=$(./port.sh)
 
-stop $PORT
+./stop.sh $PORT
 
-start $PORT
+./start.sh $PORT
 
-switch $PORT
+./switch.sh $PORT
