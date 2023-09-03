@@ -4,3 +4,9 @@ files:
   - source: /
     destination: /home/ec2-user/app2/zip
     overwrite: yes
+
+hooks:
+  ApplicationStart:
+    - location: scripts/deploy.sh
+      timeout: 60
+      runas: ec2-user
