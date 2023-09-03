@@ -1,10 +1,8 @@
 #!/bin/bash
 
-ABSPATH=$(readlink -f $0)
-ABSDIR=$(dirname $ABSPATH)
 
-PORT=$(${ABSDIR}/port.sh)
+PORT=$(/home/ec2-user/app2/zip/scripts/port.sh)
 
-${ABSDIR}/stop.sh $PORT
-${ABSDIR}/start.sh $PORT
-${ABSDIR}/switch.sh $PORT
+/home/ec2-user/app2/zip/scripts/stop.sh $PORT
+/home/ec2-user/app2/zip/scripts/start.sh $PORT
+/home/ec2-user/app2/zip/scripts/switch.sh $PORT
