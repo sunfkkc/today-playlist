@@ -6,6 +6,9 @@ files:
     overwrite: yes
 
 hooks:
+  BeforeInstall:
+    - location: scripts/permission.sh
+      timeout: 60
   ApplicationStart:
     - location: scripts/deploy.sh
       timeout: 60
