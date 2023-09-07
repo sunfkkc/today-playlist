@@ -1,3 +1,4 @@
+import { Playlist } from '@/apis/getPlaylist';
 import { atom } from 'recoil';
 
 export const form = atom<Form>({
@@ -5,10 +6,6 @@ export const form = atom<Form>({
   default: { songs: [], hashtag: [] },
 });
 
-export interface Form {
-  title?: string;
-  songs?: { id?: string; title?: string; time?: string; length?: string }[];
-  hashtag?: string[];
+export interface Form extends Playlist {
   image?: File | null;
-  thumbnailUrl?: string;
 }
