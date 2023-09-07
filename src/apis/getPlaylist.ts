@@ -9,20 +9,21 @@ export const getPlaylist = async (playlistId: string, config?: Config) => {
 };
 
 export interface Playlist {
-  playlistId: string;
-  thumbnailUrl: string;
-  title: string;
-  viewCount: number;
-  likeCount: number;
-  isLiked: boolean;
-  hashtag: string[];
-  songs: Song[];
+  playlistId?: string;
+  thumbnailUrl?: string;
+  title?: string;
+  viewCount?: number;
+  likeCount?: number;
+  isLiked?: boolean;
+  hashtag?: string[];
+  songs?: Song[];
 }
 
 export interface Song {
-  videoId: string;
-  title: string;
-  length: string;
+  videoId?: string;
+  title?: string;
+  length?: string;
+  time?: string;
 }
 
 export interface Config {
