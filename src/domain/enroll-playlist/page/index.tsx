@@ -41,25 +41,6 @@ function Page() {
     }
   };
 
-  const addTag = useCallback(
-    (tag?: string) => {
-      if (tag) {
-        setForm((prev) => ({ ...prev, hashtag: form.hashtag?.concat(tag) }));
-      }
-    },
-    [setForm, form]
-  );
-
-  const removeTag = useCallback(
-    (i: number) => {
-      setForm((prev) => ({
-        ...prev,
-        hashtag: prev.hashtag?.filter((_, _i) => _i !== i),
-      }));
-    },
-    [setForm]
-  );
-
   const setTitle = useCallback(
     (title?: string) => {
       setForm((prev) => ({ ...prev, title }));
@@ -158,9 +139,8 @@ function Page() {
       </PlaylistContainer>
 
       <TagUploader
-        addTagHandler={addTag}
-        initialData={form.hashtag}
-        removeTagHandler={removeTag}
+        tags={form.hashtag}
+        setTags={(tags) => setForm((prev) => ({ ...prev, hashtag: tags }))}
       />
 
       <Button onClick={submit} disabled={!canSubmit}>{`등록하기`}</Button>

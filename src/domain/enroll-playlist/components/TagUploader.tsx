@@ -1,23 +1,37 @@
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Icon, Text, TextFieldLine } from '@/components';
 import { colors } from '@/constants/colors';
 import { css } from '@emotion/react';
 
 interface Props {
-  initialData?: string[];
-  addTagHandler?: (tag?: string) => void;
-  removeTagHandler?: (i: number) => void;
+  tags?: string[];
+
+  setTags: (tags?: string[]) => void;
 }
 
 function TagUploader(props: Props) {
-  const { addTagHandler, initialData = [], removeTagHandler } = props;
+  const { tags = [], setTags } = props;
   const [tag, setTag] = useState('');
-  const [tags, setTags] = useState(initialData);
 
-  useEffect(() => {
-    setTags(initialData);
-  }, [initialData]);
+  const add = useCallback(
+    (tag?: string) => {
+      if (!tag) {
+        return;
+      }
+
+      setTags(tags?.concat(tag));
+      setTag('');
+    },
+    [setTags, tags]
+  );
+
+  const remove = useCallback(
+    (i: number) => {
+      setTags(tags?.filter((_, _i) => _i !== i));
+    },
+    [setTags, tags]
+  );
 
   return (
     <TagContainer>
@@ -54,9 +68,7 @@ function TagUploader(props: Props) {
             <AddButton
               data-testid="add-button"
               onClick={() => {
-                addTagHandler?.(tag);
-                setTags((prev) => prev.concat(tag));
-                setTag('');
+                add(tag);
               }}
               style={{
                 background: tag
@@ -102,8 +114,7 @@ function TagUploader(props: Props) {
                 name="XFilled20"
                 fill={colors.grey400}
                 onClick={() => {
-                  removeTagHandler?.(i);
-                  setTags((prev) => prev.filter((_, _i) => _i !== i));
+                  remove(i);
                 }}
               />
             </TagItem>
