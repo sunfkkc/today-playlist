@@ -49,4 +49,16 @@ describe('플리 등록 테스트', () => {
 
     await waitFor(() => expect(mockedSetTags).toHaveBeenCalledTimes(1));
   });
+
+  it('태그가 정상적으로 제거된다', async () => {
+    const mockedSetTags = jest.fn();
+
+    render(<TagUploader setTags={mockedSetTags} tags={['새벽감성']} />);
+
+    expect(await screen.findByText('#새벽감성')).toBeInTheDocument();
+
+    userEvent.click(await screen.findByTestId('remove-button-0'));
+
+    await waitFor(() => expect(mockedSetTags).toHaveBeenCalledTimes(1));
+  });
 });
