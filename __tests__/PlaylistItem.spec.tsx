@@ -43,7 +43,7 @@ describe('<PlaylistItem /> 컴포넌트 테스트', () => {
 
     await waitFor(() => {
       expect(useRouter().push).toHaveBeenCalledWith(
-        `/enroll?playlistId=${playlistId}&usage=modify`
+        `/update?playlistId=${playlistId}&usage=modify`
       );
     });
   });

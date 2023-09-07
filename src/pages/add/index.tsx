@@ -1,4 +1,4 @@
-import { useEnrollPlaylistForm } from '@/atoms/enrollPlaylistForm';
+import { useForm } from '@/domain/update-playlist/hooks/useForm';
 import {
   Button,
   Divider,
@@ -18,7 +18,7 @@ import { useCallback, useState } from 'react';
 
 function Page() {
   const router = useRouter();
-  const [form, setForm] = useEnrollPlaylistForm();
+  const [form, setForm] = useForm();
   const [searchWord, setSearchWord] = useState('');
   const { search: searchSongs } = useSearchSong();
   const { mutateAsync } = useRegisterSong();

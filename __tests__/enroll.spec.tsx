@@ -2,10 +2,10 @@ jest.mock('next/router');
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ImageUploader from '@/domain/enroll-playlist/components/ImageUploader';
-import TagUploader from '@/domain/enroll-playlist/components/TagUploader';
-import PlaylistViewer from '@/domain/enroll-playlist/components/PlaylistViewer';
-import { EnrollPlaylistForm } from '@/atoms/enrollPlaylistForm';
+import ImageUploader from '@/domain/update-playlist/components/ImageUploader';
+import TagUploader from '@/domain/update-playlist/components/TagUploader';
+import PlaylistViewer from '@/domain/update-playlist/components/PlaylistViewer';
+import { Form } from '@/domain/update-playlist/atoms/form';
 import { useRouter } from 'next/router';
 
 describe('플리 등록 테스트', () => {
@@ -68,9 +68,7 @@ describe('플리 등록 테스트', () => {
   });
 
   it('노래 목록이 정상적으로 노출된다', async () => {
-    const songs: EnrollPlaylistForm['songs'] = [
-      { id: '0', time: '03:56', title: '제목1' },
-    ];
+    const songs: Form['songs'] = [{ id: '0', time: '03:56', title: '제목1' }];
 
     render(<PlaylistViewer songs={songs} />);
 

@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { ReactElement, useEffect } from 'react';
-import { useResetEnrollPlaylistForm } from './atoms/enrollPlaylistForm';
+import { useResetForm as useResetUpdatePlaylistForm } from '@/domain/update-playlist/hooks/useForm';
 
 let before = '';
 
 function AppProvider({ children }: { children: ReactElement }) {
   const router = useRouter();
-  const reset = useResetEnrollPlaylistForm();
+  const reset = useResetUpdatePlaylistForm();
+
   useEffect(() => {
     const cur = router.pathname;
 
