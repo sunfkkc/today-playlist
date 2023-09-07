@@ -1,7 +1,12 @@
+jest.mock('next/router');
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ImageUploader from '@/domain/enroll-playlist/components/ImageUploader';
 import TagUploader from '@/domain/enroll-playlist/components/TagUploader';
+import PlaylistViewer from '@/domain/enroll-playlist/components/PlaylistViewer';
+import { EnrollPlaylistForm } from '@/atoms/enrollPlaylistForm';
+import { useRouter } from 'next/router';
 
 describe('플리 등록 테스트', () => {
   it('사진이 정상적으로 업로드 된다.', async () => {
@@ -60,5 +65,26 @@ describe('플리 등록 테스트', () => {
     userEvent.click(await screen.findByTestId('remove-button-0'));
 
     await waitFor(() => expect(mockedSetTags).toHaveBeenCalledTimes(1));
+  });
+
+  it('노래 목록이 정상적으로 노출된다', async () => {
+    const songs: EnrollPlaylistForm['songs'] = [
+      { id: '0', time: '03:56', title: '제목1' },
+    ];
+
+    render(<PlaylistViewer songs={songs} />);
+
+    expect(await screen.findByText('제목1')).toBeInTheDocument();
+    expect(await screen.findByText('03:56')).toBeInTheDocument();
+  });
+
+  it('플레이리스트 추가 버튼을 누르면 추가 페이지로 이동된다', async () => {
+    render(<PlaylistViewer />);
+
+    userEvent.click(await screen.findByTestId('add-button'));
+
+    await waitFor(() => {
+      expect(useRouter().push).toHaveBeenCalledWith('/add');
+    });
   });
 });
