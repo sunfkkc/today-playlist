@@ -32,7 +32,7 @@ function PlaylistItem(props: IPlaylistItem) {
 
   const navigateToEditPage = useCallback(
     (playlistId: string) => {
-      router.push(`/enroll?playlistId=${playlistId}&usage=modify`);
+      router.push(`/update?playlistId=${playlistId}&usage=modify`);
     },
     [router]
   );

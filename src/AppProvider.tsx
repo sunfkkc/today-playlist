@@ -10,7 +10,7 @@ function AppProvider({ children }: { children: ReactElement }) {
   useEffect(() => {
     const cur = router.pathname;
 
-    if (cur !== '/add' && before === '/enroll') {
+    if (cur !== '/add' && before === '/update') {
       reset();
     }
     return () => {

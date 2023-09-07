@@ -20,7 +20,7 @@ function BottomTab() {
     {
       title: '플리등록',
       icon: 'PlusList24',
-      path: '/enroll',
+      path: '/update',
     },
     {
       title: '찜한플리',
